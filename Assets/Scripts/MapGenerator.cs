@@ -42,23 +42,6 @@ public class MapGenerator : MonoBehaviour
     void Update()
     {
         moveOnSection(detector.checkMoveOn());
-
-        if (Input.GetKeyDown(KeyCode.UpArrow))
-        {
-            moveOnSection(Directon.UP);
-        }
-        if (Input.GetKeyDown(KeyCode.RightArrow))
-        {
-            moveOnSection(Directon.RIGHT);
-        }
-        if (Input.GetKeyDown(KeyCode.LeftArrow))
-        {
-            moveOnSection(Directon.LEFT);
-        }
-        if (Input.GetKeyDown(KeyCode.DownArrow))
-        {
-            moveOnSection(Directon.DOWN);
-        }
     }
 
     private void moveOnSection(Directon directon)

@@ -23,8 +23,26 @@ public class MapSectionDetector : MonoBehaviour
 
     public Directon checkMoveOn()
     {
+        Directon _directon = Directon.NONE;
 
-        return Directon.NONE;
+        if (transform.position.x < nowSectionPosition.x - (sectionSize.x/2) ) // 왼쪽 경계선
+        {
+            _directon = Directon.LEFT;
+        }
+        else if(transform.position.x > nowSectionPosition.x + (sectionSize.x / 2)) // 오른쪽 경계선
+        {
+            _directon = Directon.RIGHT;
+        }
+        else if (transform.position.y > nowSectionPosition.y + (sectionSize.y / 2)) // 위쪽 경계선
+        {
+            _directon = Directon.UP;
+        }
+        else if (transform.position.y < nowSectionPosition.y - (sectionSize.y / 2)) // 아래쪽 경계선
+        {
+            _directon = Directon.DOWN;
+        }
+
+        return _directon;
     }
 
     public Vector2 SectionSize {
@@ -38,10 +56,6 @@ public class MapSectionDetector : MonoBehaviour
 
     public Vector3 NowSectionPosition {
         get { return nowSectionPosition; }
-        set
-        {
-            nowSectionPosition = value;
-            transform.position = nowSectionPosition;
-        }
+        set { nowSectionPosition = value; }
     }
 }
