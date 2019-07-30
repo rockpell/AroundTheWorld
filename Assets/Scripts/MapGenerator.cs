@@ -179,8 +179,15 @@ public class MapGenerator : MonoBehaviour
 
         if (_targetPosition != Vector3.zero)
         {
-            Instantiate(middleSection[1], _targetPosition, Quaternion.identity);
+            Instantiate(randMiddleSection(), _targetPosition, Quaternion.identity);
         }
+    }
+
+    private GameObject randMiddleSection()
+    {
+        int _index = Random.Range(0, middleSection.Length);
+
+        return middleSection[_index];
     }
 
     private Vector3 getCreateSectionPosition(Directon directon, Vector2 nowIndex, Vector3 nowPosition)
