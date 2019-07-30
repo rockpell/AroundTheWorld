@@ -1,0 +1,1 @@
+﻿public enum Directon {NONE, UPLEFT, UP, UPRIGHT, RIGHT, DOWNRIGHT, DOWN, DOWNLEFT, LEFT}
