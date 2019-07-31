@@ -45,6 +45,41 @@ public class MapSectionDetector : MonoBehaviour
         return _directon;
     }
 
+    public Vector3 getPlayerAroundSectionPosition(Directon directon)
+    {
+        Vector3 _result = Vector3.zero;
+
+        switch (directon)
+        {
+            case Directon.UPLEFT:
+                _result = new Vector3(nowSectionPosition.x - sectionSize.x, nowSectionPosition.y + sectionSize.y, 0);
+                break;
+            case Directon.UP:
+                _result = new Vector3(nowSectionPosition.x, nowSectionPosition.y + sectionSize.y, 0);
+                break;
+            case Directon.UPRIGHT:
+                _result = new Vector3(nowSectionPosition.x + sectionSize.x, nowSectionPosition.y + sectionSize.y, 0);
+                break;
+            case Directon.RIGHT:
+                _result = new Vector3(nowSectionPosition.x + sectionSize.x, nowSectionPosition.y, 0);
+                break;
+            case Directon.DOWNRIGHT:
+                _result = new Vector3(nowSectionPosition.x + sectionSize.x, nowSectionPosition.y - sectionSize.y, 0);
+                break;
+            case Directon.DOWN:
+                _result = new Vector3(nowSectionPosition.x, nowSectionPosition.y - sectionSize.y, 0);
+                break;
+            case Directon.DOWNLEFT:
+                _result = new Vector3(nowSectionPosition.x - sectionSize.x, nowSectionPosition.y - sectionSize.y, 0);
+                break;
+            case Directon.LEFT:
+                _result = new Vector3(nowSectionPosition.x - sectionSize.x, nowSectionPosition.y, 0);
+                break;
+        }
+
+        return _result;
+    }
+
     public Vector2 SectionSize {
         set { sectionSize = value; }
     }
