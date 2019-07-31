@@ -20,6 +20,9 @@ public class Wind : MonoBehaviour
     [SerializeField] private GameObject typoon;
     [SerializeField] private MapSectionDetector mapSectionDetector;
 
+    [SerializeField] private UnityEngine.UI.Text windDirectionText;
+    [SerializeField] private UnityEngine.UI.Text windSpeedText;
+
     void Start()
     {
         refreshTime = OriginRefreshTime;
@@ -39,84 +42,84 @@ public class Wind : MonoBehaviour
             }
         }
     }
-    private Directon randomDirection()
+    private Direction randomDirection()
     {
         switch (Random.Range(0, 8))
         {
             case 0:
-                return Directon.UPLEFT;
+                return Direction.UPLEFT;
             case 1:
-                return Directon.UP;
+                return Direction.UP;
             case 2:
-                return Directon.UPRIGHT;
+                return Direction.UPRIGHT;
             case 3:
-                return Directon.RIGHT;
+                return Direction.RIGHT;
             case 4:
-                return Directon.DOWNRIGHT;
+                return Direction.DOWNRIGHT;
             case 5:
-                return Directon.DOWN;
+                return Direction.DOWN;
             case 6:
-                return Directon.DOWNLEFT;
+                return Direction.DOWNLEFT;
             case 7:
-                return Directon.LEFT;
+                return Direction.LEFT;
             default:
-                return Directon.NONE;
+                return Direction.NONE;
         }
     }
-    private Directon directionDetect(Directon origin, Directon direction)
+    private Direction directionDetect(Direction origin, Direction direction)
     {
-        return (origin == direction) ? Directon.NONE : direction;
+        return (origin == direction) ? Direction.NONE : direction;
     }
-    private Directon randomDirection(Directon origin)
+    private Direction randomDirection(Direction origin)
     {
-        Directon _directon = Directon.NONE;
+        Direction _directon = Direction.NONE;
 
-        while(_directon == Directon.NONE)
+        while(_directon == Direction.NONE)
         {
             switch (Random.Range(0, 8))
             {
                 case 0:
-                    if (directionDetect(origin, Directon.UPLEFT) == Directon.UPLEFT)
-                        return Directon.UPLEFT;
+                    if (directionDetect(origin, Direction.UPLEFT) == Direction.UPLEFT)
+                        return Direction.UPLEFT;
                     else
                         break;
                 case 1:
-                    if (directionDetect(origin, Directon.UP) == Directon.UP)
-                        return Directon.UPLEFT;
+                    if (directionDetect(origin, Direction.UP) == Direction.UP)
+                        return Direction.UPLEFT;
                     else
                         break;
                 case 2:
-                    if (directionDetect(origin, Directon.UPRIGHT) == Directon.UPRIGHT)
-                        return Directon.UPLEFT;
+                    if (directionDetect(origin, Direction.UPRIGHT) == Direction.UPRIGHT)
+                        return Direction.UPLEFT;
                     else
                         break;
                 case 3:
-                    if (directionDetect(origin, Directon.RIGHT) == Directon.RIGHT)
-                        return Directon.UPLEFT;
+                    if (directionDetect(origin, Direction.RIGHT) == Direction.RIGHT)
+                        return Direction.UPLEFT;
                     else
                         break;
                 case 4:
-                    if (directionDetect(origin, Directon.DOWNRIGHT) == Directon.DOWNRIGHT)
-                        return Directon.UPLEFT;
+                    if (directionDetect(origin, Direction.DOWNRIGHT) == Direction.DOWNRIGHT)
+                        return Direction.UPLEFT;
                     else
                         break;
                 case 5:
-                    if (directionDetect(origin, Directon.DOWN) == Directon.DOWN)
-                        return Directon.UPLEFT;
+                    if (directionDetect(origin, Direction.DOWN) == Direction.DOWN)
+                        return Direction.UPLEFT;
                     else
                         break;
                 case 6:
-                    if (directionDetect(origin, Directon.DOWNLEFT) == Directon.DOWNLEFT)
-                        return Directon.UPLEFT;
+                    if (directionDetect(origin, Direction.DOWNLEFT) == Direction.DOWNLEFT)
+                        return Direction.UPLEFT;
                     else
                         break;
                 case 7:
-                    if (directionDetect(origin, Directon.LEFT) == Directon.LEFT)
-                        return Directon.UPLEFT;
+                    if (directionDetect(origin, Direction.LEFT) == Direction.LEFT)
+                        return Direction.UPLEFT;
                     else
                         break;
                 default:
-                    return Directon.NONE;
+                    return Direction.NONE;
             }
         }
         return _directon;
@@ -128,7 +131,7 @@ public class Wind : MonoBehaviour
         //바람 변경 주기는 지속적으로 변하되 속도는 
         //태풍 영역 안에서만 바람 방향에 영향을 주도록 설정
         //이 함수에서는 태풍을 생성하고 이동 방향을 지정하는 정도로만
-        Directon _directon = randomDirection();
+        Direction _directon = randomDirection();
 
         typoonPosition = mapSectionDetector.getPlayerAroundSectionPosition(_directon);
         typoonDestination = mapSectionDetector.getPlayerAroundSectionPosition(randomDirection(_directon));
@@ -157,6 +160,8 @@ public class Wind : MonoBehaviour
             default:
                 break;
         }
+        windDirectionText.text = windDirection.ToString();
+        windSpeedText.text = windSpeed.ToString();
     }
 
     public float WindDirection

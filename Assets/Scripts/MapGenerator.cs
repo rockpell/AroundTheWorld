@@ -50,42 +50,42 @@ public class MapGenerator : MonoBehaviour
         moveOnSection(detector.checkMoveOn());
     }
 
-    private void moveOnSection(Directon directon)
+    private void moveOnSection(Direction directon)
     {
         switch (directon)
         {
-            case Directon.UP:
+            case Direction.UP:
                 detector.NowSectionPosition += new Vector3(0, sectionSize.y, 0);
                 detector.NowSectionIndex += Vector2.up;
 
-                createSection(Directon.UPLEFT, detector.NowSectionIndex, detector.NowSectionPosition);
-                createSection(Directon.UP, detector.NowSectionIndex, detector.NowSectionPosition);
-                createSection(Directon.UPRIGHT, detector.NowSectionIndex, detector.NowSectionPosition);
+                createSection(Direction.UPLEFT, detector.NowSectionIndex, detector.NowSectionPosition);
+                createSection(Direction.UP, detector.NowSectionIndex, detector.NowSectionPosition);
+                createSection(Direction.UPRIGHT, detector.NowSectionIndex, detector.NowSectionPosition);
 
                 break;
-            case Directon.RIGHT:
+            case Direction.RIGHT:
                 detector.NowSectionPosition += new Vector3(sectionSize.x, 0, 0);
                 detector.NowSectionIndex += Vector2.right;
 
-                createSection(Directon.UPRIGHT, detector.NowSectionIndex, detector.NowSectionPosition);
-                createSection(Directon.RIGHT, detector.NowSectionIndex, detector.NowSectionPosition);
-                createSection(Directon.DOWNRIGHT, detector.NowSectionIndex, detector.NowSectionPosition);
+                createSection(Direction.UPRIGHT, detector.NowSectionIndex, detector.NowSectionPosition);
+                createSection(Direction.RIGHT, detector.NowSectionIndex, detector.NowSectionPosition);
+                createSection(Direction.DOWNRIGHT, detector.NowSectionIndex, detector.NowSectionPosition);
                 break;
-            case Directon.DOWN:
+            case Direction.DOWN:
                 detector.NowSectionPosition += new Vector3(0, -sectionSize.y, 0);
                 detector.NowSectionIndex += Vector2.down;
 
-                createSection(Directon.DOWNLEFT, detector.NowSectionIndex, detector.NowSectionPosition);
-                createSection(Directon.DOWN, detector.NowSectionIndex, detector.NowSectionPosition);
-                createSection(Directon.DOWNRIGHT, detector.NowSectionIndex, detector.NowSectionPosition);
+                createSection(Direction.DOWNLEFT, detector.NowSectionIndex, detector.NowSectionPosition);
+                createSection(Direction.DOWN, detector.NowSectionIndex, detector.NowSectionPosition);
+                createSection(Direction.DOWNRIGHT, detector.NowSectionIndex, detector.NowSectionPosition);
                 break;
-            case Directon.LEFT:
+            case Direction.LEFT:
                 detector.NowSectionPosition += new Vector3(-sectionSize.x, 0, 0);
                 detector.NowSectionIndex += Vector2.left;
 
-                createSection(Directon.UPLEFT, detector.NowSectionIndex, detector.NowSectionPosition);
-                createSection(Directon.LEFT, detector.NowSectionIndex, detector.NowSectionPosition);
-                createSection(Directon.DOWNLEFT, detector.NowSectionIndex, detector.NowSectionPosition);
+                createSection(Direction.UPLEFT, detector.NowSectionIndex, detector.NowSectionPosition);
+                createSection(Direction.LEFT, detector.NowSectionIndex, detector.NowSectionPosition);
+                createSection(Direction.DOWNLEFT, detector.NowSectionIndex, detector.NowSectionPosition);
                 break;
         }
     }
@@ -95,7 +95,7 @@ public class MapGenerator : MonoBehaviour
         // x증가 오른쪽, y증가 위쪽
         for(int i = 1; i < 9; i++)
         {
-            createSection((Directon)i, detector.NowSectionIndex, detector.NowSectionPosition);
+            createSection((Direction)i, detector.NowSectionIndex, detector.NowSectionPosition);
         }
     }
 
@@ -159,7 +159,7 @@ public class MapGenerator : MonoBehaviour
         }
     }
 
-    private void createSection(Directon directon, Vector2 nowIndex, Vector3 nowPosition)
+    private void createSection(Direction directon, Vector2 nowIndex, Vector3 nowPosition)
     {
         Vector3 _targetPosition = Vector3.zero;
 
@@ -188,58 +188,58 @@ public class MapGenerator : MonoBehaviour
         return middleSection[_index];
     }
 
-    private Vector3 getCreateSectionPosition(Directon directon, Vector2 nowIndex, Vector3 nowPosition)
+    private Vector3 getCreateSectionPosition(Direction directon, Vector2 nowIndex, Vector3 nowPosition)
     {
         Vector3 _result = Vector3.zero;
 
         switch (directon)
         {
-            case Directon.UPLEFT:
+            case Direction.UPLEFT:
                 if (addCoordinate((int)nowIndex.x - 1, (int)nowIndex.y + 1))
                 {
                     _result = new Vector3(nowPosition.x - sectionSize.x, nowPosition.y + sectionSize.y, 0);
                 }
                 break;
-            case Directon.UP:
+            case Direction.UP:
                 if (addCoordinate((int)nowIndex.x, (int)nowIndex.y + 1))
                 {
                     _result = new Vector3(nowPosition.x, nowPosition.y + sectionSize.y, 0);
                     GameManager.Instance.addGenerateCount(0, 1); // 각 방향별 생성 갯수
                 }
                 break;
-            case Directon.UPRIGHT:
+            case Direction.UPRIGHT:
                 if (addCoordinate((int)nowIndex.x + 1, (int)nowIndex.y + 1))
                 {
                     _result = new Vector3(nowPosition.x + sectionSize.x, nowPosition.y + sectionSize.y, 0);
                 }
                 break;
-            case Directon.RIGHT:
+            case Direction.RIGHT:
                 if (addCoordinate((int)nowIndex.x + 1, (int)nowIndex.y))
                 {
                     _result = new Vector3(nowPosition.x + sectionSize.x, nowPosition.y, 0);
                     GameManager.Instance.addGenerateCount(1, 1); // 각 방향별 생성 갯수
                 }
                 break;
-            case Directon.DOWNRIGHT:
+            case Direction.DOWNRIGHT:
                 if (addCoordinate((int)nowIndex.x + 1, (int)nowIndex.y - 1))
                 {
                     _result = new Vector3(nowPosition.x + sectionSize.x, nowPosition.y - sectionSize.y, 0);
                 }
                 break;
-            case Directon.DOWN:
+            case Direction.DOWN:
                 if (addCoordinate((int)nowIndex.x, (int)nowIndex.y - 1))
                 {
                     _result = new Vector3(nowPosition.x, nowPosition.y - sectionSize.y, 0);
                     GameManager.Instance.addGenerateCount(2, 1); // 각 방향별 생성 갯수
                 }
                 break;
-            case Directon.DOWNLEFT:
+            case Direction.DOWNLEFT:
                 if (addCoordinate((int)nowIndex.x - 1, (int)nowIndex.y - 1))
                 {
                     _result = new Vector3(nowPosition.x - sectionSize.x, nowPosition.y - sectionSize.y, 0);
                 }
                 break;
-            case Directon.LEFT:
+            case Direction.LEFT:
                 if (addCoordinate((int)nowIndex.x - 1, (int)nowIndex.y))
                 {
                     _result = new Vector3(nowPosition.x - sectionSize.x, nowPosition.y, 0);

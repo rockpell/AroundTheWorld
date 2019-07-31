@@ -1,2 +1,2 @@
-﻿public enum Directon {NONE, UPLEFT, UP, UPRIGHT, RIGHT, DOWNRIGHT, DOWN, DOWNLEFT, LEFT}
+﻿public enum Direction {NONE, UPLEFT, UP, UPRIGHT, RIGHT, DOWNRIGHT, DOWN, DOWNLEFT, LEFT}
 public enum WindSpeed { NORMAL, MIDDLE, STRONG}
