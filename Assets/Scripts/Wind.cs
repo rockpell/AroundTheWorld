@@ -20,7 +20,7 @@ public class Wind : MonoBehaviour
     [SerializeField] private GameObject typoon;
     [SerializeField] private MapSectionDetector mapSectionDetector;
 
-    [SerializeField] private UnityEngine.UI.Text windDirectionText;
+    [SerializeField] private GameObject windDirectionImage;
     [SerializeField] private UnityEngine.UI.Text windSpeedText;
 
     void Start()
@@ -160,8 +160,8 @@ public class Wind : MonoBehaviour
             default:
                 break;
         }
-        windDirectionText.text = windDirection.ToString();
         windSpeedText.text = windSpeed.ToString();
+        windDirectionImage.transform.rotation = Quaternion.Euler(0, 0, windDirection);
     }
 
     public float WindDirection
