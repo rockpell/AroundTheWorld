@@ -4,12 +4,10 @@ using UnityEngine;
 
 public class MapSectionDetector : MonoBehaviour
 {
-    [SerializeField] private Vector2 nowSectionIndex;
-    private Vector3 nowSectionPosition;
+    [SerializeField] private Vector2 nowSectionIndex; // MapGenerator에서 값을 받아온다.
+    private Vector3 nowSectionPosition; // MapGenerator에서 값을 받아온다.
+    private Vector2 sectionSize; // MapGenerator에서 값을 받아온다.
 
-    private Vector2 sectionSize;
-
-    // Start is called before the first frame update
     void Start()
     {
         
@@ -23,6 +21,8 @@ public class MapSectionDetector : MonoBehaviour
 
     public Directon checkMoveOn()
     {
+        // transform.position과 현재 위치한 Section의 경계 위치를 비교하여 다른 Section으로 이동하였다면
+        // 기존 Section을 기준으로 이동한 Section의 방향을 반환한다.
         Directon _directon = Directon.NONE;
 
         if (transform.position.x < nowSectionPosition.x - (sectionSize.x/2) ) // 왼쪽 경계선
@@ -47,6 +47,7 @@ public class MapSectionDetector : MonoBehaviour
 
     public Vector3 getPlayerAroundSectionPosition(Directon directon)
     {
+        // 플레이어 현재 위치를 기준으로 매개변수(방향) 값에 따라 위치한 Section의 위치값을 반환한다.
         Vector3 _result = Vector3.zero;
 
         switch (directon)
