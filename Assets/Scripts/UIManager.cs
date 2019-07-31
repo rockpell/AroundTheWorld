@@ -9,6 +9,9 @@ public class UIManager : MonoBehaviour
     [SerializeField] private GameObject eventMenu;
     [SerializeField] private GameObject selectMenu;
 
+    [SerializeField] private GameObject[] crews;
+    [SerializeField] private GameObject crewHighlight;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -23,11 +26,11 @@ public class UIManager : MonoBehaviour
 
     public void outrangeClick()
     {
-        Debug.Log("out!");
         selectMenu.SetActive(false);
+        hideCrewHighlight();
     }
 
-    public void showSelectMenu()
+    public void showSelectMenu(int index)
     {
         Vector2 _size = selectMenu.GetComponent<RectTransform>().sizeDelta;
 
@@ -37,5 +40,26 @@ public class UIManager : MonoBehaviour
             Input.mousePosition.y * scaler.referenceResolution.y / Screen.height - scaler.referenceResolution.y / 2 + _size.y/2);
 
         selectMenu.SetActive(true);
+        showCrewHighlight(index);
+    }
+
+    private void showCrewHighlight(int index)
+    {
+        if(crews[index] != null)
+        {
+            if(crewHighlight != null)
+            {
+                crewHighlight.transform.position = crews[index].transform.position;
+                crewHighlight.SetActive(true);
+            }
+        }
+    }
+
+    private void hideCrewHighlight()
+    {
+        if (crewHighlight != null)
+        {
+            crewHighlight.SetActive(false);
+        }
     }
 }
