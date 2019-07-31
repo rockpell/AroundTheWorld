@@ -4,18 +4,24 @@ using UnityEngine;
 
 public class MapGenerator : MonoBehaviour
 {
-    [SerializeField] private MapSectionDetector detector;
+    [SerializeField] private MapSectionDetector detector = null;
 
-    [SerializeField] private GameObject startSection;
-    [SerializeField] private GameObject endSection;
-    [SerializeField] private GameObject[] middleSection;
+    [SerializeField] private GameObject startSection = null;
+    [SerializeField] private GameObject endSection = null;
+    [SerializeField] private GameObject[] middleSection = null;
 
-    [SerializeField] private GameObject startPoint;
+    [SerializeField] private GameObject startPoint = null;
 
-    [SerializeField] private Vector3 zeroPosition;
-    [SerializeField] private Vector2 sectionSize;
+    [SerializeField] private Vector3 zeroPosition = Vector3.zero;
+    [SerializeField] private Vector2 sectionSize = Vector2.zero;
+
+    [SerializeField] private int endGenerateCount = 3;
 
     private Dictionary<int, List<int>> coordinateRecords;
+
+    private int[] generateCount = new int[4]; // 각 방향 생성 개수, 위쪽 오른쪽 아래쪽 왼쪽 순서
+
+    private bool isEndGame = false;
 
     void Start()
     {
@@ -87,7 +93,6 @@ public class MapGenerator : MonoBehaviour
     private void firstCreateSections()
     {
         // x증가 오른쪽, y증가 위쪽
-
         for(int i = 1; i < 9; i++)
         {
             createSection((Directon)i, detector.NowSectionIndex, detector.NowSectionPosition);
@@ -162,9 +167,20 @@ public class MapGenerator : MonoBehaviour
 
         if (_targetPosition != Vector3.zero)
         {
-            Instantiate(randMiddleSection(), _targetPosition, Quaternion.identity);
+            if(!isEndGame && (generateCount[0] > endGenerateCount || generateCount[1] > endGenerateCount ||
+                generateCount[2] > endGenerateCount || generateCount[3] > endGenerateCount))
+            {
+                isEndGame = true;
+                Instantiate(endSection, _targetPosition, Quaternion.identity);
+            }
+            else
+            {
+                Instantiate(randMiddleSection(), _targetPosition, Quaternion.identity);
+            }
+            
         }
     }
+
 
     private GameObject randMiddleSection()
     {
@@ -189,6 +205,7 @@ public class MapGenerator : MonoBehaviour
                 if (addCoordinate((int)nowIndex.x, (int)nowIndex.y + 1))
                 {
                     _result = new Vector3(nowPosition.x, nowPosition.y + sectionSize.y, 0);
+                    ++generateCount[0]; // 각 방향별 생성 갯수
                 }
                 break;
             case Directon.UPRIGHT:
@@ -201,6 +218,7 @@ public class MapGenerator : MonoBehaviour
                 if (addCoordinate((int)nowIndex.x + 1, (int)nowIndex.y))
                 {
                     _result = new Vector3(nowPosition.x + sectionSize.x, nowPosition.y, 0);
+                    ++generateCount[1]; // 각 방향별 생성 갯수
                 }
                 break;
             case Directon.DOWNRIGHT:
@@ -213,6 +231,7 @@ public class MapGenerator : MonoBehaviour
                 if (addCoordinate((int)nowIndex.x, (int)nowIndex.y - 1))
                 {
                     _result = new Vector3(nowPosition.x, nowPosition.y - sectionSize.y, 0);
+                    ++generateCount[2]; // 각 방향별 생성 갯수
                 }
                 break;
             case Directon.DOWNLEFT:
@@ -225,6 +244,7 @@ public class MapGenerator : MonoBehaviour
                 if (addCoordinate((int)nowIndex.x - 1, (int)nowIndex.y))
                 {
                     _result = new Vector3(nowPosition.x - sectionSize.x, nowPosition.y, 0);
+                    ++generateCount[3]; // 각 방향별 생성 갯수
                 }
                 break;
         }
