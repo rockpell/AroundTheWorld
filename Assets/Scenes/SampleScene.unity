@@ -1828,6 +1828,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c016fcf58eac8fa4189e1eac7b779543, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  myCanvas: {fileID: 1767801607}
   eventMenu: {fileID: 48796821}
   selectMenu: {fileID: 740219761}
 --- !u!4 &994440439
