@@ -25,6 +25,7 @@ public class TypoonCollide : MonoBehaviour
         {
             wind.RefreshTime = wind.OriginRefreshTime / 2;
             wind.IsTypoon = true;
+            wind.RefreshWind();
         }
     }
     public void OnTriggerStay2D(Collider2D collision)
@@ -66,6 +67,7 @@ public class TypoonCollide : MonoBehaviour
         Debug.Log("Trigger Exit");
         wind.RefreshTime = wind.OriginRefreshTime;
         wind.IsTypoon = false;
+        wind.RefreshWind();
     }
     void Update()
     {

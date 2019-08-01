@@ -118,10 +118,12 @@ public class Sail : MonoBehaviour, IShipModule
     }
     private void sailDown()
     {
+        isSailDown = true;
         Debug.Log("돛 내림!");
     }
     private void sailUp()
     {
+        isSailDown = false;
         Debug.Log("돛 올림!");
     }
     //이거 호출되는거면 그냥 내구도 감소시켜주면 됨

@@ -87,37 +87,37 @@ public class Wind : MonoBehaviour
                         break;
                 case 1:
                     if (directionDetect(origin, Direction.UP) == Direction.UP)
-                        return Direction.UPLEFT;
+                        return Direction.UP;
                     else
                         break;
                 case 2:
                     if (directionDetect(origin, Direction.UPRIGHT) == Direction.UPRIGHT)
-                        return Direction.UPLEFT;
+                        return Direction.UPRIGHT;
                     else
                         break;
                 case 3:
                     if (directionDetect(origin, Direction.RIGHT) == Direction.RIGHT)
-                        return Direction.UPLEFT;
+                        return Direction.RIGHT;
                     else
                         break;
                 case 4:
                     if (directionDetect(origin, Direction.DOWNRIGHT) == Direction.DOWNRIGHT)
-                        return Direction.UPLEFT;
+                        return Direction.DOWNRIGHT;
                     else
                         break;
                 case 5:
                     if (directionDetect(origin, Direction.DOWN) == Direction.DOWN)
-                        return Direction.UPLEFT;
+                        return Direction.DOWN;
                     else
                         break;
                 case 6:
                     if (directionDetect(origin, Direction.DOWNLEFT) == Direction.DOWNLEFT)
-                        return Direction.UPLEFT;
+                        return Direction.DOWNLEFT;
                     else
                         break;
                 case 7:
                     if (directionDetect(origin, Direction.LEFT) == Direction.LEFT)
-                        return Direction.UPLEFT;
+                        return Direction.LEFT;
                     else
                         break;
                 default:
@@ -179,4 +179,8 @@ public class Wind : MonoBehaviour
     { get { return originRefreshTime; } }
     public bool IsTypoon
     { set { isTypoon = value; } }
+    public void RefreshWind()
+    {
+        refreshWind();
+    }
 }
