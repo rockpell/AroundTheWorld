@@ -9,6 +9,7 @@ public class Sail : MonoBehaviour, IShipModule
     private float originalDegree;
     [SerializeField] private float sailDegree;
     [SerializeField] private GameObject sailModel;
+    [SerializeField] private Wind wind;
 
     //뭐가 될진 모르지만 일단 선원을 할당할 코드
     [SerializeField] private GameObject crew;
@@ -28,6 +29,7 @@ public class Sail : MonoBehaviour, IShipModule
     void Update()
     {
         checkKeyInput();
+        SailDegreeDecision();
     }
 
     private void checkKeyInput()
@@ -140,6 +142,16 @@ public class Sail : MonoBehaviour, IShipModule
         }
     }
 
+    private void SailDegreeDecision()
+    {
+        float _windDegree = wind.WindDirection;
+        if (sailDegree < 0)
+            sailDegree += 360;
+        if((sailDegree > (_windDegree+135)%360) && (sailDegree < (_windDegree + 225)%360))
+        {
+            Debug.Log("It is No-Go Zone");
+        }
+    }
     public void repairModule(int repairAmount)
     {
         durability += repairAmount;
