@@ -9,8 +9,10 @@ public class UIManager : MonoBehaviour
     [SerializeField] private GameObject eventMenu;
     [SerializeField] private GameObject selectMenu;
 
-    [SerializeField] private GameObject[] crews;
+    [SerializeField] private CrewUI[] crewUIs;
     [SerializeField] private GameObject crewHighlight;
+
+    private int selectCrewIndex = -1; // 선택된 선원 번호(왼쪽부터 0번)
 
     // Start is called before the first frame update
     void Start()
@@ -26,7 +28,7 @@ public class UIManager : MonoBehaviour
 
     public void outrangeClick()
     {
-        selectMenu.SetActive(false);
+        hideSelectMenu();
         hideCrewHighlight();
     }
 
@@ -41,15 +43,22 @@ public class UIManager : MonoBehaviour
 
         selectMenu.SetActive(true);
         showCrewHighlight(index);
+
+        selectCrewIndex = index;
+    }
+
+    private void hideSelectMenu()
+    {
+        selectMenu.SetActive(false);
     }
 
     private void showCrewHighlight(int index)
     {
-        if(crews[index] != null)
+        if(crewUIs[index] != null)
         {
             if(crewHighlight != null)
             {
-                crewHighlight.transform.position = crews[index].transform.position;
+                crewHighlight.transform.position = crewUIs[index].transform.position;
                 crewHighlight.SetActive(true);
             }
         }
@@ -61,5 +70,45 @@ public class UIManager : MonoBehaviour
         {
             crewHighlight.SetActive(false);
         }
+    }
+
+    public void fishingButton()
+    {
+        crewUIs[selectCrewIndex].setNowActMark("낚시");
+        hideSelectMenu();
+    }
+
+    public void repairButton()
+    {
+        crewUIs[selectCrewIndex].setNowActMark("수리");
+        hideSelectMenu();
+    }
+
+    public void eatButton()
+    {
+        crewUIs[selectCrewIndex].setNowActMark("식사");
+        hideSelectMenu();
+    }
+
+    public void sleepButton()
+    {
+        crewUIs[selectCrewIndex].setNowActMark("수면");
+        hideSelectMenu();
+    }
+
+    public void takeControlButton()
+    {
+        appointTakeControlCrew();
+        hideSelectMenu();
+    }
+
+    private void appointTakeControlCrew()
+    {
+        for(int i = 0; i < crewUIs.Length; i++)
+        {
+            if (i == selectCrewIndex) continue;
+            crewUIs[i].toggleTakeControlMark(false);
+        }
+        crewUIs[selectCrewIndex].toggleTakeControlMark(true);
     }
 }
