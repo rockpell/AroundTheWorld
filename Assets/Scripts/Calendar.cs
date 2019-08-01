@@ -3,12 +3,25 @@
     public int year = 2019;
     public int month = 1;
     public int day = 1;
+    public int time = 0;
 
 
-    public void nextDay()
+    public void nextTime()
     {
-        ++day;
-        day = checkMonth(month, day);
+        ++time;
+        time = checkday(month, day, time);
+    }
+    
+
+    private int checkday(int month, int day, int time)
+    {
+        if(time  == 24)
+        {
+            ++day;
+            day = checkMonth(month, day);
+            time = 0;
+        }
+        return time;
     }
 
     private int checkMonth(int month, int day)
