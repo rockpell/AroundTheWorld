@@ -199,13 +199,18 @@ public class Crewman : MonoBehaviour
         return true;
     }
 
-    public bool? whoDrive()
+    public int whoWork()
+    {
+        return 
+    }
+
+    public int? whoDrive()
     {
         for(int i = 0; i < 5; i++)
         {
             if (crewman[i].getDrive())
             {
-            return true;
+            return i;
 
             }
             if (crewman[i] == null)
