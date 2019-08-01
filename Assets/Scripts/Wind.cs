@@ -8,7 +8,7 @@ public class Wind : MonoBehaviour
     [SerializeField] private float windDirection;
     [SerializeField] private WindSpeed windSpeed;
 
-    [SerializeField] private float OriginRefreshTime;
+    [SerializeField] private float originRefreshTime;
     [SerializeField] private float typoonProbability;
     [SerializeField] private float typoonSpeed;
     private float refreshTime;
@@ -23,9 +23,11 @@ public class Wind : MonoBehaviour
     [SerializeField] private GameObject windDirectionImage;
     [SerializeField] private UnityEngine.UI.Text windSpeedText;
 
+    private bool isTypoon;
+
     void Start()
     {
-        refreshTime = OriginRefreshTime;
+        refreshTime = originRefreshTime;
         refreshWind();
     }
 
@@ -143,6 +145,8 @@ public class Wind : MonoBehaviour
     {
         windDirection = Random.Range(0, 360);
         int _windSpeed = Random.Range(0, 3);
+        if (isTypoon)
+            _windSpeed = 3;
         switch(_windSpeed)
         {
             case 0:
@@ -157,7 +161,8 @@ public class Wind : MonoBehaviour
                 //세기 3정도
                 windSpeed = global::WindSpeed.STRONG;
                 break;
-            default:
+            case 3:
+                windSpeed = global::WindSpeed.TYPOON;
                 break;
         }
         windSpeedText.text = windSpeed.ToString();
@@ -168,4 +173,10 @@ public class Wind : MonoBehaviour
     { get { return windDirection; } }
     public WindSpeed WindSpeed
     { get { return windSpeed; } }
+    public float RefreshTime
+    { set { refreshTime = value; } }
+    public float OriginRefreshTime
+    { get { return originRefreshTime; } }
+    public bool IsTypoon
+    { set { isTypoon = value; } }
 }
