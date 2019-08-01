@@ -111,4 +111,9 @@ public class UIManager : MonoBehaviour
         }
         crewUIs[selectCrewIndex].toggleTakeControlMark(true);
     }
+
+    public void hideNowActMark(int crewIndex) // 해당 선원의 행동 표시를 지우는 함수
+    {
+        crewUIs[crewIndex].hideNowActMark();
+    }
 }
