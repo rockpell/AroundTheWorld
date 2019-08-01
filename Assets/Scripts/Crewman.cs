@@ -198,11 +198,7 @@ public class Crewman : MonoBehaviour
         }
         return true;
     }
-
-    public int whoWork()
-    {
-        return 
-    }
+    
 
     public int? whoDrive()
     {

@@ -11,7 +11,8 @@ public class MainMenue : MonoBehaviour
     {
         bar.onClick.AddListener(BarOnClick);
         wharf.onClick.AddListener(WharfOnClick);
-
+        dock.onClick.AddListener(DockOnClick);
+        market.onClick.AddListener(MarketOnClick);
     }
 
     // Update is called once per frame
