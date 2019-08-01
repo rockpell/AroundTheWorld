@@ -142,4 +142,6 @@ public class Sail : MonoBehaviour, IShipModule
     {
         durability += repairAmount;
     }
+    public bool IsSailDown
+    { get { return isSailDown; } }
 }

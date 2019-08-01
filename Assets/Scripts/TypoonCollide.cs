@@ -38,14 +38,20 @@ public class TypoonCollide : MonoBehaviour
         if(currentTimes[0] > decisionTimes[0])
         {
             //돛을 내렸는지 판정
-            sail.decreaseDurability(DurabilityEvent.INSIDETYPOON_SAIL);
+            if(sail.IsSailDown == false)
+            {
+                sail.decreaseDurability(DurabilityEvent.INSIDETYPOON_SAIL);
+            }
             currentTimes[0] = 0;
         }
         //1초당 1감소, 돛 내렸으면 감소 없음
         if (currentTimes[1] > decisionTimes[1])
         {
             //돛 방향이 지금 방향이랑 비교해서 역풍인지
-            sail.decreaseDurability(DurabilityEvent.INSIDETYPOON_CONTRARYWIND_SAIL);
+            if(sail.IsSailDown == false)
+            {
+                sail.decreaseDurability(DurabilityEvent.INSIDETYPOON_CONTRARYWIND_SAIL);
+            }
             currentTimes[1] = 0;
         }
         //3초당 1감소
