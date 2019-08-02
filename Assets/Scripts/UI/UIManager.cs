@@ -12,6 +12,10 @@ public class UIManager : MonoBehaviour
     [SerializeField] private GameObject crewHighlight;
     [SerializeField] private EtcStatusUI etcStatusUI;
 
+    [SerializeField] private Text calendarDate;
+    [SerializeField] private Text calendarTime;
+    [SerializeField] private Text calendarDDay;
+
     [SerializeField] private Sprite captineSprite; // 선장
     [SerializeField] private Sprite engineerSprite; // 엔지니어
     [SerializeField] private Sprite mateSprite; // 항해사
@@ -22,7 +26,7 @@ public class UIManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+        GameManager.Instance.gameStart(this);
     }
 
     // Update is called once per frame
@@ -186,5 +190,12 @@ public class UIManager : MonoBehaviour
         }
 
         return null;
+    }
+
+    public void refreshCalendar(Calendar calendar)
+    {
+        calendarDate.text = calendar.year + "년 " + calendar.month + "월 " + calendar.day + "일";
+        calendarTime.text = calendar.time + "시";
+        calendarDDay.text = "D+";
     }
 }

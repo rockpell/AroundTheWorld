@@ -14,10 +14,19 @@ public class GameManager : MonoBehaviour
     private int nowMoney = 0; // 현재 자금
     private int food = 0; // 식량
 
+    private bool isGameStart = false;
+
+    private UIManager uiManager;
+        
+    private Calendar calendar;
+
     private FishingRod nowFishingRod;
     // 낚시대
     // 요트
     // 선원
+
+    private float inGameStandardTime = 3; // 현실 시간 기준 게임 내의 한시간
+    private float sumDeltaTime;
 
     private void Awake()
     {
@@ -32,12 +41,29 @@ public class GameManager : MonoBehaviour
     void Start()
     {
         nowMoney = initMoney;
+        calendar = new Calendar();
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+        if (isGameStart)
+        {
+            sumDeltaTime += Time.deltaTime;
+            if (sumDeltaTime > inGameStandardTime)
+            {
+                sumDeltaTime -= inGameStandardTime;
+                calendar.nextTime();
+                uiManager.refreshCalendar(calendar);
+            }
+        }
+    }
+
+    public void gameStart(UIManager uiManager)
+    {
+        this.uiManager = uiManager;
+        isGameStart = true;
+        uiManager.refreshCalendar(calendar); // 초기 값 보여주기
     }
 
     public int getGenerateCount(int index)
