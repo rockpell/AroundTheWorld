@@ -6,6 +6,21 @@ using UnityEngine;
 
 public class CrewmanManager : MonoBehaviour
 {
+    private static CrewmanManager instance;
+    public static  CrewmanManager Instance { get { return instance; } }
+
+
+
+
+    private void Awake()
+    {
+        if (instance == null)
+            instance = this;
+        else
+            Destroy(this.gameObject);
+        DontDestroyOnLoad(this.gameObject);
+    }
+
     List<Crewman> crewmanList = new List<Crewman>();
 
     // Start is called before the first frame update
@@ -25,18 +40,16 @@ public class CrewmanManager : MonoBehaviour
         if (crewmanList.Count == 0)
         {
             crewmanList.Add(new Captain());
-            crewmanList[0].setindex(crewmanList.Count);
             return true;
         }
         return false;
     }
 
-    public bool makeEnginieer(int type)//엔지니어 생성 단,선원이 4명 이하일때
+    public bool makeEngineer(int type)//엔지니어 생성 단,선원이 4명 이하일때
     {
         if(crewmanList.Count < 4)
         {
-            crewmanList.Add(new Enginieer());
-            crewmanList[crewmanList.Count + 1].setindex(crewmanList.Count+1);
+            crewmanList.Add(new Engineer());
             return true;
         }
         return false;
@@ -47,7 +60,6 @@ public class CrewmanManager : MonoBehaviour
         if (crewmanList.Count < 4)
         {
             crewmanList.Add(new Mate());
-            crewmanList[crewmanList.Count + 1].setindex(crewmanList.Count + 1);
             return true;
         }
         return false;
@@ -58,13 +70,16 @@ public class CrewmanManager : MonoBehaviour
         if (crewmanList.Count < 4)
         {
             crewmanList.Add(new Angler());
-            crewmanList[crewmanList.Count + 1].setindex(crewmanList.Count + 1);
             return true;
         }
         return false;
 
     }
     
+    public Crewman callcrewman()
+    {
+        return null;
+    }
 
     public Crewman whoDrive()// 선원중 누가 항해를 하는지
     {
@@ -92,6 +107,9 @@ public class CrewmanManager : MonoBehaviour
             return true;
         }
         return false;
+    }
+    public void timeCount(Crewman crewman, int time)
+    {
     }
 
 }

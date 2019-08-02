@@ -176,7 +176,7 @@ public class UIManager : MonoBehaviour
         {
             return captineSprite;
         }
-        else if(crewData is Enginieer)
+        else if(crewData is Engineer)
         {
             return engineerSprite;
         }

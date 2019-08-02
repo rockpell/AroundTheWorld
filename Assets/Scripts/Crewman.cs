@@ -6,7 +6,6 @@
     private int repair;//수리할때 필요한 행동력
     private int sailing_speed;//항해속도
     private int full;//포만감
-    private int index;//선원의 순서
     private Acting acting_type;//행동종류
     private bool Fishing;//낚시유무
     private bool Repair;//수리유무
@@ -18,7 +17,6 @@
     public Crewman(int type)
     {
         this.type = type;
-        this.index = 0;
         behavior = 10;
         fishing = 10;
         repair = 3;
@@ -35,15 +33,6 @@
     public int gettype()
     {
         return type;
-    }
-
-    public void setindex(int index)
-    {
-        this.index = index;
-    }
-    public int getindex()
-    {
-        return index;
     }
 
 
@@ -156,9 +145,9 @@ public class Captain : Crewman//선장 클래스
     }
 }
 
-public class Enginieer : Crewman//엔지니어 클래스
+public class Engineer : Crewman//엔지니어 클래스
 {
-    public Enginieer() : base(1)
+    public Engineer() : base(1)
     {
         setAblity(10, 10, 2, 0);
     }
