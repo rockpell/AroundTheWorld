@@ -5,6 +5,7 @@ using UnityEngine.UI;
 
 public class CrewUI : MonoBehaviour
 {
+    [SerializeField] private Image crewImage;
     [SerializeField] private GameObject takeControlMark;
     [SerializeField] private GameObject nowActMark;
 
@@ -17,6 +18,11 @@ public class CrewUI : MonoBehaviour
     void Update()
     {
         
+    }
+
+    public void chaneCrewImage(Sprite sprite)
+    {
+        crewImage.sprite = sprite;
     }
 
     public void toggleTakeControlMark(bool value)

@@ -8,7 +8,10 @@ public class MapGenerator : MonoBehaviour
 
     [SerializeField] private GameObject startSection = null;
     [SerializeField] private GameObject endSection = null;
+
     [SerializeField] private GameObject[] middleSection = null;
+    [Tooltip("모든 값이 합쳐서 100이 되도록 설정해야함")]
+    [SerializeField] private int[] middleSectionProbability;
 
     [SerializeField] private GameObject startPoint = null;
 
@@ -183,9 +186,45 @@ public class MapGenerator : MonoBehaviour
 
     private GameObject randMiddleSection()
     {
-        int _index = Random.Range(0, middleSection.Length);
+        int _index = randTable();
+
+        if (_index == -1)
+            Debug.LogError("randMiddleSection error!");
+
+        Debug.Log("_index: " + _index + "  name: " + middleSection[_index].ToString());
 
         return middleSection[_index];
+    }
+
+    private int randTable()
+    {
+        int _value = Random.Range(1, 100);
+        int _sumProbability = 0;
+
+        if (middleSectionProbability.Length != middleSection.Length)
+            Debug.LogError("middleSectionProbability과 middleSection의 길이가 다릅니다!");
+
+        for (int i = 0; i < middleSectionProbability.Length; i++)
+        {
+            _sumProbability += middleSectionProbability[i];
+        }
+
+        if (_sumProbability != 100)
+            Debug.LogError("middleSectionProbability 값의 합이 100이 아닙니다!");
+
+        _sumProbability = 0;
+
+        for (int i = 0; i < middleSectionProbability.Length; i++)
+        {
+            _sumProbability += middleSectionProbability[i];
+
+            if(_value <= _sumProbability)
+            {
+                return i;
+            }
+        }
+
+        return -1;
     }
 
     private Vector3 getCreateSectionPosition(Direction directon, Vector2 nowIndex, Vector3 nowPosition)
