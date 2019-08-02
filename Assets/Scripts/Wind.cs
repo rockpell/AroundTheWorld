@@ -171,8 +171,29 @@ public class Wind : MonoBehaviour
 
     public float WindDirection
     { get { return windDirection; } }
-    public WindSpeed WindSpeed
-    { get { return windSpeed; } }
+    public float WindSpeed
+    {
+        get
+        {
+            float _windSpeed = 0.0f;
+            switch(windSpeed)
+            {
+                case global::WindSpeed.NORMAL:
+                    _windSpeed = 3.0f;
+                    break;
+                case global::WindSpeed.MIDDLE:
+                    _windSpeed = 6.0f;
+                    break;
+                case global::WindSpeed.STRONG:
+                    _windSpeed = 9.0f;
+                    break;
+                case global::WindSpeed.TYPOON:
+                    _windSpeed = 18.0f;
+                    break;
+            }
+            return _windSpeed;
+        }
+ }
     public float RefreshTime
     { set { refreshTime = value; } }
     public float OriginRefreshTime

@@ -5,11 +5,17 @@ using UnityEngine;
 public class Sail : MonoBehaviour, IShipModule
 {
     [SerializeField] private int durability;
-    private float speed;
+
+    private float currentSpeed;
+    [SerializeField] private float decisionSpeed;
+
     private float originalDegree;
     [SerializeField] private float sailDegree;
     [SerializeField] private GameObject sailModel;
+    [SerializeField] private GameObject shipModel;
     [SerializeField] private Wind wind;
+
+    [SerializeField] private Sprite[] sailImage;
 
     //뭐가 될진 모르지만 일단 선원을 할당할 코드
     [SerializeField] private GameObject crew;
@@ -23,6 +29,7 @@ public class Sail : MonoBehaviour, IShipModule
     void Start()
     {
         isControl = true;
+        sailDegree = shipModel.transform.rotation.eulerAngles.z;
     }
 
     // Update is called once per frame
@@ -54,7 +61,7 @@ public class Sail : MonoBehaviour, IShipModule
                     if ((sailDegree - originalDegree) % 360 < 45)
                     {
                         sailDegree += sailControlSpeed;
-                        sailModel.transform.rotation = Quaternion.Euler(0, 0, sailDegree);
+                        shipModel.transform.rotation = Quaternion.Euler(0, 0, sailDegree);
                         Debug.Log("Pushing Left Key");
                     }
                     else
@@ -88,7 +95,7 @@ public class Sail : MonoBehaviour, IShipModule
                     {
                         sailDegree -= sailControlSpeed;
                         Debug.Log("Pushing Right Key");
-                        sailModel.transform.rotation = Quaternion.Euler(0, 0, sailDegree);
+                        shipModel.transform.rotation = Quaternion.Euler(0, 0, sailDegree);
                     }
                     else
                         Debug.Log("limited");
@@ -108,7 +115,6 @@ public class Sail : MonoBehaviour, IShipModule
                 if(isSailDown == false)
                 {
                     sailDown();
-
                 }
                 else
                 {
@@ -118,14 +124,24 @@ public class Sail : MonoBehaviour, IShipModule
             
         }
     }
+
+    private void sailSpeedDecision()
+    {
+    }
     private void sailDown()
     {
         isSailDown = true;
+        if(sailImage.Length > 2)
+        {
+            sailModel.GetComponent<SpriteRenderer>().sprite = sailImage[0];
+        }
         Debug.Log("돛 내림!");
     }
     private void sailUp()
     {
         isSailDown = false;
+        if (sailImage.Length > 2)
+            sailModel.GetComponent<SpriteRenderer>().sprite = sailImage[1];
         Debug.Log("돛 올림!");
     }
     //이거 호출되는거면 그냥 내구도 감소시켜주면 됨
@@ -147,10 +163,22 @@ public class Sail : MonoBehaviour, IShipModule
         float _windDegree = wind.WindDirection;
         if (sailDegree < 0)
             sailDegree += 360;
-        if((sailDegree > (_windDegree+135)%360) && (sailDegree < (_windDegree + 225)%360))
+        if ((sailDegree > (_windDegree + 135) % 360) && (sailDegree < (_windDegree + 225) % 360))
         {
-            Debug.Log("It is No-Go Zone");
+            Debug.Log("It is No-Go zone");
+            decisionSpeed = 0;
         }
+        else
+        {
+            float _degree = sailDegree - _windDegree;
+            if (_degree < 0)
+                _degree *= -1;
+
+            if (_degree < 135)
+                decisionSpeed = Mathf.Lerp(wind.WindSpeed, 0, _degree / 135);
+            else if (_degree > 225)
+                decisionSpeed = Mathf.Lerp(0, wind.WindSpeed, (_degree - 225) / 135);
+        } 
     }
     public void repairModule(int repairAmount)
     {
