@@ -8,9 +8,10 @@ public class Sail : MonoBehaviour, IShipModule
 
     private float currentSpeed;
     [SerializeField] private float decisionSpeed;
+    [SerializeField] private float speedValue;
 
     private float originalDegree;
-    [SerializeField] private float sailDegree;
+    private float shipDegree;
     [SerializeField] private GameObject sailModel;
     [SerializeField] private GameObject shipModel;
     [SerializeField] private Wind wind;
@@ -29,14 +30,16 @@ public class Sail : MonoBehaviour, IShipModule
     void Start()
     {
         isControl = true;
-        sailDegree = shipModel.transform.rotation.eulerAngles.z;
+        isSailDown = true;
+        shipDegree = shipModel.transform.rotation.eulerAngles.z;
     }
 
     // Update is called once per frame
     void Update()
     {
         checkKeyInput();
-        SailDegreeDecision();
+        sailDegreeDecision();
+        sailSpeedControl();
     }
 
     private void checkKeyInput()
@@ -51,17 +54,17 @@ public class Sail : MonoBehaviour, IShipModule
                     isControl = false;
                     isRight = false;
                     Debug.Log("Push Down Left Key");
-                    originalDegree = sailDegree;
+                    originalDegree = shipDegree;
                 }
             }
             if(Input.GetKey(KeyCode.A))
             {
                 if((isControl == false)&&(isRight == false))
                 {
-                    if ((sailDegree - originalDegree) % 360 < 45)
+                    if ((shipDegree - originalDegree) % 360 < 45)
                     {
-                        sailDegree += sailControlSpeed;
-                        shipModel.transform.rotation = Quaternion.Euler(0, 0, sailDegree);
+                        shipDegree += sailControlSpeed;
+                        shipModel.transform.rotation = Quaternion.Euler(0, 0, shipDegree);
                         Debug.Log("Pushing Left Key");
                     }
                     else
@@ -72,7 +75,7 @@ public class Sail : MonoBehaviour, IShipModule
             {
                 if ((isControl == false) && (isRight == false))
                 {
-                    sailDegree = sailDegree % 360;
+                    shipDegree = shipDegree % 360;
                     isControl = true;
                     Debug.Log("Push Up Left Key");
                 }
@@ -84,18 +87,18 @@ public class Sail : MonoBehaviour, IShipModule
                     isControl = false;
                     isRight = true;
                     Debug.Log("Push Down Right Key");
-                    originalDegree = sailDegree;
+                    originalDegree = shipDegree;
                 }
             }
             if (Input.GetKey(KeyCode.D))
             {
                 if ((isControl == false) && (isRight == true))
                 {
-                    if ((originalDegree - sailDegree) % 360 < 45)
+                    if ((originalDegree - shipDegree) % 360 < 45)
                     {
-                        sailDegree -= sailControlSpeed;
+                        shipDegree -= sailControlSpeed;
                         Debug.Log("Pushing Right Key");
-                        shipModel.transform.rotation = Quaternion.Euler(0, 0, sailDegree);
+                        shipModel.transform.rotation = Quaternion.Euler(0, 0, shipDegree);
                     }
                     else
                         Debug.Log("limited");
@@ -105,7 +108,7 @@ public class Sail : MonoBehaviour, IShipModule
             {
                 if ((isControl == false) && (isRight == true))
                 {
-                    sailDegree = sailDegree % 360;
+                    shipDegree = shipDegree % 360;
                     isControl = true;
                     Debug.Log("Push Up Right Key");
                 }
@@ -158,19 +161,19 @@ public class Sail : MonoBehaviour, IShipModule
         }
     }
 
-    private void SailDegreeDecision()
+    private void sailDegreeDecision()
     {
         float _windDegree = wind.WindDirection;
-        if (sailDegree < 0)
-            sailDegree += 360;
-        if ((sailDegree > (_windDegree + 135) % 360) && (sailDegree < (_windDegree + 225) % 360))
+        if (shipDegree < 0)
+            shipDegree += 360;
+        if ((shipDegree > (_windDegree + 135) % 360) && (shipDegree < (_windDegree + 225) % 360))
         {
             Debug.Log("It is No-Go zone");
             decisionSpeed = 0;
         }
         else
         {
-            float _degree = sailDegree - _windDegree;
+            float _degree = shipDegree - _windDegree;
             if (_degree < 0)
                 _degree *= -1;
 
@@ -178,7 +181,18 @@ public class Sail : MonoBehaviour, IShipModule
                 decisionSpeed = Mathf.Lerp(wind.WindSpeed, 0, _degree / 135);
             else if (_degree > 225)
                 decisionSpeed = Mathf.Lerp(0, wind.WindSpeed, (_degree - 225) / 135);
-        } 
+        }
+        if(isSailDown == false)
+        {
+            decisionSpeed = 0;
+        }
+    }
+
+    private void sailSpeedControl()
+    {
+        currentSpeed = Mathf.Lerp(currentSpeed, decisionSpeed, Time.deltaTime);
+        //currentSpeed를 속도로 전진한다.
+        shipModel.transform.position += currentSpeed * shipModel.transform.up * Time.deltaTime;
     }
     public void repairModule(int repairAmount)
     {
