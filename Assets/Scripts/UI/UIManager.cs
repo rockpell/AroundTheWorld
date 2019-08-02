@@ -22,7 +22,7 @@ public class UIManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-
+        
     }
 
     // Update is called once per frame
@@ -131,13 +131,13 @@ public class UIManager : MonoBehaviour
     {
         // 선원 데이터를 가져와서 UI 갱신
 
-        //crewUIs[crewIndex].setNowActMark();
-        //crewUIs[crewIndex].setActGauge();
-        //crewUIs[crewIndex].setHungerGauge();
+        //crewUIs[crewIndex].setNowActMark("행동");
+        //crewUIs[crewIndex].setActGauge(5);
+        //crewUIs[crewIndex].setHungerGauge(2);
 
-        //crewStatusUIs[selectCrewIndex].setCrewNowActText();
-        //crewStatusUIs[selectCrewIndex].setHungerText();
-        //crewStatusUIs[selectCrewIndex].setLeftActText();
+        //crewStatusUIs[crewIndex].setCrewNowActText("행동");
+        //crewStatusUIs[crewIndex].setLeftActText(10, 5);
+        //crewStatusUIs[crewIndex].setHungerText(4, 2);
     }
 
     public void initCrewUI(/*CrewmanAbilityWork[] crewData*/)
@@ -162,8 +162,8 @@ public class UIManager : MonoBehaviour
 
     public void refreshEtcUI()
     {
-        etcStatusUI.setFishingRodText(0);
-        etcStatusUI.setFoodText(0);
+        etcStatusUI.setFishingRodText(GameManager.Instance.getNowFishingRod().Durability);
+        etcStatusUI.setFoodText(GameManager.Instance.Food);
     }
 
     private Sprite getCrewImage(Crewman crewData) 

@@ -7,6 +7,9 @@ public class CrewUI : MonoBehaviour
     [SerializeField] private GameObject takeControlMark;
     [SerializeField] private GameObject nowActMark;
 
+    [SerializeField] private Slider hungerSlider;
+    [SerializeField] private Slider actSlider;
+
     void Start()
     {
         
@@ -36,11 +39,11 @@ public class CrewUI : MonoBehaviour
 
     public void setHungerGauge(int nowHunger)
     {
-
+        hungerSlider.value = nowHunger;
     }
 
     public void setActGauge(int nowAct)
     {
-
+        actSlider.value = nowAct;
     }
 }
