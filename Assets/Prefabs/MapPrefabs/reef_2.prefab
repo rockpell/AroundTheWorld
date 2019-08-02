@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 9211943178480798666}
   - component: {fileID: 9037234875113315479}
   - component: {fileID: 6242549013347755919}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: reef_2
   m_TagString: Reef
   m_Icon: {fileID: 0}
