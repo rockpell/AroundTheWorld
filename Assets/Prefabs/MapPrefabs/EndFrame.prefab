@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 597345580270320784}
   m_Layer: 0
   m_Name: point
-  m_TagString: Untagged
+  m_TagString: EndPort
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

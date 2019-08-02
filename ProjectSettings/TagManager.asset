@@ -8,6 +8,8 @@ TagManager:
   - Ship
   - Pirate
   - Island
+  - StartPort
+  - EndPort
   layers:
   - Default
   - TransparentFX
