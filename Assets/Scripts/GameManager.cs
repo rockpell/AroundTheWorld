@@ -14,6 +14,7 @@ public class GameManager : MonoBehaviour
     private int nowMoney = 0; // 현재 자금
     private int food = 0; // 식량
 
+    private FishingRod nowFishingRod;
     // 낚시대
     // 요트
     // 선원
@@ -55,6 +56,21 @@ public class GameManager : MonoBehaviour
                 generateCount[2] > endGenerateCount || generateCount[3] > endGenerateCount)
             return true;
         return false;
+    }
+
+    public void setNowFishingRod(int level)
+    {
+        switch (level)
+        {
+            case 0:
+                nowFishingRod = new FishingRodA();
+                break;
+        }
+    }
+
+    public FishingRod getNowFishingRod()
+    {
+        return nowFishingRod;
     }
 
     public int InitMoney {
