@@ -193,7 +193,9 @@ public class Wind : MonoBehaviour
             }
             return _windSpeed;
         }
- }
+    }
+    public WindSpeed WindSpeedEnumValue
+    { get { return windSpeed; } }
     public float RefreshTime
     { set { refreshTime = value; } }
     public float OriginRefreshTime

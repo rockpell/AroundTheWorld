@@ -128,9 +128,6 @@ public class Sail : MonoBehaviour, IShipModule
         }
     }
 
-    private void sailSpeedDecision()
-    {
-    }
     private void sailDown()
     {
         isSailDown = true;
@@ -169,6 +166,14 @@ public class Sail : MonoBehaviour, IShipModule
         if ((shipDegree > (_windDegree + 135) % 360) && (shipDegree < (_windDegree + 225) % 360))
         {
             Debug.Log("It is No-Go zone");
+            if(wind.WindSpeedEnumValue == WindSpeed.TYPOON)
+            {
+                decreaseDurability(DurabilityEvent.INSIDETYPOON_CONTRARYWIND_SAIL);
+            }
+            else
+            {
+                decreaseDurability(DurabilityEvent.CONTRARYWIND_SAIL);
+            }
             decisionSpeed = 0;
         }
         else
