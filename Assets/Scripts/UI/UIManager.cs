@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
 
 public class UIManager : MonoBehaviour
@@ -12,6 +10,7 @@ public class UIManager : MonoBehaviour
     [SerializeField] private CrewUI[] crewUIs;
     [SerializeField] private CrewStatusUI[] crewStatusUIs;
     [SerializeField] private GameObject crewHighlight;
+    [SerializeField] private EtcStatusUI etcStatusUI;
 
     [SerializeField] private Sprite captineSprite; // 선장
     [SerializeField] private Sprite engineerSprite; // 엔지니어
@@ -161,7 +160,13 @@ public class UIManager : MonoBehaviour
         //}
     }
 
-    private Sprite getCrewImage(CrewmanAbilityWork crewData) 
+    public void refreshEtcUI()
+    {
+        etcStatusUI.setFishingRodText(0);
+        etcStatusUI.setFoodText(0);
+    }
+
+    private Sprite getCrewImage(Crewman crewData) 
     {
         if(crewData is Captain)
         {

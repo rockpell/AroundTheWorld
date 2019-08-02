@@ -2501,6 +2501,11 @@ MonoBehaviour:
   - {fileID: 1719428324}
   - {fileID: 790121527}
   crewHighlight: {fileID: 1492987628}
+  etcStatusUI: {fileID: 1378200031}
+  captineSprite: {fileID: 0}
+  engineerSprite: {fileID: 0}
+  mateSprite: {fileID: 0}
+  anglerSprite: {fileID: 0}
 --- !u!4 &994440439
 Transform:
   m_ObjectHideFlags: 0
@@ -2987,6 +2992,7 @@ GameObject:
   - component: {fileID: 1378200028}
   - component: {fileID: 1378200030}
   - component: {fileID: 1378200029}
+  - component: {fileID: 1378200031}
   m_Layer: 5
   m_Name: EtcStatus
   m_TagString: Untagged
@@ -3052,6 +3058,20 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1378200027}
   m_CullTransparentMesh: 0
+--- !u!114 &1378200031
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1378200027}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ad5991a87873532498c6115a3cded1a6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  foodText: {fileID: 637803613}
+  fishingRodText: {fileID: 267100066}
 --- !u!1 &1390680665
 GameObject:
   m_ObjectHideFlags: 0
