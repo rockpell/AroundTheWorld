@@ -1,53 +1,58 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
-class CrewmanAbilityWork
+﻿public class Crewman//선원의 능력과 행동을 가진 클래스
 {
-    private int type;
-    private int behavior;
-    private int fishing;
-    private int repair;
-    private int sailing_speed;
-    private int food;
-    private bool Fishing;
-    private bool Repair;
-    private bool Drive;
-    private bool Sleep;
-    private bool Eat;
+    private int type;//선원의 종류 ( 0 - 선장, 1 - 엔지니어, 2 - 항해사, 3 - 강태공)
+    private int behavior;// 행동력
+    private int fishing;//낚시능력
+    private int repair;//수리할때 필요한 행동력
+    private int sailing_speed;//항해속도
+    private int full;//포만감
+    private int index;//선원의 순서
+    private Acting acting_type;//행동종류
+    private bool Fishing;//낚시유무
+    private bool Repair;//수리유무
+    private bool Drive;//항해유무
+    private bool Sleep;//잠유무
+    private bool Eat;//식사유무
 
 
-    public CrewmanAbilityWork()
+    public Crewman(int type)
     {
-        type = 0;
+        this.type = type;
+        this.index = 0;
         behavior = 10;
         fishing = 10;
         repair = 3;
         sailing_speed = 0;
-        food = 4;
+        full = 4;
         Fishing = false;
         Repair = false;
         Drive = false;
         Sleep = false;
         Eat = false;
+        acting_type = Acting.NOTHING;
     }
 
-    public void settype(int v)
-    {
-        type = v;
-    }
     public int gettype()
     {
         return type;
     }
 
-
-    public void setAblity(int v1, int v2, int v3, int v4)
+    public void setindex(int index)
     {
-        behavior = v1;
-        fishing = v2;
-        repair = v3;
-        sailing_speed = v4;
+        this.index = index;
+    }
+    public int getindex()
+    {
+        return index;
+    }
+
+
+    public void setAblity(int behavior, int fishing, int repair, int sailing_speed)
+    {
+        this.behavior = behavior;
+        this.fishing = fishing;
+        this.repair = repair;
+        this.sailing_speed = sailing_speed;
     }
     public int getbehavior()
     {
@@ -65,20 +70,33 @@ class CrewmanAbilityWork
     {
         return sailing_speed;
     }
-    public void setfood(int v)
+    public void setfull(int minus)
     {
-        food = v;
+        full = full - minus;
     }
-    public int getfood()
+    public int getfull()
     {
-        return food;
+        return full;
     }
-    public void setWork(bool v1, bool v2, bool v3, bool v4)
+    public void setFishing(bool Fishing)
     {
-        Fishing = v1;
-        Repair = v2;
-        Sleep = v3;
-        Eat = v4;
+        this.Fishing = Fishing;
+    }
+    public void setRepair(bool Repair)
+    {
+        this.Repair = Repair;
+    }
+    public void setSleep(bool Sleep)
+    {
+        this.Sleep = Sleep;
+    }
+    public void setEat(bool Eat)
+    {
+        this.Eat = Eat;
+    }
+    public void setDrive(bool Drive)
+    {
+        this.Drive = Drive;
     }
     public bool getFishig()
     {
@@ -96,125 +114,68 @@ class CrewmanAbilityWork
     {
         return Eat;
     }
-    public void setDrive(bool v)
-    {
-        Drive = v;
-    }
+
     public bool getDrive()
     {
         return Drive;
     }
+    public Acting whatActing()//선원이 무엇을 행동하는지?
+    {
+        acting_type = Acting.NOTHING;
+
+        if (Fishing == true) // 낚시중
+        {
+            acting_type = Acting.FISHING;
+        }
+        else if (Repair == true) // 수리중
+        {
+            acting_type = Acting.REPAIR;
+        }
+        else if (Drive == true) // 항해중
+        {
+            acting_type = Acting.DRIVE;
+        }
+        else if (Sleep == true) // 숙면중
+        {
+            acting_type = Acting.SLEEP;
+        }
+        else if (Eat == true) // 먹는중
+        {
+            acting_type = Acting.EAT;
+        }
+
+        return acting_type;
+    }
 }
 
-class Captain : CrewmanAbilityWork
+public class Captain : Crewman//선장 클래스
 {
-    public Captain() : base( )
+    public Captain() : base(0)
     {
         setAblity(10, 10, 3, 0);
     }
 }
 
-class Enginieer : CrewmanAbilityWork
+public class Enginieer : Crewman//엔지니어 클래스
 {
-    public Enginieer() : base()
+    public Enginieer() : base(1)
     {
         setAblity(10, 10, 2, 0);
     }
 }
 
-class Mate : CrewmanAbilityWork
+class Mate : Crewman//항해사 클래스
 {
-    public Mate() : base()
+    public Mate() : base(2)
     {
         setAblity(10, 10, 3, 50);
     }
 }
 
-class Angler : CrewmanAbilityWork
+class Angler : Crewman//강태공 클래스
 {
-    public Angler() : base()
+    public Angler() : base(3)
     {
         setAblity(10, 20, 3, 0);
-    }
-}
-
-public class Crewman : MonoBehaviour
-{
-    CrewmanAbilityWork[] crewman;
-
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-    public void makeCrewmanStorage()
-    {
-        crewman = new CrewmanAbilityWork[5];
-        for(int i = 0; i< 5; i++)
-        {
-            crewman[i] = null;
-        }
-    }
-
-    public bool makeCrewman(int type)
-    {
-        int i;
-        for (i = 0; i < 5; i++)
-        {
-            if(crewman[i] == null)
-            {
-                break;
-            }
-        }
-        if(i >= 5)
-        {
-            return false;
-        }
-        switch (type)
-        {
-            case 0:
-                crewman[i].settype(0);
-                crewman[i].setAblity(10, 10, 3, 0);
-                break;
-            case 1:
-                crewman[i].settype(1);
-                crewman[i].setAblity(10, 10, 2, 0);
-                break;
-            case 2:
-                crewman[i].settype(2);
-                crewman[i].setAblity(10, 10, 3, 50);
-                break;
-            case 3:
-                crewman[i].settype(3);
-                crewman[i].setAblity(10, 20, 3, 0);
-                break;
-
-        }
-        return true;
-    }
-    
-
-    public int? whoDrive()
-    {
-        for(int i = 0; i < 5; i++)
-        {
-            if (crewman[i].getDrive())
-            {
-            return i;
-
-            }
-            if (crewman[i] == null)
-            {
-                break;
-            }
-        }
-        
-        return null;
     }
 }
