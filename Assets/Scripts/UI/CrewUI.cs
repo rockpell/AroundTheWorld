@@ -20,7 +20,7 @@ public class CrewUI : MonoBehaviour
         
     }
 
-    public void chaneCrewImage(Sprite sprite)
+    public void setCrewImage(Sprite sprite)
     {
         crewImage.sprite = sprite;
     }
@@ -40,5 +40,15 @@ public class CrewUI : MonoBehaviour
     public void hideNowActMark()
     {
         nowActMark.SetActive(false);
+    }
+
+    public void setHungerGauge(int nowHunger)
+    {
+
+    }
+
+    public void setActGauge(int nowAct)
+    {
+
     }
 }

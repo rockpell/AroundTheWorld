@@ -88,6 +88,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6225860431764246850}
+  - component: {fileID: 2615638393942095552}
   m_Layer: 5
   m_Name: CrewStatus
   m_TagString: Untagged
@@ -119,6 +120,23 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 60}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &2615638393942095552
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6225860431764246861}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 625609782ceb7f8449cb53bc42491ca1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  crewImage: {fileID: 6225860431776610897}
+  crewJobText: {fileID: 6225860432173989275}
+  crewNowActText: {fileID: 6225860433310957027}
+  leftActText: {fileID: 6225860432070719001}
+  hungerText: {fileID: 6225860431237939565}
 --- !u!1 &6225860431776610899
 GameObject:
   m_ObjectHideFlags: 0
