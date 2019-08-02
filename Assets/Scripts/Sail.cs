@@ -7,11 +7,11 @@ public class Sail : MonoBehaviour, IShipModule
     [SerializeField] private int durability;
 
     private float currentSpeed;
-    [SerializeField] private float decisionSpeed;
+    private float decisionSpeed;
     [SerializeField] private float speedValue;
 
-    private float originalDegree;
-    private float shipDegree;
+    [SerializeField] private float originalDegree;
+    [SerializeField] private float shipDegree;
     [SerializeField] private GameObject sailModel;
     [SerializeField] private GameObject shipModel;
     [SerializeField] private Wind wind;
@@ -24,6 +24,9 @@ public class Sail : MonoBehaviour, IShipModule
     private bool isControl;
     private bool isRight;
     private bool isSailDown;
+
+    private float currentTime;
+    [SerializeField] private float[] decreaseTimes;
 
     [SerializeField] float sailControlSpeed;
 
@@ -53,7 +56,6 @@ public class Sail : MonoBehaviour, IShipModule
                 {
                     isControl = false;
                     isRight = false;
-                    Debug.Log("Push Down Left Key");
                     originalDegree = shipDegree;
                 }
             }
@@ -65,7 +67,6 @@ public class Sail : MonoBehaviour, IShipModule
                     {
                         shipDegree += sailControlSpeed;
                         shipModel.transform.rotation = Quaternion.Euler(0, 0, shipDegree);
-                        Debug.Log("Pushing Left Key");
                     }
                     else
                         Debug.Log("limited");
@@ -77,7 +78,6 @@ public class Sail : MonoBehaviour, IShipModule
                 {
                     shipDegree = shipDegree % 360;
                     isControl = true;
-                    Debug.Log("Push Up Left Key");
                 }
             }
             if (Input.GetKeyDown(KeyCode.D))
@@ -86,7 +86,6 @@ public class Sail : MonoBehaviour, IShipModule
                 {
                     isControl = false;
                     isRight = true;
-                    Debug.Log("Push Down Right Key");
                     originalDegree = shipDegree;
                 }
             }
@@ -94,7 +93,9 @@ public class Sail : MonoBehaviour, IShipModule
             {
                 if ((isControl == false) && (isRight == true))
                 {
-                    if ((originalDegree - shipDegree) % 360 < 45)
+                    if (originalDegree < shipDegree)
+                        originalDegree += 360;
+                    if ((originalDegree - shipDegree)%360 < 45)
                     {
                         shipDegree -= sailControlSpeed;
                         Debug.Log("Pushing Right Key");
@@ -110,7 +111,6 @@ public class Sail : MonoBehaviour, IShipModule
                 {
                     shipDegree = shipDegree % 360;
                     isControl = true;
-                    Debug.Log("Push Up Right Key");
                 }
             }
             if(Input.GetKeyDown(KeyCode.Space))
@@ -147,6 +147,7 @@ public class Sail : MonoBehaviour, IShipModule
     //이거 호출되는거면 그냥 내구도 감소시켜주면 됨
     public void decreaseDurability(DurabilityEvent durabilityEvent)
     {
+        Debug.Log("");
         switch(durabilityEvent)
         {
             case DurabilityEvent.INSIDETYPOON_SAIL:
@@ -155,24 +156,41 @@ public class Sail : MonoBehaviour, IShipModule
             case DurabilityEvent.INSIDETYPOON_CONTRARYWIND_SAIL:
                 durability -= 1;
                 break;
+            case DurabilityEvent.CONTRARYWIND_SAIL:
+                durability -= 1;
+                break;
         }
     }
 
     private void sailDegreeDecision()
     {
+        currentTime += Time.deltaTime;
         float _windDegree = wind.WindDirection;
         if (shipDegree < 0)
             shipDegree += 360;
         if ((shipDegree > (_windDegree + 135) % 360) && (shipDegree < (_windDegree + 225) % 360))
         {
             Debug.Log("It is No-Go zone");
-            if(wind.WindSpeedEnumValue == WindSpeed.TYPOON)
+
+            if(durability > 0)
             {
-                decreaseDurability(DurabilityEvent.INSIDETYPOON_CONTRARYWIND_SAIL);
-            }
-            else
-            {
-                decreaseDurability(DurabilityEvent.CONTRARYWIND_SAIL);
+                if (wind.WindSpeedEnumValue == WindSpeed.TYPOON)
+                {
+                    if(currentTime > decreaseTimes[1])
+                    {
+                        decreaseDurability(DurabilityEvent.INSIDETYPOON_CONTRARYWIND_SAIL);
+                        currentTime = 0;
+                    }
+
+                }
+                else
+                {
+                    if(currentTime > decreaseTimes[0])
+                    {
+                        decreaseDurability(DurabilityEvent.CONTRARYWIND_SAIL);
+                        currentTime = 0;
+                    }
+                }
             }
             decisionSpeed = 0;
         }
@@ -195,9 +213,12 @@ public class Sail : MonoBehaviour, IShipModule
 
     private void sailSpeedControl()
     {
-        currentSpeed = Mathf.Lerp(currentSpeed, decisionSpeed, Time.deltaTime);
-        //currentSpeed를 속도로 전진한다.
-        shipModel.transform.position += currentSpeed * shipModel.transform.up * Time.deltaTime;
+        if(durability > 0)
+        {
+            currentSpeed = Mathf.Lerp(currentSpeed, decisionSpeed, Time.deltaTime);
+            //currentSpeed를 속도로 전진한다.
+            shipModel.transform.position += currentSpeed * shipModel.transform.up * Time.deltaTime;
+        }
     }
     public void repairModule(int repairAmount)
     {
