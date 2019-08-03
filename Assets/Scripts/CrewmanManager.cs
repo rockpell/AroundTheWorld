@@ -40,7 +40,7 @@ public class CrewmanManager : MonoBehaviour
         if (crewmanList.Count == 0)
         {
             crewmanList.Add(new Captain());
-            crewmanList[crewmanList.Count].setindex(crewmanList.Count);
+            crewmanList[crewmanList.Count-1].setindex(crewmanList.Count-1);
             return true;
         }
         return false;
@@ -51,7 +51,7 @@ public class CrewmanManager : MonoBehaviour
         if(crewmanList.Count < 4)
         {
             crewmanList.Add(new Engineer());
-            crewmanList[crewmanList.Count].setindex(crewmanList.Count);
+            crewmanList[crewmanList.Count-1].setindex(crewmanList.Count-1);
             return true;
         }
         return false;
@@ -62,7 +62,7 @@ public class CrewmanManager : MonoBehaviour
         if (crewmanList.Count < 4)
         {
             crewmanList.Add(new Mate());
-            crewmanList[crewmanList.Count].setindex(crewmanList.Count);
+            crewmanList[crewmanList.Count-1].setindex(crewmanList.Count-1);
             return true;
         }
         return false;
@@ -73,7 +73,7 @@ public class CrewmanManager : MonoBehaviour
         if (crewmanList.Count < 4)
         {
             crewmanList.Add(new Angler());
-            crewmanList[crewmanList.Count].setindex(crewmanList.Count);
+            crewmanList[crewmanList.Count-1].setindex(crewmanList.Count-1);
             return true;
         }
         return false;
