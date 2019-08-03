@@ -8,7 +8,7 @@ public class ShipBody : MonoBehaviour, IShipModule
 
     void Start()
     {
-        
+        GameManager.Instance.ShipBody = this;
     }
 
     // Update is called once per frame

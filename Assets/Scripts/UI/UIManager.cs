@@ -250,8 +250,8 @@ public class UIManager : MonoBehaviour
 
     private void refreshSheepStatusUI()
     {
-        sheepStatusUI.setSailText(100, 99); // 돛 내구도
-        sheepStatusUI.setBodyShipText(100, 98); // 선체 내구도
+        sheepStatusUI.setSailText(100, GameManager.Instance.Sail.Durability); // 돛 내구도
+        sheepStatusUI.setBodyShipText(100, GameManager.Instance.ShipBody.Durability); // 선체 내구도
     }
 
     private Sprite getCrewImage(Crewman crewData) 

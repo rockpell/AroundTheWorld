@@ -23,6 +23,7 @@ public class GameManager : MonoBehaviour
     private FishingRod nowFishingRod;
 
     private Sail sail;
+    private ShipBody shipBody;
     
     private float inGameStandardTime = 3; // 현실 시간 기준 게임 내의 한시간
     private float sumDeltaTime;
@@ -136,5 +137,10 @@ public class GameManager : MonoBehaviour
     public Sail Sail {
         get { return sail; }
         set { sail = value; }
+    }
+
+    public ShipBody ShipBody {
+        get { return shipBody; }
+        set { shipBody = value; }
     }
 }
