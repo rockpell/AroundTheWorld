@@ -37,26 +37,6 @@ public class CrewmanManager : MonoBehaviour
     // Update is called once per frame
     void Update()   
     {
-        for(int i = 0; i<crewmanList.Count; i++)//잠이나 낚시를 시간이 되면 끝내기
-        {
-            if(time[i] == calendar.time)
-            {
-                if (crewmanList[i].getSleep())
-                {
-                     crewmanList[i].setSleep(false);
-                     time[i] = -1;
-                }
-                else if(crewmanList[i].getFishig())
-                {
-                    crewmanList[i].setFishing(false);
-                    time[i] = -1;
-                }
-                else
-                {
-
-                }
-            }
-        }
         
     }
 
@@ -151,26 +131,28 @@ public class CrewmanManager : MonoBehaviour
 
     public void crewmanSleep(Crewman crewman, Calendar calendar)//재우기
     {
+        int time = -1;
         if (actingCheck(crewman))
         {
             if(7 <= calendar.time && calendar.time < 19)
             {
                 crewman.setDrive(true);
-                time[crewman.getindex()] = calendar.time + 4;
-                if(time[crewman.getindex()] >= 24)
+                time = calendar.time + 4;
+                if(time >= 24)
                 {
-                    time[crewman.getindex()] -= 24;
+                    time -= 24;
                 }
             }
             else
             {
                 crewman.setDrive(true);
-                time[crewman.getindex()] = calendar.time + 6;
-                if (time[crewman.getindex()] >= 24)
+                time = calendar.time + 6;
+                if (time >= 24)
                 {
-                    time[crewman.getindex()] -= 24;
+                    time -= 24;
                 }
             }
+            crewman.settime(time);
 
         }
     }
@@ -185,14 +167,19 @@ public class CrewmanManager : MonoBehaviour
     }
     public void crewmanFishing(Crewman crewman)//낚시하기
     {
+        int time = -1;
         if (actingCheck(crewman))
         {
             crewman.setFishing(true);
-            time[crewman.getindex()] = calendar.time + 1;
-            if (time[crewman.getindex()] >= 24)
+
+            time = calendar.time + 1;
+
+            if (time >= 24)
             {
-                time[crewman.getindex()] -= 24;
+                time -= 24;
             }
+
+            crewman.settime(time);
         }
     }
 
@@ -212,5 +199,19 @@ public class CrewmanManager : MonoBehaviour
         }
         return false;
     }
+    public void crewmanWakeUpCount(Crewman crewman)//시간이 되면 깨우기
+    {
+        if(crewman.gettime() == calendar.time)
+        {
+            crewman.setSleep(false);
+        }
+    }
 
+    public void crewmanCount(Crewman crewman)//시간이 되면 낚시 그만두기
+    {
+        if (crewman.gettime() == calendar.time)
+        {
+            crewman.setFishing(false);
+        }
+    }
 }

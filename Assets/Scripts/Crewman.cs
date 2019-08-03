@@ -7,6 +7,7 @@
     private int sailing_speed;//항해속도
     private int full;//포만감
     private int index;//선원 순서
+    private int time;//행동할때의 시간
     private Acting acting_type;//행동종류
     private bool Fishing;//낚시유무
     private bool Repair;//수리유무
@@ -24,6 +25,7 @@
         sailing_speed = 0;
         full = 4;
         index = -1;
+        time = -1;
         Fishing = false;
         Repair = false;
         Drive = false;
@@ -145,6 +147,15 @@
         }
 
         return acting_type;
+    }
+
+    public void settime(int time)
+    {
+        this.time = time;
+    }
+    public int gettime()
+    {
+        return time;
     }
 }
 
