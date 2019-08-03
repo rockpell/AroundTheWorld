@@ -33,17 +33,21 @@ public class GameManager : MonoBehaviour
         if (instance == null)
             instance = this;
         else
+        {
             Destroy(this.gameObject);
+            return;
+        }
         DontDestroyOnLoad(this.gameObject);
+        calendar = new Calendar();
     }
 
     // Start is called before the first frame update
     void Start()
     {
         nowMoney = initMoney;
-        calendar = new Calendar();
 
         CrewmanManager.Instance.makeCaptain();
+        CrewmanManager.Instance.makeEngineer();
     }
 
     // Update is called once per frame
