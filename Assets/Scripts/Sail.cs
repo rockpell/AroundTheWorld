@@ -133,7 +133,7 @@ public class Sail : MonoBehaviour, IShipModule
     private void sailDown()
     {
         isSailDown = true;
-        if(sailImage.Length > 2)
+        if(sailImage.Length > 1)
         {
             sailModel.GetComponent<SpriteRenderer>().sprite = sailImage[0];
         }
@@ -142,7 +142,7 @@ public class Sail : MonoBehaviour, IShipModule
     private void sailUp()
     {
         isSailDown = false;
-        if (sailImage.Length > 2)
+        if (sailImage.Length > 1)
             sailModel.GetComponent<SpriteRenderer>().sprite = sailImage[1];
         Debug.Log("돛 올림!");
     }
