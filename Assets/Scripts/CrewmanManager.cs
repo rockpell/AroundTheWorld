@@ -28,7 +28,7 @@ public class CrewmanManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        calendar = gamemanager.Calendar;
+        calendar = GameManager.Instance.Calendar;
     }
 
     // Update is called once per frame
