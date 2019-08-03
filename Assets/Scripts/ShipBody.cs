@@ -58,9 +58,12 @@ public class ShipBody : MonoBehaviour, IShipModule
         }
     }
 
-    public void repairModule(int repairAmound)
+    public void repairModule(int repairAmount)
     {
-
+        if ((durability + repairAmount) > 100)
+            durability = 100;
+        else
+            durability += repairAmount;
     }
     public int Durability
     {
