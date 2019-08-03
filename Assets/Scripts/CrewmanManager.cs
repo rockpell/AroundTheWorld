@@ -113,12 +113,14 @@ public class CrewmanManager : MonoBehaviour
         return null;
     }
 
-    public void crewDrive(Crewman crewman)//항해시키기
+    public bool crewDrive(Crewman crewman)//항해시키기
     {
         if (whoDrive() == null && actingCheck(crewman))
         {
             crewman.setDrive(true);
+            return true;
         }
+        return false;
     }
 
     public void crewDriveStop(Crewman crewman)//항해그만두기
@@ -129,7 +131,7 @@ public class CrewmanManager : MonoBehaviour
         }
     }
 
-    public void crewmanSleep(Crewman crewman, Calendar calendar)//재우기
+    public bool crewmanSleep(Crewman crewman, Calendar calendar)//재우기
     {
         int time = -1;
         if (actingCheck(crewman))
@@ -153,19 +155,23 @@ public class CrewmanManager : MonoBehaviour
                 }
             }
             crewman.settime(time);
+            return true;
 
         }
+        return false;
     }
 
-    public void crewmanEat(Crewman crewman)//밥먹이기
+    public bool crewmanEat(Crewman crewman)//밥먹이기
     {
         if (actingCheck(crewman))
         {
             crewman.setEat(true);
+            return true;
         }
-        
+        return false;
+
     }
-    public void crewmanFishing(Crewman crewman)//낚시하기
+    public bool crewmanFishing(Crewman crewman)//낚시하기
     {
         int time = -1;
         if (actingCheck(crewman))
@@ -180,15 +186,20 @@ public class CrewmanManager : MonoBehaviour
             }
 
             crewman.settime(time);
+            return true;
+
         }
+        return false;
     }
 
-    public void crewmanRepair(Crewman crewman)// 수리하기
+    public bool crewmanRepair(Crewman crewman)// 수리하기
     {
         if (actingCheck(crewman))
         {
             crewman.setRepair(true);
+            return true;
         }
+        return false;
     }
 
     public bool actingCheck(Crewman crewman)//행동을 하는지, 행동을 하면 false, 안하면 true
@@ -199,6 +210,7 @@ public class CrewmanManager : MonoBehaviour
         }
         return false;
     }
+    /*
     public void crewmanWakeUpCount(Crewman crewman)//시간이 되면 깨우기
     {
         if(crewman.gettime() == calendar.time)
@@ -206,6 +218,21 @@ public class CrewmanManager : MonoBehaviour
             crewman.setSleep(false);
         }
     }
+    */
+    public void crewmanWkeUpCount(Crewman crewman)
+    {
+        int time = crewman.gettime();
+        if (time > 0)
+        {
+            crewman.settime(time - 1);
+        }
+        else if (time == 0)
+        {
+            crewman.settime(time - 1);
+            crewman.setSleep(false);
+        }
+    }
+     
 
     public void crewmanCount(Crewman crewman)//시간이 되면 낚시 그만두기
     {
