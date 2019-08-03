@@ -51,7 +51,7 @@ public class Sail : MonoBehaviour, IShipModule
     private void checkKeyInput()
     {
         //crew에 선원 할당식
-        if((driveCrew != null)&&(driveCrew.getDrive() == true))
+        if((driveCrew != null))
         {
             if(Input.GetKeyDown(KeyCode.A))
             {
@@ -67,6 +67,8 @@ public class Sail : MonoBehaviour, IShipModule
             {
                 if((isControl == false)&&(isRight == false))
                 {
+                    if (shipDegree < originalDegree)
+                        shipDegree += 360;
                     if ((shipDegree - originalDegree) % 360 < limitAngle)
                     {
                         shipDegree += sailControlSpeed;
