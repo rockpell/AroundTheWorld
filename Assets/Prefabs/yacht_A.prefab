@@ -73,7 +73,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 2fa563e8e3c86b34e8ffc23f6e51295f, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 0b6cd72b6a26b2241a9856765a172f70, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -229,8 +229,8 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 8d8ba8849243d4841ad37c03d356ded1, type: 3}
+  m_SortingOrder: 1
+  m_Sprite: {fileID: 21300000, guid: 4d4c27066b940bf459b5cca2089f1da8, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -259,8 +259,8 @@ MonoBehaviour:
   shipModel: {fileID: 8281448523760268389}
   wind: {fileID: 0}
   sailImage:
-  - {fileID: 21300000, guid: 8d8ba8849243d4841ad37c03d356ded1, type: 3}
-  - {fileID: 21300000, guid: 35ed90707d70aae4cb1b9f03e247b5c2, type: 3}
+  - {fileID: 21300000, guid: 4d4c27066b940bf459b5cca2089f1da8, type: 3}
+  - {fileID: 21300000, guid: faf936728ad36ae489d5180ed2ffecc5, type: 3}
   crew: {fileID: 0}
   decreaseTime: 2
   sailControlSpeed: 1
