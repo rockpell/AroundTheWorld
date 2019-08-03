@@ -19,7 +19,7 @@ public class Sail : MonoBehaviour, IShipModule
     [SerializeField] private Sprite[] sailImage;
 
     //뭐가 될진 모르지만 일단 선원을 할당할 코드
-    [SerializeField] private GameObject crew;
+    [SerializeField] private Crewman driveCrew;
 
     private bool isControl;
     private bool isRight;
@@ -50,7 +50,7 @@ public class Sail : MonoBehaviour, IShipModule
     private void checkKeyInput()
     {
         //crew에 선원 할당식
-        if(crew != null)
+        if(driveCrew != null)
         {
             if(Input.GetKeyDown(KeyCode.A))
             {
@@ -221,4 +221,9 @@ public class Sail : MonoBehaviour, IShipModule
     { get { return isSailDown; } }
     public bool IsContrary
     { get { return isContrary; } }
+    public Crewman DriveCrew
+    {
+        get { return driveCrew; }
+        set { driveCrew = value; }
+    }
 }
