@@ -6,6 +6,7 @@ public class UIManager : MonoBehaviour
     [SerializeField] private Canvas myCanvas;
     [SerializeField] private GameObject eventMenu;
     [SerializeField] private GameObject selectMenu;
+    [SerializeField] private GameObject endingPanel;
 
     [SerializeField] private CrewUI[] crewUIs;
     [SerializeField] private CrewStatusUI[] crewStatusUIs;
@@ -328,5 +329,26 @@ public class UIManager : MonoBehaviour
         }
 
         return null;
+    }
+
+    public void endGame(GameEnding gameEnding)
+    {
+        Text _endText = endingPanel.transform.GetChild(0).GetComponent<Text>();
+        endingPanel.SetActive(true);
+        switch (gameEnding)
+        {
+            case GameEnding.ARRIVE:
+                _endText.text = "세계일주 하였습니다!";
+                break;
+            case GameEnding.SHIPWRECK: // 난파엔딩
+                _endText.text = "난파되었습니다";
+                break;
+            case GameEnding.PIRATE:
+                _endText.text = "해적에게 배를 약탈당했습니다";
+                break;
+            case GameEnding.HUNGRY:
+                _endText.text = "배고파서 죽었습니다";
+                break;
+        }
     }
 }

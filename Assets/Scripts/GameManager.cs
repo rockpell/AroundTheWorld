@@ -13,6 +13,7 @@ public class GameManager : MonoBehaviour
     private int initMoney = 100; // 초기 자금
     private int nowMoney = 0; // 현재 자금
     private int food = 0; // 식량
+    private int leftFood = 0; // 남은 식량
 
     private bool isGameStart = false;
 
@@ -82,6 +83,25 @@ public class GameManager : MonoBehaviour
         uiManager.refreshCalendar(calendar); // 초기 값 보여주기
     }
 
+    public void endGame(GameEnding gameEnding)
+    {
+        switch (gameEnding)
+        {
+            case GameEnding.ARRIVE:
+                UIManager.Instance.endGame(gameEnding);
+                break;
+            case GameEnding.SHIPWRECK: // 난파엔딩
+                UIManager.Instance.endGame(gameEnding);
+                break;
+            case GameEnding.PIRATE:
+                UIManager.Instance.endGame(gameEnding);
+                break;
+            case GameEnding.HUNGRY:
+                UIManager.Instance.endGame(gameEnding);
+                break;
+        }
+    }
+
     public int getGenerateCount(int index)
     {
         return generateCount[index];
@@ -128,6 +148,11 @@ public class GameManager : MonoBehaviour
     public int Food {
         get { return food; }
         set { food = value; }
+    }
+
+    public int LeftFood {
+        get { return leftFood; }
+        set { leftFood = value; }
     }
 
     public Calendar Calendar {
