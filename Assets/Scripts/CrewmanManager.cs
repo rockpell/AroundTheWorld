@@ -119,6 +119,12 @@ public class CrewmanManager : MonoBehaviour
             crewman.setDrive(true);
             return true;
         }
+        else if(whoDrive() != null && actingCheck(crewman))
+        {
+            crewDriveStop(whoDrive());
+            crewman.setDrive(true);
+            return true;
+        }
         return false;
     }
 
@@ -132,12 +138,20 @@ public class CrewmanManager : MonoBehaviour
 
     public bool crewmanSleep(Crewman crewman, Calendar calendar)//재우기
     {
+        int behavior;
         int time = -1;
         if (actingCheck(crewman))
         {
-            if(7 <= calendar.time && calendar.time < 19)
+            crewman.setbehavior(crewman.getbehavior() + 10);
+            if (7 <= calendar.time && calendar.time < 19)
             {
-                crewman.setDrive(true);
+                crewman.setSleep(true);
+                behavior = crewman.getbehavior() + 5;
+                if(behavior > 10)
+                {
+                    behavior = 10;
+                }
+                crewman.setbehavior(behavior);
                 time = calendar.time + 4;
                 if(time >= 24)
                 {
@@ -146,7 +160,8 @@ public class CrewmanManager : MonoBehaviour
             }
             else
             {
-                crewman.setDrive(true);
+                crewman.setSleep(true);
+                crewman.setbehavior(10);
                 time = calendar.time + 6;
                 if (time >= 24)
                 {
@@ -172,9 +187,10 @@ public class CrewmanManager : MonoBehaviour
     public bool crewmanFishing(Crewman crewman)//낚시하기
     {
         int time = -1;
-        if (actingCheck(crewman))
+        if (actingCheck(crewman) && crewman.getbehavior() >= 1)
         {
             crewman.setFishing(true);
+            crewman.setbehavior(crewman.getbehavior() - 1);
 
             time = calendar.time + 1;
 
@@ -192,9 +208,18 @@ public class CrewmanManager : MonoBehaviour
 
     public bool crewmanRepair(Crewman crewman)// 수리하기
     {
-        if (actingCheck(crewman))
+        if (actingCheck(crewman) && crewman.getbehavior() >= 2)
         {
-            return true;
+            if(crewman.gettype() == 1)
+            {
+                crewman.setbehavior(crewman.getbehavior() - 2);
+                return true;
+            }
+            else if (crewman.getbehavior() >= 3)
+            {
+                crewman.setbehavior(crewman.getbehavior() - 3);
+                return true;
+            }
         }
         return false;
     }

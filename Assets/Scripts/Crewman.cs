@@ -56,6 +56,14 @@
         this.repair = repair;
         this.sailing_speed = sailing_speed;
     }
+    public void setbehavior(int behavior)
+    {
+        if (behavior <= 10&& behavior >= 0)
+        {
+            this.behavior = behavior;
+        }
+        
+    }
     public int getbehavior()
     {
         return behavior;
