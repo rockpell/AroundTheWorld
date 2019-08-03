@@ -58,17 +58,22 @@ public class UIManager : MonoBehaviour
 
     public void showSelectMenu(int index)
     {
-        Vector2 _size = selectMenu.GetComponent<RectTransform>().sizeDelta;
+        Crewman _crew = CrewmanManager.Instance.getCrewman(index);
+        
+        if(_crew.getActingType() == Acting.NOTHING || _crew.getActingType() == Acting.DRIVE)
+        {
+            Vector2 _size = selectMenu.GetComponent<RectTransform>().sizeDelta;
 
-        CanvasScaler scaler = myCanvas.GetComponentInParent<CanvasScaler>();
-        selectMenu.GetComponent<RectTransform>().anchoredPosition 
-            = new Vector2(Input.mousePosition.x * scaler.referenceResolution.x / Screen.width - scaler.referenceResolution.x / 2 + _size.x/2,
-            Input.mousePosition.y * scaler.referenceResolution.y / Screen.height - scaler.referenceResolution.y / 2 + _size.y/2);
+            CanvasScaler scaler = myCanvas.GetComponentInParent<CanvasScaler>();
+            selectMenu.GetComponent<RectTransform>().anchoredPosition
+                = new Vector2(Input.mousePosition.x * scaler.referenceResolution.x / Screen.width - scaler.referenceResolution.x / 2 + _size.x / 2,
+                Input.mousePosition.y * scaler.referenceResolution.y / Screen.height - scaler.referenceResolution.y / 2 + _size.y / 2);
 
-        selectMenu.SetActive(true);
-        showCrewHighlight(index);
+            selectMenu.SetActive(true);
+            showCrewHighlight(index);
 
-        selectCrewIndex = index;
+            selectCrewIndex = index;
+        }
     }
 
     private void hideSelectMenu()
