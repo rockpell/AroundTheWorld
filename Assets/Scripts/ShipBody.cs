@@ -22,19 +22,34 @@ public class ShipBody : MonoBehaviour, IShipModule
         switch(durabilityEvent)
         {
             case DurabilityEvent.COLLIDE_REEF_BODY:
-                durability -= 30;
+                if (durability > 30)
+                    durability -= 30;
+                else
+                    durability = 0;
                 break;
             case DurabilityEvent.COLLIDE_ISLAND_BODY:
-                durability -= 30;
+                if (durability > 30)
+                    durability -= 30;
+                else
+                    durability = 0;
                 break;
             case DurabilityEvent.COLLIDE_PIRATE_BODY:
-                durability -= 10;
+                if (durability > 10)
+                    durability -= 10;
+                else
+                    durability = 0;
                 break;
             case DurabilityEvent.COLLIDE_SHIP_BODY:
-                durability -= 1;
+                if (durability > 1)
+                    durability -= 1;
+                else
+                    durability = 0;
                 break;
             case DurabilityEvent.INSIDETYPOON_BODY:
-                durability -= 1;
+                if (durability > 1)
+                    durability -= 1;
+                else
+                    durability = 0;
                 break;
         }
         if(durability <= 0)

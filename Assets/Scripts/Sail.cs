@@ -155,6 +155,8 @@ public class Sail : MonoBehaviour, IShipModule
     //이거 호출되는거면 그냥 내구도 감소시켜주면 됨
     public void decreaseDurability(DurabilityEvent durabilityEvent)
     {
+        if (durability < 1)
+            return;
         switch(durabilityEvent)
         {
             case DurabilityEvent.INSIDETYPOON_SAIL:
@@ -223,7 +225,10 @@ public class Sail : MonoBehaviour, IShipModule
     }
     public void repairModule(int repairAmount)
     {
-        durability += repairAmount;
+        if ((durability + repairAmount) > 100)
+            durability = 100;
+        else
+            durability += repairAmount;
     }
     public bool IsSailDown
     { get { return isSailDown; } }
