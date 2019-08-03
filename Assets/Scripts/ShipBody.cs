@@ -37,6 +37,10 @@ public class ShipBody : MonoBehaviour, IShipModule
                 durability -= 1;
                 break;
         }
+        if(durability <= 0)
+        {
+            //여기서 난파엔딩 만들어주거나 호출하면 됨
+        }
     }
 
     public void repairModule(int repairAmound)

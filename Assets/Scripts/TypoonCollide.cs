@@ -49,7 +49,7 @@ public class TypoonCollide : MonoBehaviour
         if (currentTimes[1] > decisionTimes[1])
         {
             //돛 방향이 지금 방향이랑 비교해서 역풍인지
-            if(sail.IsSailDown == false)
+            if((sail.IsSailDown == false)&&(sail.IsContrary == true))
             {
                 sail.decreaseDurability(DurabilityEvent.INSIDETYPOON_CONTRARYWIND_SAIL);
             }

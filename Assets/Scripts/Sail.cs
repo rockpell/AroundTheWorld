@@ -8,10 +8,10 @@ public class Sail : MonoBehaviour, IShipModule
 
     private float currentSpeed;
     private float decisionSpeed;
-    [SerializeField] private float speedValue;
 
-    [SerializeField] private float originalDegree;
-    [SerializeField] private float shipDegree;
+    private float originalDegree;
+    private float shipDegree;
+    [SerializeField] private float limitAngle;
     [SerializeField] private GameObject sailModel;
     [SerializeField] private GameObject shipModel;
     [SerializeField] private Wind wind;
@@ -24,9 +24,10 @@ public class Sail : MonoBehaviour, IShipModule
     private bool isControl;
     private bool isRight;
     private bool isSailDown;
+    private bool isContrary;
 
     private float currentTime;
-    [SerializeField] private float[] decreaseTimes;
+    [SerializeField] private float decreaseTime;
 
     [SerializeField] float sailControlSpeed;
 
@@ -63,7 +64,7 @@ public class Sail : MonoBehaviour, IShipModule
             {
                 if((isControl == false)&&(isRight == false))
                 {
-                    if ((shipDegree - originalDegree) % 360 < 45)
+                    if ((shipDegree - originalDegree) % 360 < limitAngle)
                     {
                         shipDegree += sailControlSpeed;
                         shipModel.transform.rotation = Quaternion.Euler(0, 0, shipDegree);
@@ -95,7 +96,7 @@ public class Sail : MonoBehaviour, IShipModule
                 {
                     if (originalDegree < shipDegree)
                         originalDegree += 360;
-                    if ((originalDegree - shipDegree)%360 < 45)
+                    if ((originalDegree - shipDegree)%360 < limitAngle)
                     {
                         shipDegree -= sailControlSpeed;
                         Debug.Log("Pushing Right Key");
@@ -147,7 +148,6 @@ public class Sail : MonoBehaviour, IShipModule
     //이거 호출되는거면 그냥 내구도 감소시켜주면 됨
     public void decreaseDurability(DurabilityEvent durabilityEvent)
     {
-        Debug.Log("");
         switch(durabilityEvent)
         {
             case DurabilityEvent.INSIDETYPOON_SAIL:
@@ -171,21 +171,12 @@ public class Sail : MonoBehaviour, IShipModule
         if ((shipDegree > (_windDegree + 135) % 360) && (shipDegree < (_windDegree + 225) % 360))
         {
             Debug.Log("It is No-Go zone");
-
+            isContrary = true;
             if(durability > 0)
             {
-                if (wind.WindSpeedEnumValue == WindSpeed.TYPOON)
+                if(wind.WindSpeedEnumValue != WindSpeed.TYPOON)
                 {
-                    if(currentTime > decreaseTimes[1])
-                    {
-                        decreaseDurability(DurabilityEvent.INSIDETYPOON_CONTRARYWIND_SAIL);
-                        currentTime = 0;
-                    }
-
-                }
-                else
-                {
-                    if(currentTime > decreaseTimes[0])
+                    if(currentTime > decreaseTime)
                     {
                         decreaseDurability(DurabilityEvent.CONTRARYWIND_SAIL);
                         currentTime = 0;
@@ -196,6 +187,7 @@ public class Sail : MonoBehaviour, IShipModule
         }
         else
         {
+            isContrary = false;
             float _degree = shipDegree - _windDegree;
             if (_degree < 0)
                 _degree *= -1;
@@ -217,7 +209,7 @@ public class Sail : MonoBehaviour, IShipModule
         {
             currentSpeed = Mathf.Lerp(currentSpeed, decisionSpeed, Time.deltaTime);
             //currentSpeed를 속도로 전진한다.
-            shipModel.transform.position += currentSpeed * shipModel.transform.up * Time.deltaTime;
+            shipModel.transform.position += currentSpeed * shipModel.transform.up * 0.016f;
         }
     }
     public void repairModule(int repairAmount)
@@ -226,4 +218,6 @@ public class Sail : MonoBehaviour, IShipModule
     }
     public bool IsSailDown
     { get { return isSailDown; } }
+    public bool IsContrary
+    { get { return isContrary; } }
 }
