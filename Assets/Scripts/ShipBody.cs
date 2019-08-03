@@ -47,4 +47,8 @@ public class ShipBody : MonoBehaviour, IShipModule
     {
 
     }
+    public int Durability
+    {
+        get { return durability; }
+    }
 }

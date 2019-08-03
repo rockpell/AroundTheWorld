@@ -226,4 +226,8 @@ public class Sail : MonoBehaviour, IShipModule
         get { return driveCrew; }
         set { driveCrew = value; }
     }
+    public int Durability
+    {
+        get { return durability; }
+    }
 }
