@@ -160,11 +160,10 @@ public class CrewmanManager : MonoBehaviour
         return false;
     }
 
-    public bool crewmanEat(Crewman crewman)//밥먹이기
+    public bool crewmanEat(Crewman crewman)//식사
     {
         if (actingCheck(crewman))
         {
-            crewman.setEat(true);
             return true;
         }
         return false;
@@ -195,7 +194,6 @@ public class CrewmanManager : MonoBehaviour
     {
         if (actingCheck(crewman))
         {
-            crewman.setRepair(true);
             return true;
         }
         return false;
