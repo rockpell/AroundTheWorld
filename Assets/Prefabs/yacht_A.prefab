@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 8281448523760268384}
   - component: {fileID: 8281448523760268391}
   - component: {fileID: 8281448523760268390}
+  - component: {fileID: 8512061300700329626}
   m_Layer: 0
   m_Name: yacht_A
   m_TagString: Untagged
@@ -161,6 +162,19 @@ PolygonCollider2D:
       - {x: 0.34, y: -0.97999996}
       - {x: 0.39, y: -0.84999996}
       - {x: 0.41, y: -0.48}
+--- !u!114 &8512061300700329626
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8281448523760268389}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f185b6843da920240845bc5290304d1b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  shipBody: {fileID: 8281448523760268384}
 --- !u!1 &8281448524277206346
 GameObject:
   m_ObjectHideFlags: 0

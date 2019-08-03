@@ -44,6 +44,7 @@ public class Sail : MonoBehaviour, IShipModule
         checkKeyInput();
         sailDegreeDecision();
         sailSpeedControl();
+        shipDegree = shipModel.transform.rotation.eulerAngles.z;
     }
 
     private void checkKeyInput()

@@ -9,14 +9,19 @@ public class Typoon : MonoBehaviour
     [SerializeField] private Vector3 destination;
 
     [SerializeField] private Vector3 direction;
+
+    [SerializeField] private float rotationSpeed;
+    private float currentRotation;
     void Start()
     {
+        currentRotation = this.transform.rotation.eulerAngles.z;
     }
 
     // Update is called once per frame
     void Update()
     {
         move();
+        rotateBody();
     }
 
     public void initialize(Vector3 origin, Vector3 destination, float speed)
@@ -41,5 +46,10 @@ public class Typoon : MonoBehaviour
         {
             Destroy(this.gameObject);
         }
+    }
+    private void rotateBody()
+    {
+        currentRotation += rotationSpeed * 0.016f;
+        this.transform.rotation = Quaternion.Euler(0, 0, currentRotation);
     }
 }
