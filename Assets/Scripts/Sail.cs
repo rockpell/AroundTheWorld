@@ -51,7 +51,7 @@ public class Sail : MonoBehaviour, IShipModule
     private void checkKeyInput()
     {
         //crew에 선원 할당식
-        if((driveCrew != null))
+        if((driveCrew != null) && (driveCrew.getbehavior() >= 1))
         {
             if(Input.GetKeyDown(KeyCode.A))
             {
@@ -75,7 +75,7 @@ public class Sail : MonoBehaviour, IShipModule
                         shipModel.transform.rotation = Quaternion.Euler(0, 0, shipDegree);
                     }
                     else
-                        Debug.Log("limited");
+                    { }
                 }
             }
             if(Input.GetKeyUp(KeyCode.A))
@@ -105,11 +105,10 @@ public class Sail : MonoBehaviour, IShipModule
                     if ((originalDegree - shipDegree)%360 < limitAngle)
                     {
                         shipDegree -= sailControlSpeed;
-                        Debug.Log("Pushing Right Key");
                         shipModel.transform.rotation = Quaternion.Euler(0, 0, shipDegree);
                     }
                     else
-                        Debug.Log("limited");
+                    { }
                 }
             }
             if (Input.GetKeyUp(KeyCode.D))
@@ -120,7 +119,7 @@ public class Sail : MonoBehaviour, IShipModule
                     isControl = true;
                 }
             }
-            if(Input.GetKeyDown(KeyCode.Space))
+            if(Input.GetKeyDown(KeyCode.Space) && (driveCrew.getbehavior() >= 2))
             {
                 if(isSailDown == false)
                 {
@@ -143,7 +142,6 @@ public class Sail : MonoBehaviour, IShipModule
             sailModel.GetComponent<SpriteRenderer>().sprite = sailImage[0];
             driveCrew.setbehavior(driveCrew.getbehavior() - 2);
         }
-        Debug.Log("돛 내림!");
     }
     private void sailUp()
     {
@@ -153,7 +151,6 @@ public class Sail : MonoBehaviour, IShipModule
             sailModel.GetComponent<SpriteRenderer>().sprite = sailImage[1];
             driveCrew.setbehavior(driveCrew.getbehavior() - 2);
         }
-        Debug.Log("돛 올림!");
     }
     //이거 호출되는거면 그냥 내구도 감소시켜주면 됨
     public void decreaseDurability(DurabilityEvent durabilityEvent)
@@ -180,7 +177,6 @@ public class Sail : MonoBehaviour, IShipModule
             shipDegree += 360;
         if ((shipDegree > (_windDegree + 135) % 360) && (shipDegree < (_windDegree + 225) % 360))
         {
-            Debug.Log("It is No-Go zone");
             isContrary = true;
             if(durability > 0)
             {
@@ -242,4 +238,6 @@ public class Sail : MonoBehaviour, IShipModule
     {
         get { return durability; }
     }
+    public float CurrentSpeed
+    { get { return currentSpeed; } }
 }

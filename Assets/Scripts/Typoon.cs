@@ -26,7 +26,6 @@ public class Typoon : MonoBehaviour
 
     public void initialize(Vector3 origin, Vector3 destination, float speed)
     {
-        Debug.Log("Init");
         this.speed = speed;
         this.origin = origin;
         this.destination = destination;
@@ -37,7 +36,6 @@ public class Typoon : MonoBehaviour
     }
     private void move()
     {
-        Debug.Log("Mov");
         if (direction != Vector3.zero)
         {
             this.gameObject.transform.position += direction.normalized * speed * Time.deltaTime;

@@ -20,7 +20,6 @@ public class TypoonCollide : MonoBehaviour
 
     public void OnTriggerEnter2D(Collider2D collision)
     {
-        Debug.Log("Trigger Enter");
         if(wind != null)
         {
             wind.RefreshTime = wind.OriginRefreshTime / 2;
@@ -30,7 +29,6 @@ public class TypoonCollide : MonoBehaviour
     }
     public void OnTriggerStay2D(Collider2D collision)
     {
-        Debug.Log("Trigger Stay");
         for (int i = 0; i < currentTimes.Length; i++)
         {
             currentTimes[i] += Time.deltaTime;
@@ -64,7 +62,6 @@ public class TypoonCollide : MonoBehaviour
     }
     public void OnTriggerExit2D(Collider2D collision)
     {
-        Debug.Log("Trigger Exit");
         wind.RefreshTime = wind.OriginRefreshTime;
         wind.IsTypoon = false;
         wind.RefreshWind();
