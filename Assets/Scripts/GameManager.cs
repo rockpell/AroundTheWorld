@@ -12,17 +12,18 @@ public class GameManager : MonoBehaviour
 
     private int initMoney = 100; // 초기 자금
     private int nowMoney = 0; // 현재 자금
-    private int food = 0; // 식량
+    private int food = 0; // 현재 식량
     private int leftFood = 0; // 남은 식량
 
     private bool isGameStart = false;
 
+    private List<YachtType> yachtHaveList;
+    private List<FishingRodType> fishingRodHaveList;
+    private List<Crewman> crewmenHaveList;
+
     private UIManager uiManager;
-        
     private Calendar calendar;
-
     private FishingRod nowFishingRod;
-
     private Sail sail;
     private ShipBody shipBody;
     
@@ -46,6 +47,10 @@ public class GameManager : MonoBehaviour
     void Start()
     {
         nowMoney = initMoney;
+
+        yachtHaveList = new List<YachtType>();
+        fishingRodHaveList = new List<FishingRodType>();
+        crewmenHaveList = new List<Crewman>();
 
         setNowFishingRod(0);
 
@@ -167,5 +172,54 @@ public class GameManager : MonoBehaviour
     public ShipBody ShipBody {
         get { return shipBody; }
         set { shipBody = value; }
+    }
+
+    public void addYachtHaveList(YachtType yachtType)
+    {
+        yachtHaveList.Add(yachtType);
+    }
+
+    public bool isContainYacth(YachtType yachtType)
+    {
+        return yachtHaveList.Contains(yachtType);
+    }
+
+    public void addFishingRodHaveList(FishingRodType fishingRodType)
+    {
+        fishingRodHaveList.Add(fishingRodType);
+    }
+
+    public bool isContainFishingRod(FishingRodType fishingRodType)
+    {
+        return fishingRodHaveList.Contains(fishingRodType);
+    }
+
+    public void addCrewmanHaveList(Crewman crewman)
+    {
+        crewmenHaveList.Add(crewman);
+    }
+
+    public Crewman getFromCrewmanHaveList(int index)
+    {
+        if(crewmenHaveList.Count <= index)
+        {
+            return null;
+        }
+        return crewmenHaveList[index];
+    }
+
+    public bool removeCrewmanHaveList(Crewman crewman)
+    {
+        return crewmenHaveList.Remove(crewman);
+    }
+
+    public bool removeAtCrewmanHaveList(int index)
+    {
+        if (crewmenHaveList.Count <= index)
+        {
+            return false;
+        }
+        crewmenHaveList.RemoveAt(index);
+        return true;
     }
 }
