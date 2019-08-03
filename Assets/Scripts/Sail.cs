@@ -218,7 +218,8 @@ public class Sail : MonoBehaviour, IShipModule
             currentSpeed = Mathf.Lerp(currentSpeed, decisionSpeed, Time.deltaTime);
             //currentSpeed를 속도로 전진한다.
             //driveCrew의 항해속도 보너스를 적용시킴
-            currentSpeed = currentSpeed + (currentSpeed * (driveCrew.getsailing_speed() / 100));
+            if(driveCrew != null)
+                currentSpeed = currentSpeed + (currentSpeed * (driveCrew.getsailing_speed() / 100));
             shipModel.transform.position += currentSpeed * shipModel.transform.up * 0.016f;
         }
     }
