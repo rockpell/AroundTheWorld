@@ -25,11 +25,30 @@ public class UIManager : MonoBehaviour
 
     private int selectCrewIndex = -1; // 선택된 선원 번호(왼쪽부터 0번)
 
+    private static UIManager instance;
+    public static UIManager Instance { get { return instance; } }
+
+    void Awake()
+    {
+        if (instance == null)
+            instance = this;
+        else
+        {
+            Destroy(this.gameObject);
+            return;
+        }
+    }
+
     // Start is called before the first frame update
     void Start()
     {
         GameManager.Instance.gameStart(this);
         initUI();
+    }
+
+    void Update()
+    {
+        refreshUI();
     }
 
     public void outrangeClick()
@@ -80,37 +99,73 @@ public class UIManager : MonoBehaviour
 
     public void fishingButton()
     {
-        crewUIs[selectCrewIndex].setNowActMark("낚시");
-        crewStatusUIs[selectCrewIndex].setCrewNowActText("낚시");
-        hideSelectMenu();
+        if (CrewmanManager.Instance.crewmanFishing(CrewmanManager.Instance.getCrewman(selectCrewIndex)))
+        {
+            crewUIs[selectCrewIndex].setNowActMark("낚시");
+            crewStatusUIs[selectCrewIndex].setCrewNowActText("낚시");
+        }
+        else
+        {
+            Debug.Log("낚시 불가!");
+        }
 
-        showMessage("낚시!");
+        hideSelectMenu();
     }
 
     public void repairButton()
     {
-        crewUIs[selectCrewIndex].setNowActMark("수리");
-        crewStatusUIs[selectCrewIndex].setCrewNowActText("수리");
+        if (CrewmanManager.Instance.crewmanRepair(CrewmanManager.Instance.getCrewman(selectCrewIndex)))
+        {
+            crewUIs[selectCrewIndex].setNowActMark("수리");
+            crewStatusUIs[selectCrewIndex].setCrewNowActText("수리");
+        }
+        else
+        {
+            Debug.Log("수리 불가!");
+        }
+        
         hideSelectMenu();
     }
 
     public void eatButton()
     {
-        crewUIs[selectCrewIndex].setNowActMark("식사");
-        crewStatusUIs[selectCrewIndex].setCrewNowActText("식사");
+        if (CrewmanManager.Instance.crewmanEat(CrewmanManager.Instance.getCrewman(selectCrewIndex)))
+        {
+            crewUIs[selectCrewIndex].setNowActMark("식사");
+            crewStatusUIs[selectCrewIndex].setCrewNowActText("식사");
+        }
+        else
+        {
+            Debug.Log("식사 불가!");
+        }
         hideSelectMenu();
     }
 
     public void sleepButton()
     {
-        crewUIs[selectCrewIndex].setNowActMark("수면");
-        crewStatusUIs[selectCrewIndex].setCrewNowActText("수면");
+        if(CrewmanManager.Instance.crewmanSleep(CrewmanManager.Instance.getCrewman(selectCrewIndex)))
+        {
+            crewUIs[selectCrewIndex].setNowActMark("수면");
+            crewStatusUIs[selectCrewIndex].setCrewNowActText("수면");
+        }
+        else
+        {
+            Debug.Log("수면 불가!");
+        }
         hideSelectMenu();
     }
 
     public void takeControlButton()
     {
-        appointTakeControlCrew();
+        if (CrewmanManager.Instance.crewDrive(CrewmanManager.Instance.getCrewman(selectCrewIndex)))
+        {
+            appointTakeControlCrew();
+        }
+        else
+        {
+            Debug.Log("항해 불가!");
+        }
+        
         hideSelectMenu();
     }
 
@@ -132,31 +187,33 @@ public class UIManager : MonoBehaviour
 
     private void refreshUI()
     {
-
         refreshEtcUI();
         refreshSheepStatusUI();
+
+        for (int i = 0; i < CrewmanManager.Instance.howManyCrewman(); i++)
+        {
+            Crewman _crewman = CrewmanManager.Instance.getCrewman(i);
+
+            refreshCrewUI(i);
+        }
     }
 
     private void initUI()
     {
-        /*CrewmanAbilityWork[] crewData*/
-
         // 선원 정보를 이용하여 UI 갱신
 
-        //for (int i = 0; i < crewData.Length; i++)
-        //{
-        //    crewUIs[i].setCrewImage();
-        //    crewStatusUIs[i].setCrewImage();
+        for (int i = 0; i < CrewmanManager.Instance.howManyCrewman(); i++)
+        {
+            Crewman _crewman = CrewmanManager.Instance.getCrewman(i);
 
-        //    crewUIs[i].setActGauge();
-        //    crewUIs[i].setHungerGauge();
-        //    crewStatusUIs[i].setLeftActText();
-        //    crewStatusUIs[i].setHungerText();
-        //    crewStatusUIs[i].setCrewJobText();
+            crewUIs[i].setCrewImage(getCrewImage(_crewman));
+            crewStatusUIs[i].setCrewImage(getCrewImage(_crewman));
 
-        //    crewUIs[i].gameObject.SetActive(true);
-        //    crewStatusUIs[i].gameObject.SetActive(true);
-        //}
+            refreshCrewUI(i);
+
+            crewUIs[i].gameObject.SetActive(true);
+            crewStatusUIs[i].gameObject.SetActive(true);
+        }
 
         //sheepStatusUI.setShipDescriptionText("요트 설명 적힐곳");
     }
@@ -167,13 +224,14 @@ public class UIManager : MonoBehaviour
 
         Crewman _crew = CrewmanManager.Instance.getCrewman(crewIndex);
 
-        //crewUIs[crewIndex].setNowActMark("행동");
+        crewUIs[crewIndex].setNowActMark(actingEnumToString(_crew.whatActing()));
         crewUIs[crewIndex].setActGauge(_crew.getbehavior());
         crewUIs[crewIndex].setHungerGauge(_crew.getfull());
 
-        //crewStatusUIs[crewIndex].setCrewNowActText("행동");
+        crewStatusUIs[crewIndex].setCrewNowActText(actingEnumToString(_crew.whatActing()));
         crewStatusUIs[crewIndex].setLeftActText(10, _crew.getbehavior());
-        crewStatusUIs[crewIndex].setHungerText(4, _crew.getbehavior());
+        crewStatusUIs[crewIndex].setHungerText(4, _crew.getfull());
+        crewStatusUIs[crewIndex].setCrewJobText(getCrewJob(_crew));
     }
 
     private void refreshEtcUI()
@@ -210,6 +268,28 @@ public class UIManager : MonoBehaviour
         return null;
     }
 
+    private string getCrewJob(Crewman crewData)
+    {
+        if (crewData is Captain)
+        {
+            return "선장";
+        }
+        else if (crewData is Engineer)
+        {
+            return "엔지니어";
+        }
+        else if (crewData is Mate)
+        {
+            return "항해사";
+        }
+        else if (crewData is Angler)
+        {
+            return "강태공";
+        }
+
+        return null;
+    }
+
     public void refreshCalendar(Calendar calendar)
     {
         calendarDate.text = calendar.year + "년 " + calendar.month + "월 " + calendar.day + "일";
@@ -217,8 +297,27 @@ public class UIManager : MonoBehaviour
         calendarDDay.text = "D+" + calendar.dday;
     }
 
-    private void showMessage(string text)
+    public void showMessage(string text)
     {
         messageUI.enqueueMessage(text);
+    }
+
+    private string actingEnumToString(Acting acting)
+    {
+        switch (acting)
+        {
+            case Acting.FISHING:
+                return "낚시";
+            case Acting.REPAIR:
+                return "수리";
+            case Acting.SLEEP:
+                return "수면";
+            case Acting.EAT:
+                return "식사";
+            case Acting.DRIVE:
+                return "항해";
+        }
+
+        return null;
     }
 }

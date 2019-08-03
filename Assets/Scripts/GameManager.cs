@@ -46,6 +46,8 @@ public class GameManager : MonoBehaviour
     {
         nowMoney = initMoney;
 
+        setNowFishingRod(0);
+
         CrewmanManager.Instance.makeCaptain();
         CrewmanManager.Instance.makeEngineer();
     }
@@ -61,6 +63,7 @@ public class GameManager : MonoBehaviour
                 sumDeltaTime -= inGameStandardTime;
                 calendar.nextTime();
                 uiManager.refreshCalendar(calendar);
+                CrewmanManager.Instance.progressCrew();
             }
         }
     }

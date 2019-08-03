@@ -100,35 +100,48 @@ public class CrewmanManager : MonoBehaviour
         }
     }
 
-    public Crewman whoDrive()// 선원중 누가 항해를 하는지
-    {
-        for(int i = 0; i < crewmanList.Count; i++)
-        {
-            crewmanList[i].getDrive();
-            if (crewmanList[i].getDrive())
-            {
-                return crewmanList[i];
-            }
-        }
+    //public Crewman whoDrive()// 선원중 누가 항해를 하는지
+    //{
+    //    for(int i = 0; i < crewmanList.Count; i++)
+    //    {
+    //        crewmanList[i].getDrive();
+    //        if (crewmanList[i].getDrive())
+    //        {
+    //            return crewmanList[i];
+    //        }
+    //    }
         
+    //    return null;
+    //}
+
+    public Crewman whoDrive()
+    {
+        for (int i = 0; i < crewmanList.Count; i++)
+        {
+            if (crewmanList[i].getActingType() == Acting.DRIVE)
+                return crewmanList[i];
+        }
+
         return null;
     }
 
-    public bool crewDrive(Crewman crewman)//항해시키기
-    {
-        if (whoDrive() == null && actingCheck(crewman))
-        {
-            crewman.setDrive(true);
-            return true;
-        }
-        else if(whoDrive() != null && actingCheck(crewman))
-        {
-            crewDriveStop(whoDrive());
-            crewman.setDrive(true);
-            return true;
-        }
-        return false;
-    }
+    //public bool crewDrive(Crewman crewman)//항해시키기
+    //{
+    //    if (whoDrive() == null && actingCheck(crewman))
+    //    {
+    //        crewman.setDrive(true);
+    //        crewman.setActingType(Acting.DRIVE);
+    //        return true;
+    //    }
+    //    else if(whoDrive() != null && actingCheck(crewman))
+    //    {
+    //        crewDriveStop(whoDrive());
+    //        crewman.setDrive(true);
+    //        crewman.setActingType(Acting.DRIVE);
+    //        return true;
+    //    }
+    //    return false;
+    //}
 
     public void crewDriveStop(Crewman crewman)//항해그만두기
     {
@@ -136,6 +149,19 @@ public class CrewmanManager : MonoBehaviour
         {
             crewman.setDrive(false);
         }
+    }
+
+    public bool crewDrive(Crewman crewman)
+    {
+        for(int i = 0; i < crewmanList.Count; i++)
+        {
+            if (crewmanList[i].getActingType() == Acting.DRIVE)
+                crewmanList[i].setActingType(Acting.NOTHING);
+        }
+
+        crewman.setActingType(Acting.DRIVE);
+
+        return false;
     }
 
     public bool crewmanSleep(Crewman crewman)//재우기
@@ -148,6 +174,7 @@ public class CrewmanManager : MonoBehaviour
             if (7 <= calendar.time && calendar.time < 19)
             {
                 crewman.setSleep(true);
+                crewman.setActingType(Acting.SLEEP);
                 behavior = crewman.getbehavior() + 5;
                 if(behavior > 10)
                 {
@@ -163,6 +190,7 @@ public class CrewmanManager : MonoBehaviour
             else
             {
                 crewman.setSleep(true);
+                crewman.setActingType(Acting.SLEEP);
                 crewman.setbehavior(10);
                 time = calendar.time + 6;
                 if (time >= 24)
@@ -181,7 +209,22 @@ public class CrewmanManager : MonoBehaviour
     {
         if (actingCheck(crewman))
         {
-            return true;
+            if(crewman.getfull() < 4)
+            {
+                if (GameManager.Instance.Food > 0)
+                {
+                    GameManager.Instance.Food -= 1;
+                    crewman.setfull(crewman.getfull() + 1);
+                    return true;
+                }
+                UIManager.Instance.showMessage("식량이 부족합니다.");
+            }
+            else
+            {
+                UIManager.Instance.showMessage("배가 부릅니다.");
+            }
+
+            return false;
         }
         return false;
 
@@ -189,49 +232,79 @@ public class CrewmanManager : MonoBehaviour
     public bool crewmanFishing(Crewman crewman)//낚시하기
     {
         int time = -1;
-        if (actingCheck(crewman) && crewman.getbehavior() >= 1)
+        if (actingCheck(crewman))
         {
-            crewman.setFishing(true);
-            crewman.setbehavior(crewman.getbehavior() - 1);
-
-            time = calendar.time + 1;
-
-            if (time >= 24)
+            if (crewman.getbehavior() >= 1)
             {
-                time -= 24;
+                crewman.setFishing(true);
+                crewman.setActingType(Acting.FISHING);
+                crewman.setbehavior(crewman.getbehavior() - 1);
+
+                time = calendar.time + 1;
+
+                if (time >= 24)
+                {
+                    time -= 24;
+                }
+
+                crewman.settime(time);
+                return true;
+
             }
-
-            crewman.settime(time);
-            return true;
-
+            UIManager.Instance.showMessage("행동력이 부족합니다.");
         }
+
         return false;
     }
 
     public bool crewmanRepair(Crewman crewman)// 수리하기
     {
-        if (actingCheck(crewman) && crewman.getbehavior() >= 2)
+        if (actingCheck(crewman))
         {
-            if(crewman.gettype() == 1)
+            //if (crewman.getbehavior() >= 2)
+            //{
+            //    if (crewman.gettype() == 1)
+            //    {
+            //        crewman.setbehavior(crewman.getbehavior() - 2);
+            //        return true;
+            //    }
+            //    else if (crewman.getbehavior() >= 3)
+            //    {
+            //        crewman.setbehavior(crewman.getbehavior() - 3);
+            //        return true;
+            //    }
+            //}
+            if (crewman.gettype() == 1)
             {
-                crewman.setbehavior(crewman.getbehavior() - 2);
-                return true;
+                if (crewman.getbehavior() >= 2)
+                {
+                    crewman.setbehavior(crewman.getbehavior() - 2);
+                    UIManager.Instance.showMessage("배가 수리되었습니다.");
+                    return true;
+                }
             }
             else if (crewman.getbehavior() >= 3)
             {
                 crewman.setbehavior(crewman.getbehavior() - 3);
+                UIManager.Instance.showMessage("배가 수리되었습니다.");
                 return true;
             }
+            UIManager.Instance.showMessage("행동력이 부족합니다.");
         }
         return false;
     }
 
     public bool actingCheck(Crewman crewman)//행동을 하는지, 행동을 하면 false, 안하면 true
     {
-        if( Acting.NOTHING == crewman.whatActing())
-        {
+        //if( Acting.NOTHING == crewman.whatActing())
+        //{
+        //    return true;
+        //}
+
+        if (crewman.getActingType() == Acting.NOTHING)
             return true;
-        }
+
+        UIManager.Instance.showMessage("다른 행동을 하는중입니다.");
         return false;
     }
     public void crewmanWakeUpCount(Crewman crewman)//시간이 되면 깨우기
@@ -239,17 +312,28 @@ public class CrewmanManager : MonoBehaviour
         if(crewman.gettime() == calendar.time)
         {
             crewman.setSleep(false);
+            crewman.setActingType(Acting.NOTHING);
         }
     }
 
-     
-
-    public bool crewmanCount(Crewman crewman)//시간이 되면 낚시 그만두기 true면 그만 false면 계속
+    public bool crewmanFishingCount(Crewman crewman)//시간이 되면 낚시 그만두기 true면 그만 false면 계속
     {
         if (crewman.gettime() == calendar.time)
         {
             crewman.setFishing(false);
+            crewman.setActingType(Acting.NOTHING);
+
+            if (crewmanFishingYes(crewman, GameManager.Instance.getNowFishingRod()))
+            {
+                GameManager.Instance.Food += 2;
+                UIManager.Instance.showMessage("낚시 성공! \n식량 2를 획득하였습니다.");
                 return true;
+            }
+            else
+            {
+                UIManager.Instance.showMessage("낚시 실패!");
+                return false;
+            }
         }
         return false;
         
@@ -268,5 +352,21 @@ public class CrewmanManager : MonoBehaviour
     public int howManyCrewman()//선원의 수
     {
         return crewmanList.Count;
+    }
+
+    public void progressCrew()
+    {
+        for(int i = 0; i < crewmanList.Count; i++)
+        {
+            if (crewmanList[i].getActingType() == Acting.SLEEP)
+            {
+                crewmanWakeUpCount(crewmanList[i]);
+            }
+            else if(crewmanList[i].getActingType() == Acting.FISHING)
+            {
+                crewmanFishingCount(crewmanList[i]);
+            }
+        }
+        
     }
 }

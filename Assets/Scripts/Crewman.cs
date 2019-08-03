@@ -80,9 +80,13 @@
     {
         return sailing_speed;
     }
-    public void setfull(int minus)
+    //public void setfull(int minus)
+    //{
+    //    full = full - minus;
+    //}
+    public void setfull(int value)
     {
-        full = full - minus;
+        full = value;
     }
     public int getfull()
     {
@@ -164,6 +168,16 @@
     public int gettime()
     {
         return time;
+    }
+
+    public void setActingType(Acting acting)
+    {
+        acting_type = acting;
+    }
+
+    public Acting getActingType()
+    {
+        return acting_type;
     }
 }
 
