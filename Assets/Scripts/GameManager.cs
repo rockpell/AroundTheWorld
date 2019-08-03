@@ -19,7 +19,7 @@ public class GameManager : MonoBehaviour
 
     private List<YachtType> yachtHaveList;
     private List<FishingRodType> fishingRodHaveList;
-    private List<Crewman> crewmenHaveList;
+    private List<Crewman> crewmenHaveList; // 배에 안탄 선원, 배에 타고 있는 선원 포함
 
     private UIManager uiManager;
     private Calendar calendar;
