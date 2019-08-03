@@ -8,6 +8,7 @@ public class CrewmanManager : MonoBehaviour
 {
     private static CrewmanManager instance;
     public static  CrewmanManager Instance { get { return instance; } }
+    private GameManager gamemanager;
     private Calendar calendar;
     private int howmany;
 
@@ -27,6 +28,7 @@ public class CrewmanManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        calendar = gamemanager.Calendar;
     }
 
     // Update is called once per frame
@@ -136,7 +138,7 @@ public class CrewmanManager : MonoBehaviour
         }
     }
 
-    public bool crewmanSleep(Crewman crewman, Calendar calendar)//재우기
+    public bool crewmanSleep(Crewman crewman)//재우기
     {
         int behavior;
         int time = -1;
