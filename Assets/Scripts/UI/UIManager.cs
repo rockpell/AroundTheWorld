@@ -11,6 +11,7 @@ public class UIManager : MonoBehaviour
     [SerializeField] private CrewStatusUI[] crewStatusUIs;
     [SerializeField] private GameObject crewHighlight;
     [SerializeField] private EtcStatusUI etcStatusUI;
+    [SerializeField] private SheepStatusUI sheepStatusUI;
 
     [SerializeField] private Text calendarDate;
     [SerializeField] private Text calendarTime;
@@ -27,12 +28,6 @@ public class UIManager : MonoBehaviour
     void Start()
     {
         GameManager.Instance.gameStart(this);
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-
     }
 
     public void outrangeClick()
@@ -131,22 +126,11 @@ public class UIManager : MonoBehaviour
         crewStatusUIs[selectCrewIndex].setCrewNowActText("활동중");
     }
 
-    public void refreshCrewUI(/*CrewmanAbilityWork crewData, */int crewIndex)
+    public void initUI()
     {
-        // 선원 데이터를 가져와서 UI 갱신
+        /*CrewmanAbilityWork[] crewData*/
 
-        //crewUIs[crewIndex].setNowActMark("행동");
-        //crewUIs[crewIndex].setActGauge(5);
-        //crewUIs[crewIndex].setHungerGauge(2);
-
-        //crewStatusUIs[crewIndex].setCrewNowActText("행동");
-        //crewStatusUIs[crewIndex].setLeftActText(10, 5);
-        //crewStatusUIs[crewIndex].setHungerText(4, 2);
-    }
-
-    public void initCrewUI(/*CrewmanAbilityWork[] crewData*/)
-    {
-        // 선원 정보를 이용하여 UI 생성
+        // 선원 정보를 이용하여 UI 갱신
 
         //for (int i = 0; i < crewData.Length; i++)
         //{
@@ -162,12 +146,33 @@ public class UIManager : MonoBehaviour
         //    crewUIs[i].gameObject.SetActive(true);
         //    crewStatusUIs[i].gameObject.SetActive(true);
         //}
+
+        //sheepStatusUI.setShipDescriptionText("요트 설명 적힐곳");
+    }
+
+    public void refreshCrewUI(/*CrewmanAbilityWork crewData, */int crewIndex)
+    {
+        // 선원 데이터를 가져와서 UI 갱신
+
+        //crewUIs[crewIndex].setNowActMark("행동");
+        //crewUIs[crewIndex].setActGauge(5);
+        //crewUIs[crewIndex].setHungerGauge(2);
+
+        //crewStatusUIs[crewIndex].setCrewNowActText("행동");
+        //crewStatusUIs[crewIndex].setLeftActText(10, 5);
+        //crewStatusUIs[crewIndex].setHungerText(4, 2);
     }
 
     public void refreshEtcUI()
     {
         etcStatusUI.setFishingRodText(GameManager.Instance.getNowFishingRod().Durability);
         etcStatusUI.setFoodText(GameManager.Instance.Food);
+    }
+
+    public void refreshSheepStatusUI()
+    {
+        sheepStatusUI.setSailText(100, 99); // 돛 내구도
+        sheepStatusUI.setBodyShipText(100, 98); // 선체 내구도
     }
 
     private Sprite getCrewImage(Crewman crewData) 
@@ -196,6 +201,6 @@ public class UIManager : MonoBehaviour
     {
         calendarDate.text = calendar.year + "년 " + calendar.month + "월 " + calendar.day + "일";
         calendarTime.text = calendar.time + "시";
-        calendarDDay.text = "D+";
+        calendarDDay.text = "D+" + calendar.dday;
     }
 }

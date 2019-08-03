@@ -4,7 +4,7 @@
     public int month = 1;
     public int day = 1;
     public int time = 0;
-
+    public int dday = 0;
 
     public void nextTime()
     {
@@ -18,6 +18,7 @@
         if(time  == 24)
         {
             ++day;
+            ++dday;
             day = checkMonth(month, day);
             time = 0;
         }

@@ -191,8 +191,6 @@ public class MapGenerator : MonoBehaviour
         if (_index == -1)
             Debug.LogError("randMiddleSection error!");
 
-        Debug.Log("_index: " + _index + "  name: " + middleSection[_index].ToString());
-
         return middleSection[_index];
     }
 
