@@ -48,7 +48,7 @@ public class CrewmanManager : MonoBehaviour
         return false;
     }
 
-    public bool makeEngineer(int type)//엔지니어 생성 단,선원이 4명 이하일때
+    public bool makeEngineer()//엔지니어 생성 단,선원이 4명 이하일때
     {
         if(crewmanList.Count < 4)
         {
@@ -59,7 +59,7 @@ public class CrewmanManager : MonoBehaviour
         return false;
         
     }
-    public bool makeMate(int type)//항해사 생성 단,선원이 4명 이하일때
+    public bool makeMate()//항해사 생성 단,선원이 4명 이하일때
     {
         if (crewmanList.Count < 4)
         {
@@ -70,7 +70,7 @@ public class CrewmanManager : MonoBehaviour
         return false;
 
     }
-    public bool makeAngler(int type)//강태공 생성 단,선원이 4명 이하일때
+    public bool makeAngler()//강태공 생성 단,선원이 4명 이하일때
     {
         if (crewmanList.Count < 4)
         {
