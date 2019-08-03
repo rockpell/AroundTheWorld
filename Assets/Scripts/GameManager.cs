@@ -21,10 +21,9 @@ public class GameManager : MonoBehaviour
     private Calendar calendar;
 
     private FishingRod nowFishingRod;
-    // 낚시대
-    // 요트
-    // 선원
 
+    private Sail sail;
+    
     private float inGameStandardTime = 3; // 현실 시간 기준 게임 내의 한시간
     private float sumDeltaTime;
 
@@ -132,5 +131,10 @@ public class GameManager : MonoBehaviour
 
     public Calendar Calendar {
         get { return calendar; }
+    }
+
+    public Sail Sail {
+        get { return sail; }
+        set { sail = value; }
     }
 }
