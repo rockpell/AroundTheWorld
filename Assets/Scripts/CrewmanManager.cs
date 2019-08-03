@@ -9,7 +9,7 @@ public class CrewmanManager : MonoBehaviour
     private static CrewmanManager instance;
     public static  CrewmanManager Instance { get { return instance; } }
     private Calendar calendar;
-    private int[] time;
+    private int howmany;
 
 
 
@@ -27,11 +27,6 @@ public class CrewmanManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        time = new int[4];
-        for(int i = 0; i < 4; i++)
-        {
-            time[i] = -1;
-        }
     }
 
     // Update is called once per frame
@@ -97,6 +92,10 @@ public class CrewmanManager : MonoBehaviour
     public void dieCrewman(Crewman crewman)//해당되는 crewman삭제
     {
         crewmanList.RemoveAt(crewman.getindex());
+        for(int i = 0; i< crewmanList.Count; i++)
+        {
+            crewmanList[i].setindex(i);
+        }
     }
 
     public Crewman whoDrive()// 선원중 누가 항해를 하는지
@@ -210,7 +209,6 @@ public class CrewmanManager : MonoBehaviour
         }
         return false;
     }
-    /*
     public void crewmanWakeUpCount(Crewman crewman)//시간이 되면 깨우기
     {
         if(crewman.gettime() == calendar.time)
@@ -218,27 +216,32 @@ public class CrewmanManager : MonoBehaviour
             crewman.setSleep(false);
         }
     }
-    */
-    public void crewmanWkeUpCount(Crewman crewman)
-    {
-        int time = crewman.gettime();
-        if (time > 0)
-        {
-            crewman.settime(time - 1);
-        }
-        else if (time == 0)
-        {
-            crewman.settime(time - 1);
-            crewman.setSleep(false);
-        }
-    }
+
      
 
-    public void crewmanCount(Crewman crewman)//시간이 되면 낚시 그만두기
+    public bool crewmanCount(Crewman crewman)//시간이 되면 낚시 그만두기 true면 그만 false면 계속
     {
         if (crewman.gettime() == calendar.time)
         {
             crewman.setFishing(false);
+                return true;
         }
+        return false;
+        
+    }
+
+    public bool crewmanFishingYes(Crewman crewman, FishingRod fishingRod)//낚시 성공 실패
+    {
+        if (Random.Range(0.0f, 100.0f) < (crewman.getfishing() + fishingRod.FishingProbability))
+        {
+            return true;
+        }
+        else
+            return false;
+    }
+
+    public int howManyCrewman()//선원의 수
+    {
+        return crewmanList.Count;
     }
 }
