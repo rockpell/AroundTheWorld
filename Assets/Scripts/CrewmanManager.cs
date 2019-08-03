@@ -172,7 +172,6 @@ public class CrewmanManager : MonoBehaviour
         int time = -1;
         if (actingCheck(crewman))
         {
-            crewman.setbehavior(crewman.getbehavior() + 10);
             if (7 <= calendar.time && calendar.time < 19)
             {
                 crewman.setSleep(true);
