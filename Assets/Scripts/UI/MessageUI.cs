@@ -41,6 +41,7 @@ public class MessageUI : MonoBehaviour
 
     private IEnumerator sequence()
     {
+        setMessageText("");
         yield return StartCoroutine(downMessage());
         while(messageQueue.Count > 0)
         {
