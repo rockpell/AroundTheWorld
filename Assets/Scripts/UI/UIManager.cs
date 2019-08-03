@@ -164,7 +164,9 @@ public class UIManager : MonoBehaviour
     {
         if (CrewmanManager.Instance.crewDrive(CrewmanManager.Instance.getCrewman(selectCrewIndex)))
         {
-            appointTakeControlCrew();
+            crewUIs[selectCrewIndex].setNowActMark("항해");
+            crewStatusUIs[selectCrewIndex].setCrewNowActText("항해");
+            //appointTakeControlCrew();
         }
         else
         {
@@ -176,7 +178,7 @@ public class UIManager : MonoBehaviour
 
     private void appointTakeControlCrew()
     {
-        for(int i = 0; i < crewUIs.Length; i++)
+        for (int i = 0; i < crewUIs.Length; i++)
         {
             if (i == selectCrewIndex) continue;
             crewUIs[i].toggleTakeControlMark(false);
@@ -203,7 +205,7 @@ public class UIManager : MonoBehaviour
         }
     }
 
-    private void initUI()
+    public void initUI()
     {
         // 선원 정보를 이용하여 UI 갱신
 
@@ -229,11 +231,11 @@ public class UIManager : MonoBehaviour
 
         Crewman _crew = CrewmanManager.Instance.getCrewman(crewIndex);
 
-        crewUIs[crewIndex].setNowActMark(actingEnumToString(_crew.whatActing()));
+        crewUIs[crewIndex].setNowActMark(actingEnumToString(_crew.getActingType()));
         crewUIs[crewIndex].setActGauge(_crew.getbehavior());
         crewUIs[crewIndex].setHungerGauge(_crew.getfull());
 
-        crewStatusUIs[crewIndex].setCrewNowActText(actingEnumToString(_crew.whatActing()));
+        crewStatusUIs[crewIndex].setCrewNowActText(actingEnumToString(_crew.getActingType()));
         crewStatusUIs[crewIndex].setLeftActText(10, _crew.getbehavior());
         crewStatusUIs[crewIndex].setHungerText(4, _crew.getfull());
         crewStatusUIs[crewIndex].setCrewJobText(getCrewJob(_crew));
@@ -321,6 +323,7 @@ public class UIManager : MonoBehaviour
                 return "식사";
             case Acting.DRIVE:
                 return "항해";
+
         }
 
         return null;

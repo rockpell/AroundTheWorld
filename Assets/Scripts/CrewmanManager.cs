@@ -98,6 +98,8 @@ public class CrewmanManager : MonoBehaviour
         {
             crewmanList[i].setindex(i);
         }
+
+        UIManager.Instance.initUI(); // 선원 변경 되었기때문에 UI 초기화 필요
     }
 
     //public Crewman whoDrive()// 선원중 누가 항해를 하는지
@@ -161,7 +163,7 @@ public class CrewmanManager : MonoBehaviour
 
         crewman.setActingType(Acting.DRIVE);
 
-        return false;
+        return true;
     }
 
     public bool crewmanSleep(Crewman crewman)//재우기
@@ -367,6 +369,20 @@ public class CrewmanManager : MonoBehaviour
                 crewmanFishingCount(crewmanList[i]);
             }
         }
-        
+    }
+
+    public void hungryCrewProcess()
+    {
+        for (int i = 0; i < crewmanList.Count; i++)
+        {
+            if(crewmanList[i].getfull() > 0)
+            {
+                crewmanList[i].setfull(crewmanList[i].getfull() - 1);
+            }
+            else
+            {
+                dieCrewman(crewmanList[i]);
+            }
+        }
     }
 }
