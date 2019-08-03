@@ -61,9 +61,16 @@ public class GameManager : MonoBehaviour
             if (sumDeltaTime > inGameStandardTime)
             {
                 sumDeltaTime -= inGameStandardTime;
-                calendar.nextTime();
+
+                bool _isNextDay = calendar.nextTime();
+
                 uiManager.refreshCalendar(calendar);
                 CrewmanManager.Instance.progressCrew();
+
+                if (_isNextDay)
+                {
+                    CrewmanManager.Instance.hungryCrewProcess();
+                }
             }
         }
     }

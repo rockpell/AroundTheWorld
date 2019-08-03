@@ -6,10 +6,15 @@
     public int time = 0;
     public int dday = 0;
 
-    public void nextTime()
+    public bool nextTime()
     {
         ++time;
         time = checkday(month, day, time);
+
+        if (dday != 0 && time == 0)
+            return true;
+
+        return false;
     }
     
 
