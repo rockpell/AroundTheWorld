@@ -42,6 +42,8 @@ public class GameManager : MonoBehaviour
     {
         nowMoney = initMoney;
         calendar = new Calendar();
+
+        CrewmanManager.Instance.makeCaptain();
     }
 
     // Update is called once per frame
@@ -112,5 +114,9 @@ public class GameManager : MonoBehaviour
     public int Food {
         get { return food; }
         set { food = value; }
+    }
+
+    public Calendar Calendar {
+        get { return calendar; }
     }
 }
