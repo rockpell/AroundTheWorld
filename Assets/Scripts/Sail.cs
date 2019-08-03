@@ -36,6 +36,7 @@ public class Sail : MonoBehaviour, IShipModule
         isControl = true;
         isSailDown = true;
         shipDegree = shipModel.transform.rotation.eulerAngles.z;
+        GameManager.Instance.Sail = this;
     }
 
     // Update is called once per frame
