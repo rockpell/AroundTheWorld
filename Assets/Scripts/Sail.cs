@@ -51,7 +51,7 @@ public class Sail : MonoBehaviour, IShipModule
     private void checkKeyInput()
     {
         //crew에 선원 할당식
-        if(driveCrew != null)
+        if((driveCrew != null)&&(driveCrew.getDrive() == true))
         {
             if(Input.GetKeyDown(KeyCode.A))
             {
@@ -60,6 +60,7 @@ public class Sail : MonoBehaviour, IShipModule
                     isControl = false;
                     isRight = false;
                     originalDegree = shipDegree;
+                    driveCrew.setbehavior(driveCrew.getbehavior() - 1);
                 }
             }
             if(Input.GetKey(KeyCode.A))
@@ -90,6 +91,7 @@ public class Sail : MonoBehaviour, IShipModule
                     isControl = false;
                     isRight = true;
                     originalDegree = shipDegree;
+                    driveCrew.setbehavior(driveCrew.getbehavior() - 1);
                 }
             }
             if (Input.GetKey(KeyCode.D))
@@ -137,6 +139,7 @@ public class Sail : MonoBehaviour, IShipModule
         if(sailImage.Length > 1)
         {
             sailModel.GetComponent<SpriteRenderer>().sprite = sailImage[0];
+            driveCrew.setbehavior(driveCrew.getbehavior() - 2);
         }
         Debug.Log("돛 내림!");
     }
@@ -144,7 +147,10 @@ public class Sail : MonoBehaviour, IShipModule
     {
         isSailDown = false;
         if (sailImage.Length > 1)
+        {
             sailModel.GetComponent<SpriteRenderer>().sprite = sailImage[1];
+            driveCrew.setbehavior(driveCrew.getbehavior() - 2);
+        }
         Debug.Log("돛 올림!");
     }
     //이거 호출되는거면 그냥 내구도 감소시켜주면 됨
@@ -211,6 +217,8 @@ public class Sail : MonoBehaviour, IShipModule
         {
             currentSpeed = Mathf.Lerp(currentSpeed, decisionSpeed, Time.deltaTime);
             //currentSpeed를 속도로 전진한다.
+            //driveCrew의 항해속도 보너스를 적용시킴
+            currentSpeed = currentSpeed + (currentSpeed * (driveCrew.getsailing_speed() / 100));
             shipModel.transform.position += currentSpeed * shipModel.transform.up * 0.016f;
         }
     }
