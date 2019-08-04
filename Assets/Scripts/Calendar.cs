@@ -3,7 +3,7 @@
     public int year = 2019;
     public int month = 1;
     public int day = 1;
-    public int time = 0;
+    public int time = 9;
     public int dday = 0;
 
     public bool nextTime()
