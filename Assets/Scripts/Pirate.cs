@@ -5,17 +5,23 @@ using UnityEngine;
 public class Pirate : MonoBehaviour
 {
     [SerializeField] private float speed;
+    [SerializeField] private float selfDestroyTime;
+    private float curTime;
     [SerializeField] private float detectRange;
     [SerializeField] private Transform shootPosition;
-    [SerializeField] private float decisionDegree;
-    [SerializeField] private GameObject playerShip;
-    [SerializeField] private float currentDegree;
+
+    private float decisionDegree;
+    private float currentDegree;
+
+    private GameObject playerShip;
+    
     void Start()
     {
     }
     
     void Update()
     {
+        selfDestroy();
         if(playerShip == null)
         {
             playerShip = GameManager.Instance.ShipBody.gameObject;
@@ -46,7 +52,17 @@ public class Pirate : MonoBehaviour
     private void moveShip()
     {
         rotateShip();
-        this.transform.position += transform.up * speed * Time.deltaTime;
+        if((playerShip.transform.position - this.transform.position).magnitude <= detectRange)
+        {
+            this.transform.position += transform.up * speed * Time.deltaTime;
+        }
+    }
+
+    private void selfDestroy()
+    {
+        curTime += Time.deltaTime;
+        if (curTime > selfDestroyTime)
+            Destroy(this.gameObject);
     }
 
     private void shipPlunder()
