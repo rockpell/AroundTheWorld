@@ -5165,7 +5165,8 @@ MonoBehaviour:
   - {fileID: 2854723747674427681, guid: 4be7872c0aebb2e47957b69f00662d1c, type: 3}
   - {fileID: 5034064937581367020, guid: dbd9e4edcd7981b49916a8164857df2e, type: 3}
   - {fileID: 3336049093541497926, guid: b959a51f2de889d46ad7dd581b818825, type: 3}
-  middleSectionProbability: 460000000800000008000000080000000300000003000000
+  - {fileID: 1547136157492771244, guid: eb840d2072cd8f64cbc6a6bcfaa9429f, type: 3}
+  middleSectionProbability: 46000000080000000800000008000000020000000200000002000000
   startPoint: {fileID: 1528782032}
   zeroPosition: {x: 0, y: 0, z: 0}
   sectionSize: {x: 10.2, y: 10.2}
