@@ -207,9 +207,15 @@ public class MainMenu : MonoBehaviour
 
     void PlusAnglerOnClick()
     {
-        if (a_count > 0 && CrewmanManager.Instance.howManyCrewman() < 4)
+        if (a_count >= 2 && CrewmanManager.Instance.howManyCrewman() < 4)
         {
             plusAngler.interactable = true;
+            CrewmanManager.Instance.makeAngler();
+            a_count--;
+        }
+        if (a_count == 1 && CrewmanManager.Instance.howManyCrewman() < 4)
+        {
+            plusAngler.interactable = false;
             CrewmanManager.Instance.makeAngler();
             a_count--;
         }
@@ -218,7 +224,7 @@ public class MainMenu : MonoBehaviour
     }
     void PlusEngineerOnClick()
     {
-        if (e_count > 2 && CrewmanManager.Instance.howManyCrewman() < 4)
+        if (e_count >= 2 && CrewmanManager.Instance.howManyCrewman() < 4)
         {
             plusEngineer.interactable = true;
             CrewmanManager.Instance.makeEngineer();
@@ -235,7 +241,7 @@ public class MainMenu : MonoBehaviour
     }
     void PlusMateOnClick()
     {
-        if (m_count > 2 && CrewmanManager.Instance.howManyCrewman() < 4)
+        if (m_count >= 2 && CrewmanManager.Instance.howManyCrewman() < 4)
         {
             plusMate.interactable = true;
             CrewmanManager.Instance.makeMate();
@@ -292,6 +298,7 @@ public class MainMenu : MonoBehaviour
 
     void PlusYacht_aOnClick()
     {
+
         if (GameManager.Instance.isContainYacth(YachtType.TYPE_A))
         {
 
@@ -327,10 +334,10 @@ public class MainMenu : MonoBehaviour
 
     void Yacht_aOnClick()
     {
-        if (GameManager.Instance.InitMoney >= 2000)
+        if (GameManager.Instance.InitMoney >= 2000 && !GameManager.Instance.isContainYacth(YachtType.TYPE_A))
         {
-            GameManager.Instance.InitMoney -= 2000;
             GameManager.Instance.addYachtHaveList(YachtType.TYPE_A);
+            GameManager.Instance.InitMoney -= 2000;
             textMoney();
         }
             
