@@ -31,6 +31,8 @@ public class GameManager : MonoBehaviour
     private float inGameStandardTime = 3; // 현실 시간 기준 게임 내의 한시간
     private float sumDeltaTime;
 
+    private int reward = 0;
+
     private GameEnding nowGameEnding = GameEnding.NONE;
 
     private void Awake()
@@ -109,6 +111,7 @@ public class GameManager : MonoBehaviour
         switch (gameEnding)
         {
             case GameEnding.ARRIVE:
+                reward = rewardMoney();
                 UIManager.Instance.endGame(gameEnding);
                 break;
             case GameEnding.SHIPWRECK: // 난파엔딩
@@ -211,6 +214,10 @@ public class GameManager : MonoBehaviour
         set { shipBody = value; }
     }
 
+    public int Reward {
+        get { return reward; }
+    }
+
     public GameEnding NowGameEnding {
         get { return nowGameEnding; }
         set { nowGameEnding = value; }
@@ -285,5 +292,22 @@ public class GameManager : MonoBehaviour
         Time.timeScale = 1;
         isGameEnd = false;
         initGenerateCount();
+    }
+
+    private int rewardMoney()
+    {
+        int _result = sumGenerateCount();
+        initMoney += _result;
+        return _result;
+    }
+
+    private int sumGenerateCount()
+    {
+        int _sum = 0;
+        for(int i = 0; i < generateCount.Length; i++)
+        {
+            _sum += generateCount[i];
+        }
+        return _sum;
     }
 }
