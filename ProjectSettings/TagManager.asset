@@ -10,6 +10,7 @@ TagManager:
   - Island
   - StartPort
   - EndPort
+  - Typoon
   layers:
   - Default
   - TransparentFX
