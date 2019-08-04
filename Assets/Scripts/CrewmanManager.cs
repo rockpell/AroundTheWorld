@@ -237,20 +237,25 @@ public class CrewmanManager : MonoBehaviour
         {
             if (crewman.getbehavior() >= 1)
             {
-                crewman.setFishing(true);
-                crewman.setActingType(Acting.FISHING);
-                crewman.setbehavior(crewman.getbehavior() - 1);
-
-                time = calendar.time + 1;
-
-                if (time >= 24)
+                if(GameManager.Instance.getNowFishingRod().Durability > 0)
                 {
-                    time -= 24;
+                    crewman.setFishing(true);
+                    crewman.setActingType(Acting.FISHING);
+                    crewman.setbehavior(crewman.getbehavior() - 1);
+
+                    GameManager.Instance.getNowFishingRod().Durability -= 2;
+
+                    time = calendar.time + 1;
+
+                    if (time >= 24)
+                    {
+                        time -= 24;
+                    }
+
+                    crewman.settime(time);
+                    return true;
                 }
-
-                crewman.settime(time);
-                return true;
-
+                UIManager.Instance.showMessage("낚시대의 내구도가 부족합니다.");
             }
             UIManager.Instance.showMessage("행동력이 부족합니다.");
         }

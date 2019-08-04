@@ -19,7 +19,11 @@ public class FishingRod
 
     public int Durability {
         get { return durability; }
-        set { durability = value; }
+        set
+        {
+            durability = value;
+            if (durability < 0) durability = 0;
+        }
     }
 }
 
