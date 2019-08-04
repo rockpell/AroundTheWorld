@@ -415,6 +415,7 @@ public class CrewmanManager : MonoBehaviour
     public void notifyStealDrive(Crewman crewman)
     {
         crewman.setActingType(Acting.NOTHING);
-        GameManager.Instance.Sail.DriveCrew = null;
+        if(crewman == GameManager.Instance.Sail.DriveCrew)
+            GameManager.Instance.Sail.DriveCrew = null;
     }
 }
