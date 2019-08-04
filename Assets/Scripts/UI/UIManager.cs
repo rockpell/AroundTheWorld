@@ -167,7 +167,7 @@ public class UIManager : MonoBehaviour
         {
             crewUIs[selectCrewIndex].setNowActMark("항해");
             crewStatusUIs[selectCrewIndex].setCrewNowActText("항해");
-            GameManager.Instance.Sail.DriveCrew = CrewmanManager.Instance.getCrewman(selectCrewIndex);
+            //GameManager.Instance.Sail.DriveCrew = CrewmanManager.Instance.getCrewman(selectCrewIndex);
             //appointTakeControlCrew();
         }
         else

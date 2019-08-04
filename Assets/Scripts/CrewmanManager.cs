@@ -162,6 +162,7 @@ public class CrewmanManager : MonoBehaviour
         }
 
         crewman.setActingType(Acting.DRIVE);
+        GameManager.Instance.Sail.DriveCrew = crewman;
 
         return true;
     }
@@ -172,6 +173,8 @@ public class CrewmanManager : MonoBehaviour
         int time = -1;
         if (actingCheck(crewman))
         {
+            notifyStealDrive(crewman);
+
             if (7 <= calendar.time && calendar.time < 19)
             {
                 crewman.setSleep(true);
@@ -210,19 +213,21 @@ public class CrewmanManager : MonoBehaviour
     {
         if (actingCheck(crewman))
         {
-            if(crewman.getfull() < 4)
+            notifyStealDrive(crewman);
+
+            if (GameManager.Instance.Food > 0)
             {
-                if (GameManager.Instance.Food > 0)
+                if (crewman.getfull() < 4)
                 {
                     GameManager.Instance.Food -= 1;
                     crewman.setfull(crewman.getfull() + 1);
                     return true;
                 }
-                UIManager.Instance.showMessage("식량이 부족합니다.");
+                UIManager.Instance.showMessage("배가 부릅니다.");
             }
             else
             {
-                UIManager.Instance.showMessage("배가 부릅니다.");
+                UIManager.Instance.showMessage("식량이 부족합니다.");
             }
 
             return false;
@@ -230,14 +235,57 @@ public class CrewmanManager : MonoBehaviour
         return false;
 
     }
+
+    public bool crewmanRepair(Crewman crewman)// 수리하기
+    {
+        if (actingCheck(crewman))
+        {
+            //if (crewman.getbehavior() >= 2)
+            //{
+            //    if (crewman.gettype() == 1)
+            //    {
+            //        crewman.setbehavior(crewman.getbehavior() - 2);
+            //        return true;
+            //    }
+            //    else if (crewman.getbehavior() >= 3)
+            //    {
+            //        crewman.setbehavior(crewman.getbehavior() - 3);
+            //        return true;
+            //    }
+            //}
+
+            notifyStealDrive(crewman);
+
+            if (crewman.gettype() == 1)
+            {
+                if (crewman.getbehavior() >= 2)
+                {
+                    crewman.setbehavior(crewman.getbehavior() - 2);
+                    UIManager.Instance.showMessage("배가 수리되었습니다.");
+                    return true;
+                }
+            }
+            else if (crewman.getbehavior() >= 3)
+            {
+                crewman.setbehavior(crewman.getbehavior() - 3);
+                UIManager.Instance.showMessage("배가 수리되었습니다.");
+                return true;
+            }
+            UIManager.Instance.showMessage("행동력이 부족합니다.");
+        }
+        return false;
+    }
+
     public bool crewmanFishing(Crewman crewman)//낚시하기
     {
         int time = -1;
         if (actingCheck(crewman))
         {
+            notifyStealDrive(crewman);
+
             if (crewman.getbehavior() >= 1)
             {
-                if(GameManager.Instance.getNowFishingRod().Durability > 0)
+                if (GameManager.Instance.getNowFishingRod().Durability > 0)
                 {
                     crewman.setFishing(true);
                     crewman.setActingType(Acting.FISHING);
@@ -263,56 +311,6 @@ public class CrewmanManager : MonoBehaviour
         return false;
     }
 
-    public bool crewmanRepair(Crewman crewman)// 수리하기
-    {
-        if (actingCheck(crewman))
-        {
-            //if (crewman.getbehavior() >= 2)
-            //{
-            //    if (crewman.gettype() == 1)
-            //    {
-            //        crewman.setbehavior(crewman.getbehavior() - 2);
-            //        return true;
-            //    }
-            //    else if (crewman.getbehavior() >= 3)
-            //    {
-            //        crewman.setbehavior(crewman.getbehavior() - 3);
-            //        return true;
-            //    }
-            //}
-            if (crewman.gettype() == 1)
-            {
-                if (crewman.getbehavior() >= 2)
-                {
-                    crewman.setbehavior(crewman.getbehavior() - 2);
-                    UIManager.Instance.showMessage("배가 수리되었습니다.");
-                    return true;
-                }
-            }
-            else if (crewman.getbehavior() >= 3)
-            {
-                crewman.setbehavior(crewman.getbehavior() - 3);
-                UIManager.Instance.showMessage("배가 수리되었습니다.");
-                return true;
-            }
-            UIManager.Instance.showMessage("행동력이 부족합니다.");
-        }
-        return false;
-    }
-
-    public bool actingCheck(Crewman crewman)//행동을 하는지, 행동을 하면 false, 안하면 true
-    {
-        //if( Acting.NOTHING == crewman.whatActing())
-        //{
-        //    return true;
-        //}
-
-        if (crewman.getActingType() == Acting.NOTHING)
-            return true;
-
-        UIManager.Instance.showMessage("다른 행동을 하는중입니다.");
-        return false;
-    }
     public void crewmanWakeUpCount(Crewman crewman)//시간이 되면 깨우기
     {
         if(crewman.gettime() == calendar.time)
@@ -355,6 +353,20 @@ public class CrewmanManager : MonoBehaviour
             return false;
     }
 
+    public bool actingCheck(Crewman crewman)//행동을 하는지, 행동을 하면 false, 안하면 true
+    {
+        //if( Acting.NOTHING == crewman.whatActing())
+        //{
+        //    return true;
+        //}
+
+        if (crewman.getActingType() == Acting.NOTHING || crewman.getActingType() == Acting.DRIVE)
+            return true;
+
+        UIManager.Instance.showMessage("다른 행동을 하는중입니다.");
+        return false;
+    }
+
     public int howManyCrewman()//선원의 수
     {
         return crewmanList.Count;
@@ -388,5 +400,11 @@ public class CrewmanManager : MonoBehaviour
                 dieCrewman(crewmanList[i]);
             }
         }
+    }
+
+    public void notifyStealDrive(Crewman crewman)
+    {
+        crewman.setActingType(Acting.NOTHING);
+        GameManager.Instance.Sail.DriveCrew = null;
     }
 }
