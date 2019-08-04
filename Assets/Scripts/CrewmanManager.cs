@@ -114,6 +114,14 @@ public class CrewmanManager : MonoBehaviour
         UIManager.Instance.initUI(); // 선원 변경 되었기때문에 UI 초기화 필요
     }
 
+    public void deleteAllCrewman()
+    {
+        for(int i = 0; i < crewmanList.Count; i++)
+        {
+            crewmanList.RemoveAt(i);
+        }
+    }
+
     //public Crewman whoDrive()// 선원중 누가 항해를 하는지
     //{
     //    for(int i = 0; i < crewmanList.Count; i++)

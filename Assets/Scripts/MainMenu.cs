@@ -16,7 +16,7 @@ public class MainMenu : MonoBehaviour
 
     public GameObject menustart, barselect, wharfselect, dockselect, marketselect;
 
-    private int e_count, m_count, a_count, c_count;
+    private int e_count, m_count, a_count, c_count, count;
 
     public CrewmanManager crewman;
 
@@ -157,6 +157,14 @@ public class MainMenu : MonoBehaviour
 
     void WharfOnClick()
     {
+        if(count == 0)
+        {
+            CrewmanManager.Instance.deleteAllCrewman();
+            CrewmanManager.Instance.makeCaptain();
+
+            count++;
+        }
+
         if(e_count > 0 && CrewmanManager.Instance.howManyCrewman() < 4)
         {
             plusEngineer.interactable = true;
@@ -202,6 +210,7 @@ public class MainMenu : MonoBehaviour
 
     void StartOnClick()
     {
+        count = 0;
         SceneManager.LoadScene("InGame");
     }
 
@@ -375,7 +384,7 @@ public class MainMenu : MonoBehaviour
         if(GameManager.Instance.InitMoney > 10 && !GameManager.Instance.isContainFishingRod(FishingRodType.TYPE_A))
         {
             GameManager.Instance.addFishingRodHaveList(FishingRodType.TYPE_A);
-            GameManager.Instance.InitMoney = GameManager.Instance.InitMoney-GameManager.Instance.getNowFishingRod().Price;
+            GameManager.Instance.InitMoney = GameManager.Instance.InitMoney - 10;
             textMoney();
         }
 
