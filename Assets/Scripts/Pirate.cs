@@ -167,6 +167,7 @@ public class Pirate : MonoBehaviour
     {
         RaycastHit2D raycast = 
             Physics2D.Raycast(shootPosition.transform.position, (playerShip.transform.position - this.transform.position));
+        raycast = Physics2D.BoxCast(shootPosition.transform.position, this.gameObject.transform.lossyScale, this.transform.rotation.eulerAngles.z, (playerShip.transform.position - this.transform.position));
 
         if(raycast.collider != null)
         {
@@ -191,6 +192,7 @@ public class Pirate : MonoBehaviour
         RaycastHit2D raycast =
             Physics2D.Raycast(this.transform.position, direction, (playerShip.transform.position - this.transform.position).magnitude);
 
+        raycast = Physics2D.BoxCast(this.transform.position, this.gameObject.transform.lossyScale, this.transform.rotation.eulerAngles.z, direction, (playerShip.transform.position - this.transform.position).magnitude);
         if (raycast.collider != null)
         {
             if ((raycast.collider.tag == "Player") || (raycast.collider.tag == "Typoon"))
@@ -216,12 +218,12 @@ public class Pirate : MonoBehaviour
     {
         if(GameManager.Instance.Food >= 30)
         {
-            Debug.Log("식량 30내놔");
+            GameManager.Instance.Food -= 30;
             Destroy(this.gameObject);
         }
         else
         {
-            Debug.Log("난파");
+            GameManager.Instance.NowGameEnding = GameEnding.PIRATE;
             Destroy(this.gameObject);
         }
     }
