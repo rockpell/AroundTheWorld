@@ -89,7 +89,6 @@ public class GameManager : MonoBehaviour
 
     public void gameStart(UIManager uiManager)
     {
-        Debug.Log("gameStart!");
         this.uiManager = uiManager;
         isGameStart = true;
         //uiManager.refreshCalendar(calendar); // 초기 값 보여주기
@@ -131,7 +130,6 @@ public class GameManager : MonoBehaviour
             isGameStart = false;
             nowGameEnding = GameEnding.NONE;
             Time.timeScale = 0; // 나중에 다시 1로 바꿔줘야함
-            Debug.Log("Time.timeScale = 0");
         }
     }
 
@@ -151,6 +149,14 @@ public class GameManager : MonoBehaviour
                 generateCount[2] > endGenerateCount || generateCount[3] > endGenerateCount)
             return true;
         return false;
+    }
+
+    private void initGenerateCount()
+    {
+        for(int i = 0; i < generateCount.Length; i++)
+        {
+            generateCount[i] = 0;
+        }
     }
 
     public void setNowFishingRod(int level)
@@ -274,10 +280,10 @@ public class GameManager : MonoBehaviour
         shipBody.repairModule(30);
     }
 
-    public void recoveryTimeScale()
+    public void recoveryTimeScale() // 게임 다시 시작시 UIManager 쪽에서 호출될 함수
     {
         Time.timeScale = 1;
         isGameEnd = false;
-        Debug.Log("Time.timeScale = 1");
+        initGenerateCount();
     }
 }
