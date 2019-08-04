@@ -223,6 +223,7 @@ public class Pirate : MonoBehaviour
         }
         else
         {
+            GameManager.Instance.Food -= 30;
             GameManager.Instance.NowGameEnding = GameEnding.PIRATE;
             Destroy(this.gameObject);
         }
