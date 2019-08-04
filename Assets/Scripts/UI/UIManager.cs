@@ -364,6 +364,7 @@ public class UIManager : MonoBehaviour
 
     public void restartButton()
     {
+        GameManager.Instance.recoveryTimeScale();
         UnityEngine.SceneManagement.SceneManager.LoadScene("MainMenuScene");
     }
 }

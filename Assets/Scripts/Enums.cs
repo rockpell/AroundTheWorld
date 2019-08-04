@@ -4,4 +4,4 @@ public enum DurabilityEvent { INSIDETYPOON_SAIL, INSIDETYPOON_CONTRARYWIND_SAIL,
 public enum Acting { NOTHING, FISHING, REPAIR, DRIVE, SLEEP, EAT }
 public enum GameEnding { NONE, ARRIVE, SHIPWRECK, PIRATE, HUNGRY, DEAD}
 public enum YachtType { DEFAULT, TYPE_A}
-public enum FishingRodType { TYPE_A}
+public enum FishingRodType { TYPE_A, TYPE_B}

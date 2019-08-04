@@ -31,8 +31,18 @@ public class FishingRodA : FishingRod
 {
     public FishingRodA()
     {
-        this.price = 10;
+        this.price = 5;
         this.fishingProbability = 10;
+        this.durability = 100;
+    }
+}
+
+public class FishingRodB : FishingRod
+{
+    public FishingRodB()
+    {
+        this.price = 20;
+        this.fishingProbability = 20;
         this.durability = 100;
     }
 }

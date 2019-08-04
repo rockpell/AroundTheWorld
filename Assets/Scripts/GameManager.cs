@@ -89,9 +89,10 @@ public class GameManager : MonoBehaviour
 
     public void gameStart(UIManager uiManager)
     {
+        Debug.Log("gameStart!");
         this.uiManager = uiManager;
         isGameStart = true;
-        uiManager.refreshCalendar(calendar); // 초기 값 보여주기
+        //uiManager.refreshCalendar(calendar); // 초기 값 보여주기
     }
 
     private void checkEndGame()
@@ -127,6 +128,8 @@ public class GameManager : MonoBehaviour
         if(gameEnding != GameEnding.NONE)
         {
             isGameEnd = true;
+            isGameStart = false;
+            nowGameEnding = GameEnding.NONE;
             Time.timeScale = 0; // 나중에 다시 1로 바꿔줘야함
             Debug.Log("Time.timeScale = 0");
         }
@@ -156,6 +159,9 @@ public class GameManager : MonoBehaviour
         {
             case 0:
                 nowFishingRod = new FishingRodA();
+                break;
+            case 1:
+                nowFishingRod = new FishingRodB();
                 break;
         }
     }
@@ -266,5 +272,12 @@ public class GameManager : MonoBehaviour
     public void repairBody()
     {
         shipBody.repairModule(30);
+    }
+
+    public void recoveryTimeScale()
+    {
+        Time.timeScale = 1;
+        isGameEnd = false;
+        Debug.Log("Time.timeScale = 1");
     }
 }
