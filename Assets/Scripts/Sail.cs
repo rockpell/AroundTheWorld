@@ -51,9 +51,9 @@ public class Sail : MonoBehaviour, IShipModule
     private void checkKeyInput()
     {
         //crew에 선원 할당식
-        if((driveCrew != null) && (driveCrew.getbehavior() >= 1))
+        if((driveCrew != null))
         {
-            if(Input.GetKeyDown(KeyCode.A))
+            if(Input.GetKeyDown(KeyCode.A) && (driveCrew.getbehavior() > 0))
             {
                 if(isControl == true)
                 {
@@ -86,7 +86,7 @@ public class Sail : MonoBehaviour, IShipModule
                     isControl = true;
                 }
             }
-            if (Input.GetKeyDown(KeyCode.D))
+            if (Input.GetKeyDown(KeyCode.D) && (driveCrew.getbehavior() > 0))
             {
                 if (isControl == true)
                 {
