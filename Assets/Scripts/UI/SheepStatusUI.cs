@@ -17,11 +17,13 @@ public class SheepStatusUI : MonoBehaviour
     private bool isDetilMode = false;
 
     private Color initColor;
+    private Color initTextColor;
     private Color dangerColor;
 
     void Start()
     {
         initColor = new Color(1, 1, 1, 1);
+        initTextColor = new Color(0, 0, 0, 1);
         dangerColor = new Color(1, 0, 0, 1);
     }
 
@@ -38,10 +40,12 @@ public class SheepStatusUI : MonoBehaviour
 
         if(nowValue <= 30)
         {
+            sailText.color = dangerColor;
             shipSailImage.color = dangerColor;
         }
         else
         {
+            sailText.color = initTextColor;
             shipSailImage.color = initColor;
         }
     }
@@ -52,10 +56,12 @@ public class SheepStatusUI : MonoBehaviour
 
         if (nowValue <= 30)
         {
+            bodyShipText.color = dangerColor;
             shipBodyImage.color = dangerColor;
         }
         else
         {
+            bodyShipText.color = initTextColor;
             shipBodyImage.color = initColor;
         }
     }
