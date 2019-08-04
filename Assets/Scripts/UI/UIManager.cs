@@ -205,6 +205,12 @@ public class UIManager : MonoBehaviour
     public void initUI()
     {
         // 선원 정보를 이용하여 UI 갱신
+        
+        for(int i = 0; i < crewUIs.Length; i++)
+        {
+            crewUIs[i].gameObject.SetActive(false);
+            crewStatusUIs[i].gameObject.SetActive(false);
+        }
 
         for (int i = 0; i < CrewmanManager.Instance.howManyCrewman(); i++)
         {

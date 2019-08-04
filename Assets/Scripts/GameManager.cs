@@ -16,6 +16,7 @@ public class GameManager : MonoBehaviour
     private int leftFood = 0; // 남은 식량
 
     private bool isGameStart = false;
+    private bool isGameEnd = false;
 
     private List<YachtType> yachtHaveList;
     private List<FishingRodType> fishingRodHaveList;
@@ -29,6 +30,8 @@ public class GameManager : MonoBehaviour
     
     private float inGameStandardTime = 3; // 현실 시간 기준 게임 내의 한시간
     private float sumDeltaTime;
+
+    private GameEnding nowGameEnding = GameEnding.NONE;
 
     private void Awake()
     {
@@ -79,6 +82,11 @@ public class GameManager : MonoBehaviour
                 }
             }
         }
+
+        if (isGameStart && !isGameEnd)
+        {
+            checkEndGame();
+        }
     }
 
     public void gameStart(UIManager uiManager)
@@ -86,6 +94,16 @@ public class GameManager : MonoBehaviour
         this.uiManager = uiManager;
         isGameStart = true;
         uiManager.refreshCalendar(calendar); // 초기 값 보여주기
+    }
+
+    private void checkEndGame()
+    {
+        if(sail.Durability == 0 || shipBody.Durability == 0)
+        {
+            nowGameEnding = GameEnding.SHIPWRECK;
+        }
+
+        endGame(nowGameEnding);
     }
 
     public void endGame(GameEnding gameEnding)
@@ -104,6 +122,12 @@ public class GameManager : MonoBehaviour
             case GameEnding.HUNGRY:
                 UIManager.Instance.endGame(gameEnding);
                 break;
+        }
+        if(gameEnding != GameEnding.NONE)
+        {
+            isGameEnd = true;
+            Time.timeScale = 0; // 나중에 다시 1로 바꿔줘야함
+            Debug.Log("Time.timeScale = 0");
         }
     }
 
@@ -172,6 +196,11 @@ public class GameManager : MonoBehaviour
     public ShipBody ShipBody {
         get { return shipBody; }
         set { shipBody = value; }
+    }
+
+    public GameEnding NowGameEnding {
+        get { return nowGameEnding; }
+        set { nowGameEnding = value; }
     }
 
     public void addYachtHaveList(YachtType yachtType)

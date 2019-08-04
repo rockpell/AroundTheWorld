@@ -4781,7 +4781,7 @@ MonoBehaviour:
   myCanvas: {fileID: 1767801607}
   eventMenu: {fileID: 48796821}
   selectMenu: {fileID: 740219761}
-  endingPanel: {fileID: 0}
+  endingPanel: {fileID: 669301686}
   crewUIs:
   - {fileID: 982398675}
   - {fileID: 308112186}

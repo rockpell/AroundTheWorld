@@ -93,7 +93,7 @@ public class CrewmanManager : MonoBehaviour
 
     public void dieCrewman(Crewman crewman)//해당되는 crewman삭제
     {
-        crewmanList.RemoveAt(crewman.getindex());
+        crewmanList.Remove(crewman);
         for(int i = 0; i< crewmanList.Count; i++)
         {
             crewmanList[i].setindex(i);
@@ -376,6 +376,7 @@ public class CrewmanManager : MonoBehaviour
 
     public void hungryCrewProcess()
     {
+        List<Crewman> _removeList = new List<Crewman>();
         for (int i = 0; i < crewmanList.Count; i++)
         {
             if(crewmanList[i].getfull() > 0)
@@ -384,8 +385,18 @@ public class CrewmanManager : MonoBehaviour
             }
             else
             {
-                dieCrewman(crewmanList[i]);
+                _removeList.Add(crewmanList[i]);
             }
+        }
+
+        foreach(Crewman removeCrewman in _removeList)
+        {
+            dieCrewman(removeCrewman);
+        }
+
+        if (crewmanList.Count < 1)
+        {
+            GameManager.Instance.NowGameEnding = GameEnding.HUNGRY;
         }
     }
 
