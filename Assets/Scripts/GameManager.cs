@@ -55,10 +55,8 @@ public class GameManager : MonoBehaviour
         fishingRodHaveList = new List<FishingRodType>();
         crewmenHaveList = new List<Crewman>();
 
-        setNowFishingRod(0);
-
-        CrewmanManager.Instance.makeCaptain();
-        CrewmanManager.Instance.makeEngineer();
+        //CrewmanManager.Instance.makeCaptain();
+        //CrewmanManager.Instance.makeEngineer();
     }
 
     // Update is called once per frame
