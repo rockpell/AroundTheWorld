@@ -9,6 +9,7 @@ public class ParticleControl : MonoBehaviour
     [SerializeField] private Sail sail;
 
     [SerializeField] private float createTime;
+    [SerializeField] private float limitSpeed;
 
     private float createTimeCounter;
 
@@ -18,7 +19,7 @@ public class ParticleControl : MonoBehaviour
 
         if(createTimeCounter > createTime)
         {
-            if(sail.CurrentSpeed > 1)
+            if(sail.CurrentSpeed > limitSpeed)
                 Instantiate(subEmitter, this.transform.position, Quaternion.identity);
             createTimeCounter = 0;
         }

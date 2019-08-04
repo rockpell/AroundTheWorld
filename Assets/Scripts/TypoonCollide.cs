@@ -20,51 +20,60 @@ public class TypoonCollide : MonoBehaviour
 
     public void OnTriggerEnter2D(Collider2D collision)
     {
-        if(wind != null)
+        if (collision.tag == "Typoon")
         {
-            wind.RefreshTime = wind.OriginRefreshTime / 2;
-            wind.IsTypoon = true;
-            wind.RefreshWind();
+            if (wind != null)
+            {
+                wind.RefreshTime = wind.OriginRefreshTime / 2;
+                wind.IsTypoon = true;
+                wind.RefreshWind();
+            }
         }
     }
     public void OnTriggerStay2D(Collider2D collision)
     {
-        for (int i = 0; i < currentTimes.Length; i++)
+        if(collision.tag == "Typoon")
         {
-            currentTimes[i] += Time.deltaTime;
-        }
-        //2초당 1감소, 돛 내렸으면 감소 없음
-        if(currentTimes[0] > decisionTimes[0])
-        {
-            //돛을 내렸는지 판정
-            if(sail.IsSailDown == false)
+            for (int i = 0; i < currentTimes.Length; i++)
             {
-                sail.decreaseDurability(DurabilityEvent.INSIDETYPOON_SAIL);
+                currentTimes[i] += Time.deltaTime;
             }
-            currentTimes[0] = 0;
-        }
-        //1초당 1감소, 돛 내렸으면 감소 없음
-        if (currentTimes[1] > decisionTimes[1])
-        {
-            //돛 방향이 지금 방향이랑 비교해서 역풍인지
-            if((sail.IsSailDown == false)&&(sail.IsContrary == true))
+            //2초당 1감소, 돛 내렸으면 감소 없음
+            if (currentTimes[0] > decisionTimes[0])
             {
-                sail.decreaseDurability(DurabilityEvent.INSIDETYPOON_CONTRARYWIND_SAIL);
+                //돛을 내렸는지 판정
+                if (sail.IsSailDown == false)
+                {
+                    sail.decreaseDurability(DurabilityEvent.INSIDETYPOON_SAIL);
+                }
+                currentTimes[0] = 0;
             }
-            currentTimes[1] = 0;
-        }
-        //3초당 1감소
-        if(currentTimes[2] > decisionTimes[2])
-        {
-            shipBody.decreaseDurability(DurabilityEvent.INSIDETYPOON_BODY);
-            currentTimes[2] = 0;
+            //1초당 1감소, 돛 내렸으면 감소 없음
+            if (currentTimes[1] > decisionTimes[1])
+            {
+                //돛 방향이 지금 방향이랑 비교해서 역풍인지
+                if ((sail.IsSailDown == false) && (sail.IsContrary == true))
+                {
+                    sail.decreaseDurability(DurabilityEvent.INSIDETYPOON_CONTRARYWIND_SAIL);
+                }
+                currentTimes[1] = 0;
+            }
+            //3초당 1감소
+            if (currentTimes[2] > decisionTimes[2])
+            {
+                shipBody.decreaseDurability(DurabilityEvent.INSIDETYPOON_BODY);
+                currentTimes[2] = 0;
+            }
         }
     }
     public void OnTriggerExit2D(Collider2D collision)
     {
-        wind.RefreshTime = wind.OriginRefreshTime;
-        wind.IsTypoon = false;
-        wind.RefreshWind();
+        if(collision.tag == "Typoon")
+        {
+            wind.RefreshTime = wind.OriginRefreshTime;
+            wind.IsTypoon = false;
+            wind.RefreshWind();
+        }
     }
     void Update()
     {

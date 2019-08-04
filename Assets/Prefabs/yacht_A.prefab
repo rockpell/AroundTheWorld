@@ -47,6 +47,7 @@ MonoBehaviour:
     type: 3}
   sail: {fileID: 8281448524277206347}
   createTime: 0.05
+  limitSpeed: 0
 --- !u!1 &8281448523760268389
 GameObject:
   m_ObjectHideFlags: 0
@@ -62,6 +63,7 @@ GameObject:
   - component: {fileID: 8281448523760268390}
   - component: {fileID: 8512061300700329626}
   - component: {fileID: 1331817507}
+  - component: {fileID: 8142153960139979429}
   m_Layer: 0
   m_Name: yacht_A
   m_TagString: Untagged
@@ -237,6 +239,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   nowSectionIndex: {x: 0, y: 0}
+--- !u!114 &8142153960139979429
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8281448523760268389}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 193870d5c600ef245908cd23d72bf6be, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  nowSectionIndex: {x: 0, y: 0}
 --- !u!1 &8281448524277206346
 GameObject:
   m_ObjectHideFlags: 0
@@ -396,24 +411,27 @@ PolygonCollider2D:
   m_AutoTiling: 0
   m_Points:
     m_Paths:
-    - - {x: 0.41, y: 0.32999998}
-      - {x: 0.38, y: 0.41}
-      - {x: 0.24, y: 0.69}
-      - {x: 0.089999996, y: 0.91999996}
-      - {x: 0.03, y: 0.97999996}
-      - {x: -0.04, y: 0.97999996}
-      - {x: -0.089999996, y: 0.93}
-      - {x: -0.26999998, y: 0.65}
-      - {x: -0.39, y: 0.42}
-      - {x: -0.41, y: 0.32999998}
-      - {x: -0.41, y: -0.48999998}
-      - {x: -0.39999998, y: -0.59}
-      - {x: -0.35999998, y: -0.94}
-      - {x: -0.31, y: -0.96}
-      - {x: -0.22, y: -0.97999996}
-      - {x: 0.34, y: -0.97999996}
-      - {x: 0.39, y: -0.84999996}
-      - {x: 0.41, y: -0.48}
+    - - {x: 0.3788703, y: 0.21437508}
+      - {x: 0.33997592, y: 0.3521874}
+      - {x: 0.22814946, y: 0.58769}
+      - {x: 0.1955288, y: 0.65442306}
+      - {x: 0.098894365, y: 0.7999278}
+      - {x: 0.03444711, y: 0.8999517}
+      - {x: -0.0044230595, y: 0.9399759}
+      - {x: -0.036634658, y: 0.90331733}
+      - {x: -0.22997592, y: 0.609976}
+      - {x: -0.33663464, y: 0.39331728}
+      - {x: -0.37442312, y: 0.25439906}
+      - {x: -0.37442306, y: -0.35658652}
+      - {x: -0.36000434, y: -0.55790514}
+      - {x: -0.359976, y: -0.5677644}
+      - {x: -0.3110817, y: -0.90442306}
+      - {x: -0.25218755, y: -0.92442304}
+      - {x: -0.0020913035, y: -0.96665865}
+      - {x: 0.2955288, y: -0.9266347}
+      - {x: 0.31439897, y: -0.8366586}
+      - {x: 0.33760047, y: -0.7280512}
+      - {x: 0.36108172, y: -0.47555292}
 --- !u!114 &8281448524429411833
 MonoBehaviour:
   m_ObjectHideFlags: 0
