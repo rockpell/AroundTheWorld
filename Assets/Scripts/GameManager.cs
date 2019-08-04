@@ -8,7 +8,8 @@ public class GameManager : MonoBehaviour
     public static GameManager Instance{get{ return instance;}}
 
     [SerializeField] private int endGenerateCount = 3;
-    private int[] generateCount = new int[4]; // 각 방향 생성 개수, 위쪽 오른쪽 아래쪽 왼쪽 순서
+    //private int[] generateCount = new int[4]; // 각 방향 생성 개수, 위쪽 오른쪽 아래쪽 왼쪽 순서
+    private int generateCount;
 
     private int initMoney = 100; // 초기 자금
     private int nowMoney = 0; // 현재 자금
@@ -56,9 +57,6 @@ public class GameManager : MonoBehaviour
         yachtHaveList = new List<YachtType>();
         fishingRodHaveList = new List<FishingRodType>();
         crewmenHaveList = new List<Crewman>();
-
-        //CrewmanManager.Instance.makeCaptain();
-        //CrewmanManager.Instance.makeEngineer();
     }
 
     // Update is called once per frame
@@ -142,30 +140,21 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    public int getGenerateCount(int index)
+    public void addGenerateCount()
     {
-        return generateCount[index];
-    }
-
-    public void addGenerateCount(int index, int value)
-    {
-        generateCount[index] += value;
+        ++generateCount;
     }
 
     public bool isGenerateCountEnd()
     {
-        if (generateCount[0] > endGenerateCount || generateCount[1] > endGenerateCount ||
-                generateCount[2] > endGenerateCount || generateCount[3] > endGenerateCount)
+        if(generateCount != 0 && (generateCount % endGenerateCount == 0))
             return true;
         return false;
     }
 
     private void initGenerateCount()
     {
-        for(int i = 0; i < generateCount.Length; i++)
-        {
-            generateCount[i] = 0;
-        }
+        generateCount = 0;
     }
 
     public void setNowFishingRod(int level)
@@ -232,6 +221,10 @@ public class GameManager : MonoBehaviour
     public GameEnding NowGameEnding {
         get { return nowGameEnding; }
         set { nowGameEnding = value; }
+    }
+
+    public int GenerateCount {
+        get { return generateCount; }
     }
 
     public void addYachtHaveList(YachtType yachtType)
@@ -307,18 +300,8 @@ public class GameManager : MonoBehaviour
 
     private int rewardMoney()
     {
-        int _result = sumGenerateCount();
+        int _result = generateCount;
         initMoney += _result;
         return _result;
-    }
-
-    private int sumGenerateCount()
-    {
-        int _sum = 0;
-        for(int i = 0; i < generateCount.Length; i++)
-        {
-            _sum += generateCount[i];
-        }
-        return _sum;
     }
 }

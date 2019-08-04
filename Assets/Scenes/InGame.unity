@@ -8586,7 +8586,7 @@ PrefabInstance:
     - target: {fileID: 5605345965436722607, guid: 62b818e041193e04eb4ce4433b8732ae,
         type: 3}
       propertyPath: originRefreshTime
-      value: 3
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 5605345965436722606, guid: 62b818e041193e04eb4ce4433b8732ae,
         type: 3}

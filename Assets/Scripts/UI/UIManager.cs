@@ -353,7 +353,7 @@ public class UIManager : MonoBehaviour
         switch (gameEnding)
         {
             case GameEnding.ARRIVE:
-                _endText.text = "세계일주 하였습니다!\n 명성이 올라 " + GameManager.Instance.Reward + "의 돈을 얻습니다.";
+                _endText.text = "항구에 도착하였습니다!\n 명성이 올라 " + GameManager.Instance.Reward + "의 돈을 얻습니다.";
                 break;
             case GameEnding.SHIPWRECK: // 난파엔딩
                 _endText.text = "난파되었습니다";
