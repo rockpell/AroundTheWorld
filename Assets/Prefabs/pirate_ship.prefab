@@ -215,12 +215,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 10c927fe64b6b984c8056be8a150c787, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 3
-  detectRange: 0
+  speed: 4
+  selfDestroyTime: 20
+  detectRange: 30
   shootPosition: {fileID: 3695377609148884119}
   decisionDegree: 0
-  playerShip: {fileID: 0}
   currentDegree: 0
+  modifiedDegree: 0
 --- !u!50 &3695377609458376702
 Rigidbody2D:
   serializedVersion: 4
