@@ -91,7 +91,7 @@ public class GameManager : MonoBehaviour
     {
         this.uiManager = uiManager;
         isGameStart = true;
-        //uiManager.refreshCalendar(calendar); // 초기 값 보여주기
+        uiManager.refreshCalendar(calendar); // 초기 값 보여주기
     }
 
     private void checkEndGame()
