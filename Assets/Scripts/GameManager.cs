@@ -98,7 +98,7 @@ public class GameManager : MonoBehaviour
 
     private void checkEndGame()
     {
-        if(sail.Durability == 0 || shipBody.Durability == 0)
+        if(shipBody.Durability == 0)
         {
             nowGameEnding = GameEnding.SHIPWRECK;
         }
