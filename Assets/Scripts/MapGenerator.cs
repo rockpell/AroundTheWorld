@@ -24,7 +24,7 @@ public class MapGenerator : MonoBehaviour
 
     //private int[] generateCount = new int[4]; // 각 방향 생성 개수, 위쪽 오른쪽 아래쪽 왼쪽 순서
 
-    private bool isEndGame = false;
+    private bool isCreateEndPort = false;
 
     void Start()
     {
@@ -91,6 +91,8 @@ public class MapGenerator : MonoBehaviour
                 createSection(Direction.DOWNLEFT, detector.NowSectionIndex, detector.NowSectionPosition);
                 break;
         }
+
+        isCreateEndPort = false;
     }
 
     private void firstCreateSections()
@@ -167,22 +169,19 @@ public class MapGenerator : MonoBehaviour
         Vector3 _targetPosition = Vector3.zero;
 
         _targetPosition = getCreateSectionPosition(directon, nowIndex, nowPosition);
-
         if (_targetPosition != Vector3.zero)
         {
-            if(!isEndGame && GameManager.Instance.isGenerateCountEnd())
+            if(!isCreateEndPort && GameManager.Instance.isGenerateCountEnd())
             {
-                isEndGame = true;
+                isCreateEndPort = true;
                 Instantiate(endSection, _targetPosition, Quaternion.identity);
             }
             else
             {
                 Instantiate(randMiddleSection(), _targetPosition, Quaternion.identity);
             }
-            
         }
     }
-
 
     private GameObject randMiddleSection()
     {
@@ -228,7 +227,7 @@ public class MapGenerator : MonoBehaviour
     private Vector3 getCreateSectionPosition(Direction directon, Vector2 nowIndex, Vector3 nowPosition)
     {
         Vector3 _result = Vector3.zero;
-
+        GameManager.Instance.addGenerateCount();
         switch (directon)
         {
             case Direction.UPLEFT:
@@ -241,7 +240,6 @@ public class MapGenerator : MonoBehaviour
                 if (addCoordinate((int)nowIndex.x, (int)nowIndex.y + 1))
                 {
                     _result = new Vector3(nowPosition.x, nowPosition.y + sectionSize.y, 0);
-                    GameManager.Instance.addGenerateCount(0, 1); // 각 방향별 생성 갯수
                 }
                 break;
             case Direction.UPRIGHT:
@@ -254,7 +252,6 @@ public class MapGenerator : MonoBehaviour
                 if (addCoordinate((int)nowIndex.x + 1, (int)nowIndex.y))
                 {
                     _result = new Vector3(nowPosition.x + sectionSize.x, nowPosition.y, 0);
-                    GameManager.Instance.addGenerateCount(1, 1); // 각 방향별 생성 갯수
                 }
                 break;
             case Direction.DOWNRIGHT:
@@ -267,7 +264,6 @@ public class MapGenerator : MonoBehaviour
                 if (addCoordinate((int)nowIndex.x, (int)nowIndex.y - 1))
                 {
                     _result = new Vector3(nowPosition.x, nowPosition.y - sectionSize.y, 0);
-                    GameManager.Instance.addGenerateCount(2, 1); // 각 방향별 생성 갯수
                 }
                 break;
             case Direction.DOWNLEFT:
@@ -280,7 +276,6 @@ public class MapGenerator : MonoBehaviour
                 if (addCoordinate((int)nowIndex.x - 1, (int)nowIndex.y))
                 {
                     _result = new Vector3(nowPosition.x - sectionSize.x, nowPosition.y, 0);
-                    GameManager.Instance.addGenerateCount(3, 1); // 각 방향별 생성 갯수
                 }
                 break;
         }
