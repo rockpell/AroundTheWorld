@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
-public class MainMenue : MonoBehaviour
+public class MainMenu : MonoBehaviour
 {
     public Button bar, wharf, dock, market;
     public Button engineer, mate, angler, plusEngineer, plusMate, plusAngler;
@@ -15,6 +15,8 @@ public class MainMenue : MonoBehaviour
     public Text LeftFood;
     public Text Food;
 
+    public GameObject menustart, barselect, wharfselect, dockselect, marketselect;
+
     private int e_count, m_count, a_count, c_count;
 
     public CrewmanManager crewman;
@@ -24,13 +26,22 @@ public class MainMenue : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+
+        menustart.SetActive(true);
+        marketselect.SetActive(false);
+        wharfselect.SetActive(false);
+        dockselect.SetActive(false);
+        barselect.SetActive(false);
+
         textFood();
-        textLeftfood();
+        textLeftFood();
 
         e_count = 0;
         m_count = 0;
         a_count = 0;
         c_count = 0;
+
+        
 
         bar.onClick.AddListener(BarOnClick);//술집
         wharf.onClick.AddListener(WharfOnClick);//부두
@@ -65,13 +76,13 @@ public class MainMenue : MonoBehaviour
 
         _return.onClick.AddListener(_ReturnOnClick);//되돌리기
 
-        GameManager.Instance.addYachtHaveList(YachtType.DEFAULT);
+        //GameManager.Instance.addYachtHaveList(YachtType.DEFAULT);
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+
     }
 
     void BarOnClick()//술집
@@ -86,6 +97,11 @@ public class MainMenue : MonoBehaviour
         wharf.interactable = false;
         dock.interactable = false;
         market.interactable = false;
+
+        menustart.SetActive(false);
+        barselect.SetActive(true);
+
+
     }
 
     
@@ -138,9 +154,6 @@ public class MainMenue : MonoBehaviour
 
     void WharfOnClick()
     {
-        _return.interactable = true;
-
-        start.interactable = true;
         if(e_count > 0 && CrewmanManager.Instance.howManyCrewman() < 4)
         {
             plusEngineer.interactable = true;
@@ -168,10 +181,19 @@ public class MainMenue : MonoBehaviour
             plusFooddown.interactable = true;
         }
 
+        _return.interactable = true;
+
         bar.interactable = false;
         wharf.interactable = false;
         dock.interactable = false;
         market.interactable = false;
+
+        menustart.SetActive(false);
+        wharfselect.SetActive(true);
+
+        start.interactable = true;
+
+
     }
 
 
@@ -226,7 +248,7 @@ public class MainMenue : MonoBehaviour
             GameManager.Instance.LeftFood -= 1;
             GameManager.Instance.Food += 1;
             textFood();
-            textLeftfood();
+            textLeftFood();
             plusFoodup.interactable = true;
         }
         else
@@ -239,7 +261,7 @@ public class MainMenue : MonoBehaviour
             GameManager.Instance.LeftFood += 1;
             GameManager.Instance.Food -= 1;
             textFood();
-            textLeftfood();
+            textLeftFood();
             plusFooddown.interactable = true;
         }
         else
@@ -277,6 +299,9 @@ public class MainMenue : MonoBehaviour
         wharf.interactable = false;
         dock.interactable = false;
         market.interactable = false;
+
+        menustart.SetActive(false);
+        dockselect.SetActive(true);
     }
 
 
@@ -312,6 +337,8 @@ public class MainMenue : MonoBehaviour
         dock.interactable = false;
         market.interactable = false;
 
+        menustart.SetActive(false);
+        marketselect.SetActive(true);
     }
 
 
@@ -340,7 +367,7 @@ public class MainMenue : MonoBehaviour
             GameManager.Instance.InitMoney = GameManager.Instance.InitMoney - 1;
             GameManager.Instance.LeftFood += 1;
             textFood();
-            textLeftfood();
+            textLeftFood();
         }
     }
     void FoodDownOnClick()
@@ -350,7 +377,7 @@ public class MainMenue : MonoBehaviour
             GameManager.Instance.InitMoney = GameManager.Instance.InitMoney + 1;
             GameManager.Instance.LeftFood -= 1;
             textFood();
-            textLeftfood();
+            textLeftFood();
         }
         
     }
@@ -370,7 +397,7 @@ public class MainMenue : MonoBehaviour
         wharf.interactable = true;
         dock.interactable = true;
         market.interactable = true;
-
+        
 
         _return.interactable = false;
         engineer.interactable = false;
@@ -395,14 +422,20 @@ public class MainMenue : MonoBehaviour
         plusMate.interactable = false;
         plusNormalYacht.interactable = false;
         plusYacht_a.interactable = false;
+
+        menustart.SetActive(true);
+        wharfselect.SetActive(false);
+        dockselect.SetActive(false);
+        marketselect.SetActive(false);
+        barselect.SetActive(false);
     }
 
-    public void textLeftfood()
+    public void textLeftFood()
     {
-        LeftFood.text = GameManager.Instance.LeftFood + "일치 식량 보유";
+       // LeftFood.text = GameManager.Instance.LeftFood + "일치 식량 보유";
     }
     public void textFood()
     {
-        Food.text = "사용할" + GameManager.Instance.Food + "일치 식량";
+        //Food.text = "사용할" + GameManager.Instance.Food + "일치 식량";
     }
 }
