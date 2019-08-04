@@ -12,8 +12,7 @@ public class MainMenu : MonoBehaviour
     public Button fishing_rod_a, fishing_rod_b, fishing_rod_c, foodup, fooddown, plusFishing_rod_a, plusFoodup, plusFooddown;
     public Button _return;
     public Button start;
-    public Text LeftFood;
-    public Text Food;
+    public Text LeftFood, Food, Money;
 
     public GameObject menustart, barselect, wharfselect, dockselect, marketselect;
 
@@ -35,6 +34,7 @@ public class MainMenu : MonoBehaviour
 
         textFood();
         textLeftFood();
+        textMoney();
 
         e_count = 0;
         m_count = 0;
@@ -76,7 +76,7 @@ public class MainMenu : MonoBehaviour
 
         _return.onClick.AddListener(_ReturnOnClick);//되돌리기
 
-        //GameManager.Instance.addYachtHaveList(YachtType.DEFAULT);
+        GameManager.Instance.addYachtHaveList(YachtType.DEFAULT);
     }
 
     // Update is called once per frame
@@ -109,12 +109,13 @@ public class MainMenu : MonoBehaviour
     {
         if(GameManager.Instance.InitMoney >= 80)
         {
-            if(crewman.howManyCrewman() < 4)
+            if(CrewmanManager.Instance.howManyCrewman() < 4)
             {
                 GameManager.Instance.InitMoney = GameManager.Instance.InitMoney - 80;
                 GameManager.Instance.addCrewmanHaveList(new Engineer());
                 e_count++;
                 c_count++;
+                textMoney();
             }
            
         }
@@ -124,12 +125,13 @@ public class MainMenu : MonoBehaviour
     {
         if (GameManager.Instance.InitMoney >= 80)
         {
-            if (crewman.howManyCrewman() < 4)
+            if (CrewmanManager.Instance.howManyCrewman() < 4)
             {
                 GameManager.Instance.InitMoney = GameManager.Instance.InitMoney - 80;
                 GameManager.Instance.addCrewmanHaveList(new Mate());
                 m_count++;
                 c_count++;
+                textMoney();
             }
         }
 
@@ -138,12 +140,13 @@ public class MainMenu : MonoBehaviour
     {
         if (GameManager.Instance.InitMoney >= 80)
         {
-            if(crewman.howManyCrewman() < 4)
+            if(CrewmanManager.Instance.howManyCrewman() < 4)
             {
                 GameManager.Instance.InitMoney = GameManager.Instance.InitMoney - 80;
                 GameManager.Instance.addCrewmanHaveList(new Angler());
                 a_count++;
                 c_count++;
+                textMoney();
             }
         }
 
@@ -199,7 +202,7 @@ public class MainMenu : MonoBehaviour
 
     void StartOnClick()
     {
-        //SceneManager.LoadScene("SampleScene");
+        SceneManager.LoadScene("InGame");
     }
 
     void PlusAnglerOnClick()
@@ -215,9 +218,15 @@ public class MainMenu : MonoBehaviour
     }
     void PlusEngineerOnClick()
     {
-        if (e_count > 0 && CrewmanManager.Instance.howManyCrewman() < 4)
+        if (e_count > 2 && CrewmanManager.Instance.howManyCrewman() < 4)
         {
             plusEngineer.interactable = true;
+            CrewmanManager.Instance.makeEngineer();
+            e_count--;
+        }
+        if (e_count == 1 && CrewmanManager.Instance.howManyCrewman() < 4)
+        {
+            plusEngineer.interactable = false;
             CrewmanManager.Instance.makeEngineer();
             e_count--;
         }
@@ -226,9 +235,15 @@ public class MainMenu : MonoBehaviour
     }
     void PlusMateOnClick()
     {
-        if (m_count > 0 && CrewmanManager.Instance.howManyCrewman() < 4)
+        if (m_count > 2 && CrewmanManager.Instance.howManyCrewman() < 4)
         {
             plusMate.interactable = true;
+            CrewmanManager.Instance.makeMate();
+            m_count--;
+        }
+        if (m_count == 1 && CrewmanManager.Instance.howManyCrewman() < 4)
+        {
+            plusMate.interactable = false;
             CrewmanManager.Instance.makeMate();
             m_count--;
         }
@@ -238,6 +253,11 @@ public class MainMenu : MonoBehaviour
 
     void PlusFishing_rod_aOnClick()
     {
+        if (GameManager.Instance.isContainFishingRod(FishingRodType.TYPE_A))
+        {
+            GameManager.Instance.setNowFishingRod(0);
+            plusFishing_rod_a.interactable = false;
+        }
         plusFishing_rod_a.interactable = false;
     }
 
@@ -311,6 +331,7 @@ public class MainMenu : MonoBehaviour
         {
             GameManager.Instance.InitMoney -= 2000;
             GameManager.Instance.addYachtHaveList(YachtType.TYPE_A);
+            textMoney();
         }
             
     }
@@ -344,10 +365,11 @@ public class MainMenu : MonoBehaviour
 
     void Fishing_rod_aOnClick()
     {
-        if(GameManager.Instance.InitMoney > 5)
+        if(GameManager.Instance.InitMoney > 10 && !GameManager.Instance.isContainFishingRod(FishingRodType.TYPE_A))
         {
-            GameManager.Instance.InitMoney = GameManager.Instance.InitMoney- FishingRodA.Price;
             GameManager.Instance.addFishingRodHaveList(FishingRodType.TYPE_A);
+            GameManager.Instance.InitMoney = GameManager.Instance.InitMoney-GameManager.Instance.getNowFishingRod().Price;
+            textMoney();
         }
 
     }
@@ -368,6 +390,7 @@ public class MainMenu : MonoBehaviour
             GameManager.Instance.LeftFood += 1;
             textFood();
             textLeftFood();
+            textMoney();
         }
     }
     void FoodDownOnClick()
@@ -378,6 +401,7 @@ public class MainMenu : MonoBehaviour
             GameManager.Instance.LeftFood -= 1;
             textFood();
             textLeftFood();
+            textMoney();
         }
         
     }
@@ -432,10 +456,14 @@ public class MainMenu : MonoBehaviour
 
     public void textLeftFood()
     {
-       // LeftFood.text = GameManager.Instance.LeftFood + "일치 식량 보유";
+        LeftFood.text = GameManager.Instance.LeftFood + "일치 식량 보유";
     }
     public void textFood()
     {
-        //Food.text = "사용할" + GameManager.Instance.Food + "일치 식량";
+        Food.text = "사용할" + GameManager.Instance.Food + "일치 식량";
+    }
+    public void textMoney()
+    {
+        Money.text = "남은 돈:" + GameManager.Instance.InitMoney ;
     }
 }
