@@ -192,7 +192,12 @@ public class GameManager : MonoBehaviour
 
     public int Food {
         get { return food; }
-        set { food = value; }
+        set 
+        {
+            food = value;
+            if (food < 0)
+                food = 0;
+        }
     }
 
     public int LeftFood {
