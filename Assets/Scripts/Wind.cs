@@ -18,7 +18,7 @@ public class Wind : MonoBehaviour
     [SerializeField] private Vector3 typoonDestination;
 
     [SerializeField] private GameObject typoon;
-    [SerializeField] private MapSectionDetector mapSectionDetector;
+    private MapSectionDetector mapSectionDetector;
 
     [SerializeField] private GameObject windDirectionImage;
     [SerializeField] private UnityEngine.UI.Text windSpeedText;
@@ -29,6 +29,7 @@ public class Wind : MonoBehaviour
     {
         refreshTime = originRefreshTime;
         refreshWind();
+        mapSectionDetector = GameObject.FindGameObjectWithTag("Player").GetComponent<MapSectionDetector>();
     }
 
     void Update()
@@ -137,7 +138,7 @@ public class Wind : MonoBehaviour
 
         typoonPosition = mapSectionDetector.getPlayerAroundSectionPosition(_directon);
         typoonDestination = mapSectionDetector.getPlayerAroundSectionPosition(randomDirection(_directon));
-
+        
         typoon.GetComponent<Typoon>().initialize(typoonPosition, typoonDestination, typoonSpeed);
         Instantiate(typoon);
     }
