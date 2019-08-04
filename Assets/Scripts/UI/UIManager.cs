@@ -361,4 +361,9 @@ public class UIManager : MonoBehaviour
         eventMenuUI.gameObject.SetActive(true);
         eventMenuUI.showSaveCrewMenu();
     }
+
+    public void restartButton()
+    {
+        UnityEngine.SceneManagement.SceneManager.LoadScene("MainMenuScene");
+    }
 }
