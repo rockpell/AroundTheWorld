@@ -47,16 +47,15 @@ public class GameManager : MonoBehaviour
         }
         DontDestroyOnLoad(this.gameObject);
         calendar = new Calendar();
+        yachtHaveList = new List<YachtType>();
+        fishingRodHaveList = new List<FishingRodType>();
+        crewmenHaveList = new List<Crewman>();
     }
 
     // Start is called before the first frame update
     void Start()
     {
         nowMoney = initMoney;
-
-        yachtHaveList = new List<YachtType>();
-        fishingRodHaveList = new List<FishingRodType>();
-        crewmenHaveList = new List<Crewman>();
     }
 
     // Update is called once per frame
