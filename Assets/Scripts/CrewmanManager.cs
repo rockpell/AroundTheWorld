@@ -91,6 +91,18 @@ public class CrewmanManager : MonoBehaviour
         return null;
     }
 
+    public bool isAliveCaptain()
+    {
+        for(int i = 0; i < crewmanList.Count; i++)
+        {
+            if(crewmanList[i] is Captain)
+            {
+                return true;
+            }
+        }
+        return false;
+    }
+
     public void dieCrewman(Crewman crewman)//해당되는 crewman삭제
     {
         crewmanList.Remove(crewman);
@@ -394,7 +406,7 @@ public class CrewmanManager : MonoBehaviour
             dieCrewman(removeCrewman);
         }
 
-        if (crewmanList.Count < 1)
+        if (!isAliveCaptain())
         {
             GameManager.Instance.NowGameEnding = GameEnding.HUNGRY;
         }
