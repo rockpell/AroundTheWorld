@@ -74,6 +74,7 @@ public class GameManager : MonoBehaviour
                 bool _isNextDay = calendar.nextTime();
 
                 uiManager.refreshCalendar(calendar);
+                uiManager.refreshDayLightUI();
                 CrewmanManager.Instance.progressCrew();
 
                 if (_isNextDay)

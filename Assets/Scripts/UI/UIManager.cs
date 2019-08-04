@@ -7,6 +7,7 @@ public class UIManager : MonoBehaviour
     [SerializeField] private GameObject eventMenu;
     [SerializeField] private GameObject selectMenu;
     [SerializeField] private GameObject endingPanel;
+    [SerializeField] private Image dayLightPanel;
 
     [SerializeField] private CrewUI[] crewUIs;
     [SerializeField] private CrewStatusUI[] crewStatusUIs;
@@ -254,6 +255,19 @@ public class UIManager : MonoBehaviour
     {
         sheepStatusUI.setSailText(100, GameManager.Instance.Sail.Durability); // 돛 내구도
         sheepStatusUI.setBodyShipText(100, GameManager.Instance.ShipBody.Durability); // 선체 내구도
+    }
+
+    public void refreshDayLightUI()
+    {
+        Calendar _calendar = GameManager.Instance.Calendar;
+        if(7 <= _calendar.time && _calendar.time < 19)
+        {
+            dayLightPanel.color = new Color(0, 0, 0, 0);
+        }
+        else
+        {
+            dayLightPanel.color = new Color(0, 0, 0, 0.2f);
+        }
     }
 
     private Sprite getCrewImage(Crewman crewData) 
