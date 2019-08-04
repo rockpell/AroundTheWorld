@@ -116,10 +116,7 @@ public class CrewmanManager : MonoBehaviour
 
     public void deleteAllCrewman()
     {
-        for(int i = 0; i < crewmanList.Count; i++)
-        {
-            crewmanList.RemoveAt(i);
-        }
+        crewmanList.Clear();
     }
 
     //public Crewman whoDrive()// 선원중 누가 항해를 하는지

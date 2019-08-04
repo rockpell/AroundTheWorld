@@ -16,7 +16,8 @@ public class MainMenu : MonoBehaviour
 
     public GameObject menustart, barselect, wharfselect, dockselect, marketselect;
 
-    private int e_count, m_count, a_count, c_count, count;
+    private int e_count, m_count, a_count, c_count, f_count;
+    private bool _count;
 
     public CrewmanManager crewman;
 
@@ -25,6 +26,7 @@ public class MainMenu : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        
 
         menustart.SetActive(true);
         marketselect.SetActive(false);
@@ -40,6 +42,8 @@ public class MainMenu : MonoBehaviour
         m_count = 0;
         a_count = 0;
         c_count = 0;
+        f_count = 0;
+        _count = true;
 
         
 
@@ -157,14 +161,14 @@ public class MainMenu : MonoBehaviour
 
     void WharfOnClick()
     {
-        if(count == 0)
+        if(_count)
         {
             CrewmanManager.Instance.deleteAllCrewman();
             CrewmanManager.Instance.makeCaptain();
 
-            count++;
+            _count = false;
         }
-
+        
         if(e_count > 0 && CrewmanManager.Instance.howManyCrewman() < 4)
         {
             plusEngineer.interactable = true;
@@ -191,8 +195,7 @@ public class MainMenu : MonoBehaviour
         {
             plusFooddown.interactable = true;
         }
-
-        _return.interactable = true;
+        
 
         bar.interactable = false;
         wharf.interactable = false;
@@ -210,7 +213,8 @@ public class MainMenu : MonoBehaviour
 
     void StartOnClick()
     {
-        count = 0;
+        _count = true;
+        f_count = 0;
         SceneManager.LoadScene("InGame");
     }
 
@@ -271,9 +275,9 @@ public class MainMenu : MonoBehaviour
         if (GameManager.Instance.isContainFishingRod(FishingRodType.TYPE_A))
         {
             GameManager.Instance.setNowFishingRod(0);
+            GameManager.Instance.removeFishingRodHaveList(FishingRodType.TYPE_A);
             plusFishing_rod_a.interactable = false;
         }
-        plusFishing_rod_a.interactable = false;
     }
 
     void PlusFoodupOnClick()
@@ -315,9 +319,9 @@ public class MainMenu : MonoBehaviour
     }
     void PlusNormalYachtOnClick()
     {
-        if (GameManager.Instance.isContainYacth(YachtType.DEFAULT))
+        if (!GameManager.Instance.isContainYacth(YachtType.DEFAULT))
         {
-
+            plusNormalYacht.interactable = true;
         }
     }
 
@@ -381,10 +385,11 @@ public class MainMenu : MonoBehaviour
 
     void Fishing_rod_aOnClick()
     {
-        if(GameManager.Instance.InitMoney > 10 && !GameManager.Instance.isContainFishingRod(FishingRodType.TYPE_A))
+        if(GameManager.Instance.InitMoney >= 10 && !GameManager.Instance.isContainFishingRod(FishingRodType.TYPE_A)&& f_count == 0)
         {
             GameManager.Instance.addFishingRodHaveList(FishingRodType.TYPE_A);
             GameManager.Instance.InitMoney = GameManager.Instance.InitMoney - 10;
+            f_count++;
             textMoney();
         }
 

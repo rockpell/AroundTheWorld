@@ -238,6 +238,11 @@ public class GameManager : MonoBehaviour
         return crewmenHaveList[index];
     }
 
+    public bool removeFishingRodHaveList(FishingRodType fishingRodType)
+    {
+        return fishingRodHaveList.Remove(fishingRodType);
+    }
+
     public bool removeCrewmanHaveList(Crewman crewman)
     {
         return crewmenHaveList.Remove(crewman);
