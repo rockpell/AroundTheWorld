@@ -19,8 +19,16 @@ public class ParticleControl : MonoBehaviour
 
         if(createTimeCounter > createTime)
         {
-            if(sail.CurrentSpeed > limitSpeed)
+            if(sail != null)
+            {
+                if (sail.CurrentSpeed > limitSpeed)
+                    Instantiate(subEmitter, this.transform.position, Quaternion.identity);
+            }
+            else
+            {
                 Instantiate(subEmitter, this.transform.position, Quaternion.identity);
+            }
+            
             createTimeCounter = 0;
         }
     }
