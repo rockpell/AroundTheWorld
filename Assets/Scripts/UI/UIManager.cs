@@ -345,7 +345,7 @@ public class UIManager : MonoBehaviour
                 _endText.text = "난파되었습니다";
                 break;
             case GameEnding.PIRATE:
-                _endText.text = "해적에게 배를 약탈당했습니다";
+                _endText.text = "해적에게 전부 약탈당했습니다";
                 break;
             case GameEnding.HUNGRY:
                 _endText.text = "배고파서 죽었습니다";
