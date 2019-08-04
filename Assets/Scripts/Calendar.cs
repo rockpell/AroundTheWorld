@@ -22,7 +22,7 @@
     {
         if(time  == 24)
         {
-            ++day;
+            ++this.day;
             ++dday;
             day = checkMonth(month, day);
             time = 0;
