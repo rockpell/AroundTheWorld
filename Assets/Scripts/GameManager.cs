@@ -122,6 +122,9 @@ public class GameManager : MonoBehaviour
             case GameEnding.HUNGRY:
                 UIManager.Instance.endGame(gameEnding);
                 break;
+            case GameEnding.DEAD:
+                UIManager.Instance.endGame(gameEnding);
+                break;
         }
         if(gameEnding != GameEnding.NONE)
         {

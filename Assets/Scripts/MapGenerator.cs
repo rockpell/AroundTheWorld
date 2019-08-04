@@ -196,7 +196,7 @@ public class MapGenerator : MonoBehaviour
 
     private int randTable()
     {
-        int _value = Random.Range(1, 100);
+        int _value = Random.Range(1, 101);
         int _sumProbability = 0;
 
         if (middleSectionProbability.Length != middleSection.Length)

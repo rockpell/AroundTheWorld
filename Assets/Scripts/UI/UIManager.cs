@@ -350,6 +350,15 @@ public class UIManager : MonoBehaviour
             case GameEnding.HUNGRY:
                 _endText.text = "배고파서 죽었습니다";
                 break;
+            case GameEnding.DEAD:
+                _endText.text = "선장이 죽었습니다";
+                break;
         }
+    }
+
+    public void showSaveCrewEvent()
+    {
+        eventMenuUI.gameObject.SetActive(true);
+        eventMenuUI.showSaveCrewMenu();
     }
 }
