@@ -236,39 +236,26 @@ public class CrewmanManager : MonoBehaviour
 
     }
 
+    public void slectCrewmanRepair(Crewman crewman)
+    {
+        notifyStealDrive(crewman);
+    }
+
     public bool crewmanRepair(Crewman crewman)// 수리하기
     {
         if (actingCheck(crewman))
         {
-            //if (crewman.getbehavior() >= 2)
-            //{
-            //    if (crewman.gettype() == 1)
-            //    {
-            //        crewman.setbehavior(crewman.getbehavior() - 2);
-            //        return true;
-            //    }
-            //    else if (crewman.getbehavior() >= 3)
-            //    {
-            //        crewman.setbehavior(crewman.getbehavior() - 3);
-            //        return true;
-            //    }
-            //}
-
-            notifyStealDrive(crewman);
-
             if (crewman.gettype() == 1)
             {
                 if (crewman.getbehavior() >= 2)
                 {
                     crewman.setbehavior(crewman.getbehavior() - 2);
-                    UIManager.Instance.showMessage("배가 수리되었습니다.");
                     return true;
                 }
             }
             else if (crewman.getbehavior() >= 3)
             {
                 crewman.setbehavior(crewman.getbehavior() - 3);
-                UIManager.Instance.showMessage("배가 수리되었습니다.");
                 return true;
             }
             UIManager.Instance.showMessage("행동력이 부족합니다.");

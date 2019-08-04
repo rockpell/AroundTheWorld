@@ -14,6 +14,7 @@ public class UIManager : MonoBehaviour
     [SerializeField] private EtcStatusUI etcStatusUI;
     [SerializeField] private SheepStatusUI sheepStatusUI;
     [SerializeField] private MessageUI messageUI;
+    [SerializeField] private EventMenuUI eventMenuUI;
 
     [SerializeField] private Text calendarDate;
     [SerializeField] private Text calendarTime;
@@ -120,16 +121,10 @@ public class UIManager : MonoBehaviour
 
     public void repairButton()
     {
-        if (CrewmanManager.Instance.crewmanRepair(CrewmanManager.Instance.getCrewman(selectCrewIndex)))
-        {
-            crewUIs[selectCrewIndex].setNowActMark("수리");
-            crewStatusUIs[selectCrewIndex].setCrewNowActText("수리");
-        }
-        else
-        {
-            Debug.Log("수리 불가!");
-        }
-        
+        CrewmanManager.Instance.slectCrewmanRepair(CrewmanManager.Instance.getCrewman(selectCrewIndex));
+        eventMenuUI.gameObject.SetActive(true);
+        eventMenuUI.showRepairMenu(selectCrewIndex);
+
         hideSelectMenu();
     }
 

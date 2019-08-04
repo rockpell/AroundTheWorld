@@ -222,4 +222,14 @@ public class GameManager : MonoBehaviour
         crewmenHaveList.RemoveAt(index);
         return true;
     }
+
+    public void repairSail()
+    {
+        sail.repairModule(30);
+    }
+
+    public void repairBody()
+    {
+        shipBody.repairModule(30);
+    }
 }
