@@ -167,6 +167,8 @@ public class MapGenerator : MonoBehaviour
     private void createSection(Direction directon, Vector2 nowIndex, Vector3 nowPosition)
     {
         Vector3 _targetPosition = Vector3.zero;
+        GameObject _createObject;
+
 
         _targetPosition = getCreateSectionPosition(directon, nowIndex, nowPosition);
         if (_targetPosition != Vector3.zero)
@@ -174,12 +176,15 @@ public class MapGenerator : MonoBehaviour
             if(!isCreateEndPort && GameManager.Instance.isGenerateCountEnd())
             {
                 isCreateEndPort = true;
-                Instantiate(endSection, _targetPosition, Quaternion.identity);
+                _createObject = endSection;
+                Instantiate(_createObject, _targetPosition, Quaternion.identity);
             }
             else
             {
-                Instantiate(randMiddleSection(), _targetPosition, Quaternion.identity);
+                _createObject = randMiddleSection();
+                Instantiate(_createObject, _targetPosition, Quaternion.identity);
             }
+            alarmSpecialSection(_createObject);
         }
     }
 
@@ -300,5 +305,22 @@ public class MapGenerator : MonoBehaviour
         }
 
         return true;
+    }
+
+    private void alarmSpecialSection(GameObject target) // 해적, 항구 생성시 메세지 생성하는 함수
+    {
+        for(int i = 0; i < target.transform.childCount; i++)
+        {
+            if (target.transform.GetChild(i).GetComponent<Pirate>())
+            {
+                UIManager.Instance.showMessage("해적이 출현하였습니다");
+                break;
+            }
+            else if (target.transform.GetChild(i).GetComponent<EndPort>())
+            {
+                UIManager.Instance.showMessage("근처에 항구가 있습니다");
+                break;
+            }
+        }
     }
 }

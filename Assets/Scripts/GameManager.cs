@@ -9,7 +9,7 @@ public class GameManager : MonoBehaviour
 
     [SerializeField] private int endGenerateCount = 3;
     //private int[] generateCount = new int[4]; // 각 방향 생성 개수, 위쪽 오른쪽 아래쪽 왼쪽 순서
-    private int generateCount;
+    private int generatedCount;
 
     private int initMoney = 100; // 초기 자금
     private int nowMoney = 0; // 현재 자금
@@ -141,19 +141,19 @@ public class GameManager : MonoBehaviour
 
     public void addGenerateCount()
     {
-        ++generateCount;
+        ++generatedCount;
     }
 
     public bool isGenerateCountEnd()
     {
-        if(generateCount != 0 && (generateCount % endGenerateCount == 0))
+        if(generatedCount != 0 && (generatedCount % endGenerateCount == 0))
             return true;
         return false;
     }
 
     private void initGenerateCount()
     {
-        generateCount = 0;
+        generatedCount = 0;
     }
 
     public void setNowFishingRod(int level)
@@ -220,10 +220,6 @@ public class GameManager : MonoBehaviour
     public GameEnding NowGameEnding {
         get { return nowGameEnding; }
         set { nowGameEnding = value; }
-    }
-
-    public int GenerateCount {
-        get { return generateCount; }
     }
 
     public void addYachtHaveList(YachtType yachtType)
@@ -299,7 +295,7 @@ public class GameManager : MonoBehaviour
 
     private int rewardMoney()
     {
-        int _result = generateCount;
+        int _result = generatedCount;
         initMoney += _result;
         return _result;
     }
