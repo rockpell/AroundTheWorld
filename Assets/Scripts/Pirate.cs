@@ -219,6 +219,7 @@ public class Pirate : MonoBehaviour
         if(GameManager.Instance.Food >= 30)
         {
             GameManager.Instance.Food -= 30;
+            UIManager.Instance.showMessage("해적에게 식량 30을 약탈당했습니다");
             Destroy(this.gameObject);
         }
         else
