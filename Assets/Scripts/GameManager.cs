@@ -97,6 +97,7 @@ public class GameManager : MonoBehaviour
         this.uiManager = uiManager;
         isGameStart = true;
         uiManager.refreshCalendar(calendar); // 초기 값 보여주기
+        uiManager.refreshDayLightUI(); // 게임 재시작시 밤일 경우 갱신하기 위함
     }
 
     private void checkEndGame()

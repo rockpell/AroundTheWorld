@@ -17,9 +17,13 @@ public class MessageUI : MonoBehaviour
     private float deltaMove = 3;
 
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
         messageQueue = new Queue<string>();
+    }
+
+    void Start()
+    {
         rectTransform = GetComponent<RectTransform>();
         rectTransform.anchoredPosition = initPosition;
     }
