@@ -190,7 +190,7 @@ public class CrewmanManager : MonoBehaviour
         int time = -1;
         if (actingCheck(crewman))
         {
-            notifyStealDrive(crewman);
+            stealDrive(crewman);
 
             if (7 <= calendar.time && calendar.time < 19)
             {
@@ -230,7 +230,7 @@ public class CrewmanManager : MonoBehaviour
     {
         if (actingCheck(crewman))
         {
-            notifyStealDrive(crewman);
+            stealDrive(crewman);
 
             if (GameManager.Instance.Food > 0)
             {
@@ -255,7 +255,7 @@ public class CrewmanManager : MonoBehaviour
 
     public void slectCrewmanRepair(Crewman crewman)
     {
-        notifyStealDrive(crewman);
+        stealDrive(crewman);
     }
 
     public bool crewmanRepair(Crewman crewman)// 수리하기
@@ -285,7 +285,7 @@ public class CrewmanManager : MonoBehaviour
         int time = -1;
         if (actingCheck(crewman))
         {
-            notifyStealDrive(crewman);
+            stealDrive(crewman);
 
             if (crewman.getbehavior() >= 1)
             {
@@ -417,7 +417,7 @@ public class CrewmanManager : MonoBehaviour
         }
     }
 
-    public void notifyStealDrive(Crewman crewman)
+    public void stealDrive(Crewman crewman)
     {
         crewman.setActingType(Acting.NOTHING);
         if(crewman == GameManager.Instance.Sail.DriveCrew)
