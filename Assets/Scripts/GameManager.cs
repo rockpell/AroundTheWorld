@@ -16,6 +16,9 @@ public class GameManager : MonoBehaviour
     private int food = 0; // 현재 식량
     private int leftFood = 0; // 남은 식량
 
+    private int arriveCount = 0; // 도착 횟수
+    [SerializeField] private int arriveEndingNeedCount = 4; // 도착 엔딩 필요 횟수
+
     private bool isGameStart = false;
     private bool isGameEnd = false;
 
@@ -116,7 +119,14 @@ public class GameManager : MonoBehaviour
         {
             case GameEnding.ARRIVE:
                 reward = rewardMoney();
-                UIManager.Instance.endGame(gameEnding);
+                if(++arriveCount >= arriveEndingNeedCount)
+                {
+                    UIManager.Instance.endGame(GameEnding.ARRIVE_WORLD);
+                }
+                else
+                {
+                    UIManager.Instance.endGame(gameEnding);
+                }
                 break;
             case GameEnding.SHIPWRECK: // 난파엔딩
                 UIManager.Instance.endGame(gameEnding);
@@ -136,7 +146,7 @@ public class GameManager : MonoBehaviour
             isGameEnd = true;
             isGameStart = false;
             nowGameEnding = GameEnding.NONE;
-            Time.timeScale = 0; // 나중에 다시 1로 바꿔줘야함
+            Time.timeScale = 0; // recoveryTimeScale 함수에서 다시 1로 바꿔줌
         }
     }
 

@@ -367,6 +367,9 @@ public class UIManager : MonoBehaviour
             case GameEnding.DEAD:
                 _endText.text = "선장이 죽었습니다";
                 break;
+            case GameEnding.ARRIVE_WORLD:
+                _endText.text = "세계 일주하였습니다.";
+                break;
         }
     }
 
