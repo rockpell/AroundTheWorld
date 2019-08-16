@@ -8447,6 +8447,12 @@ MonoBehaviour:
   shipBodyImage: {fileID: 151969974}
   shipSailImage: {fileID: 1948265124}
   shipDescription: {fileID: 0}
+  shipBodyViewSprite:
+  - {fileID: 21300000, guid: b9ff2aab2bc5a8242925794c78531c59, type: 3}
+  - {fileID: 21300000, guid: b33c643ff73afe34f8d32aa3abaf182a, type: 3}
+  shipSailViewSprite:
+  - {fileID: 21300000, guid: 90e2e045092eb3a48b0e29d6580151cc, type: 3}
+  - {fileID: 21300000, guid: 4a4aa6a61def2be4aae4f66b6b7a4615, type: 3}
 --- !u!114 &2118230302
 MonoBehaviour:
   m_ObjectHideFlags: 0

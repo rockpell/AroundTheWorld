@@ -227,6 +227,8 @@ public class UIManager : MonoBehaviour
         }
 
         //sheepStatusUI.setShipDescriptionText("요트 설명 적힐곳");
+
+        initShipStatusImage(); // 요트 상태 창 이미지 변경
     }
 
     private void refreshCrewUI(int crewIndex)
@@ -268,6 +270,12 @@ public class UIManager : MonoBehaviour
         {
             dayLightPanel.color = new Color(0, 0, 0, 0.2f);
         }
+    }
+
+    private void initShipStatusImage() // 요트 상태 창 이미지 변경
+    {
+        // 현재 요트 종류에 따라 이미지 변경하도록 해야함
+        //sheepStatusUI.setViewImage(YachtType.TYPE_A);
     }
 
     private Sprite getCrewImage(Crewman crewData) 

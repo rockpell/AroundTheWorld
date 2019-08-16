@@ -14,6 +14,9 @@ public class SheepStatusUI : MonoBehaviour
 
     [SerializeField] private Text shipDescription;
 
+    [SerializeField] private Sprite[] shipBodyViewSprite;
+    [SerializeField] private Sprite[] shipSailViewSprite;
+
     private bool isDetilMode = false;
 
     private Color initColor;
@@ -69,5 +72,26 @@ public class SheepStatusUI : MonoBehaviour
     public void setShipDescriptionText(string text)
     {
         shipDescription.text = text;
+    }
+
+    public void setViewImage(YachtType type)
+    {
+        Vector2 _imageSize = Vector2.zero;
+        switch (type)
+        {
+            case YachtType.DEFAULT:
+                shipBodyImage.sprite = shipBodyViewSprite[0];
+                shipSailImage.sprite = shipSailViewSprite[0];
+                _imageSize = new Vector2(180, 220);
+                break;
+            case YachtType.TYPE_A:
+                shipBodyImage.sprite = shipBodyViewSprite[1];
+                shipSailImage.sprite = shipSailViewSprite[1];
+                _imageSize = new Vector2(210, 220);
+                break;
+        }
+
+        shipBodyImage.GetComponent<RectTransform>().sizeDelta = _imageSize;
+        shipSailImage.GetComponent<RectTransform>().sizeDelta = _imageSize;
     }
 }
